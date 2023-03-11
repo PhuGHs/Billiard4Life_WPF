@@ -1,0 +1,143 @@
+﻿<UserControl
+       
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:i1="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
+      xmlns:local="clr-namespace:Billiard4Life.View" x:Class="Billiard4Life.View.LichSuBan"
+      xmlns:vm="clr-namespace:Billiard4Life.ViewModel"
+      mc:Ignorable="d"
+      d:DesignHeight="660"
+      d:DesignWidth="1060"
+      x:Name="mainPage"
+      FontSize="12"
+      FontFamily="comfortaa">
+
+    <UserControl.DataContext>
+        <vm:LichSuBanViewModel />
+    </UserControl.DataContext>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <TextBox materialDesign:HintAssist.Hint="Tìm kiếm tên món"
+                         x:Name="FilterBox"
+                         Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="18"
+                         AllowDrop="True"
+                         Width="300"
+                         Height="31" />
+            </Grid>
+            <Grid Grid.Column="1">
+                <ComboBox Height="30"
+                          Width="120"
+                          Margin="10"
+                          FontSize="15"
+                          SelectedIndex="1"
+                          x:Name="Filterbox"
+                          SelectedItem="{Binding SelectedItemFilter}" 
+                          SelectionChanged="Filterbox_SelectionChanged">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding CheckItemFilterCM}"
+                                                   CommandParameter="{Binding ElementName=Filterbox}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ComboBoxItem Content="Toàn bộ" />
+                    <ComboBoxItem Content="Theo ngày" />
+                    <ComboBoxItem Content="Theo tháng" />
+                </ComboBox>
+            </Grid>
+            <Grid Grid.Column="2">
+                <ComboBox Height="30"
+                          Width="100"
+                          Margin="10"
+                          FontSize="15"
+                          Visibility="Collapsed"
+                          x:Name="cbbmonth"
+                          SelectedIndex="{Binding SelectedMonth, Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedMonthCM}"
+                                                   CommandParameter="{Binding ElementName=cbbmonth}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ComboBoxItem Content="Tháng 1" />
+                    <ComboBoxItem Content="Tháng 2" />
+                    <ComboBoxItem Content="Tháng 3" />
+                    <ComboBoxItem Content="Tháng 4" />
+                    <ComboBoxItem Content="Tháng 5" />
+                    <ComboBoxItem Content="Tháng 6" />
+                    <ComboBoxItem Content="Tháng 7" />
+                    <ComboBoxItem Content="Tháng 8" />
+                    <ComboBoxItem Content="Tháng 9" />
+                    <ComboBoxItem Content="Tháng 10" />
+                    <ComboBoxItem Content="Tháng 11" />
+                    <ComboBoxItem Content="Tháng 12" />
+                </ComboBox>
+                <DatePicker Height="30"
+                            Width="130"
+                            FontSize="15"
+                            Margin="10"
+                            Visibility="Visible"
+                            x:Name="timepicker"
+                            SelectedDate="{Binding SelectedDate, Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedDateChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedDateExportListCM}"
+                                                   CommandParameter="{Binding ElementName=timepicker}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DatePicker>
+            </Grid>
+            <Grid Grid.Column="3">
+                <Button Height="40"
+                        Width="130"
+                        Padding="0"
+                        Content="Xuất file Excel"
+                        materialDesign:ButtonAssist.CornerRadius="8"
+                        Command="{Binding ExportFileCM}" 
+                        Background="#FF2DA356">
+                </Button>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListView ItemsSource="{Binding ListProduct}"
+                          FontSize="16"
+                          Margin="20 0 20 20">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding SoHD}"
+                                            Width="200"
+                                            Header="Số hóa đơn" />
+                            <GridViewColumn DisplayMemberBinding="{Binding TenMon}"
+                                            Width="280"
+                                            Header="Tên sản phẩm" />
+                            <GridViewColumn DisplayMemberBinding="{Binding SoLuong}"
+                                            Width="150"
+                                            Header="Số lượng" />
+                            <GridViewColumn DisplayMemberBinding="{Binding TriGia}"
+                                            Width="190"
+                                            Header="Thành tiền" />
+                            <GridViewColumn DisplayMemberBinding="{Binding ngayHD}"
+                                            Width="190"
+                                            Header="Ngày hóa đơn" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,154 @@
+﻿<UserControl x:Class="Billiard4Life.UserControlRS.Navigator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" 
+             xmlns:nav="clr-namespace:Billiard4Life.State.Navigator" d:DataContext="{d:DesignInstance Type=nav:Navigator}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+             
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="sidebarRadioButton" TargetType="RadioButton">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="#EAE7B1"/>
+                <Setter Property="Margin" Value="0 0 0 5"/>
+                <Setter Property="Height" Value="45"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Tag" Value="#EDF1D6"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Border Background="{TemplateBinding Background}" BorderThickness="4 0 0 0" BorderBrush="Transparent">
+                                <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="#F7F1E5"/>
+                        <Setter Property="Tag" Value="#EDF1D6"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="#A6BB8D" Offset="0"/>
+                                    <GradientStop Color="#495385" Offset="3"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="RadioButton">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="4 0 0 0" BorderBrush="#ECF9FF">
+                                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Foreground" Value="#DDF7E3"/>
+                        <Setter Property="Tag" Value="#EDF1D6"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Color="#A6BB8D" Offset="0"/>
+                                    <GradientStop Color="#495385" Offset="3"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="RadioButton">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="4 0 0 0" BorderBrush="#BFDB38">
+                                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+
+
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="sidebarRadioButtonIcon" TargetType="fa:IconImage">
+                <Setter Property="Width" Value="23"/>
+                <Setter Property="Height" Value="23"/>
+                <Setter Property="Margin" Value="35 0 20 0"/>
+                <Setter Property="Foreground" Value="{Binding Path=Tag,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}"/>
+            </Style>
+            <Style x:Key="sideBarRadioButtonText" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontWeight" Value="Regular" />
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="{Binding Path=Foreground,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}"/>
+            </Style>
+        </Grid.Resources>
+        <Grid>
+            
+            <StackPanel>
+                <Separator Height="0.8" Margin="20 30" Background="#EAE7B1"/>
+                <!--sidebarRadioButton-->
+                <!--Menu-->
+                <RadioButton IsChecked="True"  Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.MenuAdmin}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="BowlFood" Style="{StaticResource sidebarRadioButtonIcon}" />
+                        <TextBlock Text="Menu" Style="{StaticResource sideBarRadioButtonText}" />
+                    </StackPanel>
+                </RadioButton>
+                <!--Tình trạng bàn-->
+                <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.TinhTrangBan}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Check" Style="{StaticResource sidebarRadioButtonIcon}" />
+                        <TextBlock Text="Tình Trạng Bàn" Style="{StaticResource sideBarRadioButtonText}" />
+                    </StackPanel>
+                </RadioButton>
+                <!--Lịch sử bàn-->
+                <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.LichSuBan}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="History" Style="{StaticResource sidebarRadioButtonIcon}" />
+                        <TextBlock Text="Lịch Sử Bàn" Style="{StaticResource sideBarRadioButtonText}" />
+                    </StackPanel>
+                </RadioButton>
+                <!--Bếp-->
+                <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.Bep}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="KitchenSet" Style="{StaticResource sidebarRadioButtonIcon}" />
+                        <TextBlock Text="Bếp" Style="{StaticResource sideBarRadioButtonText}" />
+                    </StackPanel>
+                </RadioButton>
+                <!--storage-->
+                <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.Kho}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Warehouse" Style="{StaticResource sidebarRadioButtonIcon}" />
+                        <TextBlock Text="Kho" Style="{StaticResource sideBarRadioButtonText}" />
+                    </StackPanel>
+                </RadioButton>
+                <!--Employee-->
+                <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.NhanVien}" >
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="PeopleGroup" Style="{StaticResource sidebarRadioButtonIcon}" />
+                        <TextBlock Text="Nhân Viên" Style="{StaticResource sideBarRadioButtonText}" />
+                    </StackPanel>
+                </RadioButton>
+                <!--Thống Kê-->
+                <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.ThongKe}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="ChartLine" Style="{StaticResource sidebarRadioButtonIcon}" />
+                        <TextBlock Text="Thống Kê" Style="{StaticResource sideBarRadioButtonText}" />
+                    </StackPanel>
+                </RadioButton>
+            </StackPanel>
+
+        </Grid>
+        
+    </Grid>
+</UserControl>

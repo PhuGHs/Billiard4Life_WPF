@@ -1,0 +1,333 @@
+﻿<UserControl x:Class="Billiard4Life.View.Menu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             xmlns:nav="clr-namespace:Billiard4Life.State.Navigator"
+             xmlns:vm="clr-namespace:Billiard4Life.ViewModel"
+             d:DesignHeight="660" d:DesignWidth="1060"
+             Background="Transparent"
+             TextElement.FontFamily="Comfortaa"
+             x:Name="page">
+    <UserControl.DataContext>
+        <vm:MenuViewModel x:Name="vm"/>
+    </UserControl.DataContext>
+    <Border CornerRadius="10">
+        <Grid>
+            <Grid.Resources>
+                <Style x:Key="SearchBar" TargetType="Border">
+                    <Setter Property="Width" Value="250"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderBrush" Value="#DFDFDE"/>
+                    <Setter Property="CornerRadius" Value="10"/>
+                    <Setter Property="Padding" Value="2"/>
+                    <Setter Property="Height" Value="35"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsFocused, ElementName=txtInput}" Value="True">
+                            <Setter Property="BorderBrush" Value="#1C3879"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <Style x:Key="SearchBarButton" TargetType="Button">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Width" Value="30"/>
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" BorderThickness="4 0 0 0" BorderBrush="Transparent">
+                                    <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style x:Key="SearchBarIcon" TargetType="fa:IconImage">
+                    <Setter Property="Width" Value="20"/>
+                    <Setter Property="Height" Value="20"/>
+                    <Setter Property="Margin" Value="5 0 0 0" />
+                    <Setter Property="Foreground" Value="#D8D8D8"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsFocused, ElementName=txtInput}" Value="True">
+                            <Setter Property="Foreground" Value="#1C3879"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Resources>
+            <Grid Background="#fff">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <GridSplitter 
+                    Height="700" 
+                    Width="3" 
+                    Margin="0 30"/>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10 10 0 0">
+
+                        <StackPanel Orientation="Vertical" Width="160">
+                            <Label 
+                                Content="Sắp xếp" 
+                                HorizontalAlignment="Center" 
+                                FontWeight="SemiBold" 
+                                FontSize="14"/>
+                            <ComboBox ItemsSource="{Binding ComboBox_2Items}"
+                                      SelectedItem="{Binding MyComboboxSelection, Mode=TwoWay}"
+                                      HorizontalAlignment="Center" 
+                                      HorizontalContentAlignment="Center"
+                                      Width="120" 
+                                      FontSize="14">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SortingFeature_Command}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </StackPanel>
+                        <Border Margin="40 0 0 0" Grid.Column="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource SearchBar}">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource SearchBarButton}">
+                                    <fa:IconImage Icon="MagnifyingGlass" Style="{StaticResource SearchBarIcon}"/>
+                                </Button>
+                                <TextBox 
+                                    x:Name="txtInput" 
+                                    materialDesign:HintAssist.Hint="Tìm kiếm món ăn" 
+                                    BorderThickness="0" 
+                                    Width="250" 
+                                    Height="35" 
+                                    Margin="10 0 0 0" 
+                                    FontSize="17" 
+                                    Foreground="#73777B"
+                                    Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
+                        <ItemsControl x:Name="itemControl" ItemsSource="{Binding MenuItemCollection, UpdateSourceTrigger=PropertyChanged}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <materialDesign:Card Width="180" Height="250" Margin="10">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="130"/>
+                                                <RowDefinition Height="80" />
+                                                <RowDefinition Height="30" />
+                                            </Grid.RowDefinitions>
+
+                                            <Image Source="{Binding FoodImage}" Stretch="UniformToFill" />
+                                            <StackPanel Grid.Row ="1" Orientation="Vertical" HorizontalAlignment="Center">
+                                                <TextBlock 
+                                                    FontWeight="SemiBold" 
+                                                    FontSize="20"  
+                                                    Margin="0 10 0 0" 
+                                                    TextAlignment="Center"
+                                                    Text="{Binding FoodName}"/>
+                                                <TextBlock 
+                                                    FontWeight="Regular" 
+                                                    FontSize="18" 
+                                                    Margin="0 10 0 0" 
+                                                    TextAlignment="Center" 
+                                                    Text="{Binding PriceVNDCurrency}"/>
+                                            </StackPanel>
+                                            <Button            
+                                                Grid.Row="2"
+                                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                                Width="100"
+                                                Background="#1C3879"
+                                                Command="{Binding ElementName=vm, Path=OrderFeature_Command}"
+                                                CommandParameter="{Binding}">
+                                                _ĐẶT
+                                            </Button>
+                                        </Grid>
+                                    </materialDesign:Card>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Separator 
+                        HorizontalAlignment="Left" 
+                        Height="0.8" 
+                        Margin="20 30" 
+                        Background="#46558a"/>
+                    <Border Margin="20 0 20 0" CornerRadius="20" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="120"/>
+                                <RowDefinition Height="360"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" 
+                                    Padding="20" 
+                                    Background="#1C3879" 
+                                    CornerRadius="20 20 0 0" 
+                                    Margin="0 20 0 0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock 
+                                            Height="30" 
+                                            Foreground="#fff" 
+                                            FontWeight="SemiBold" 
+                                            FontSize="20">New Order</TextBlock>
+                                        <TextBlock 
+                                            Height="30" 
+                                            Foreground="#fff" 
+                                            FontWeight="Light" 
+                                            FontSize="16" 
+                                            Text="{Binding Day}"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Bàn"
+                                               Foreground="White"
+                                               FontSize="20"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                    <ComboBox Grid.Column="1" 
+                                              Background="Transparent"
+                                              Foreground="White"
+                                              Width="65"
+                                              HorizontalAlignment="Right"
+                                              FontSize="20"
+                                              BorderBrush="White"
+                                              ItemsSource="{Binding Tables}"
+                                              SelectedItem="{Binding SelectedTable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              DisplayMemberPath="NumOfTable"
+                                              HorizontalContentAlignment="Center">
+                                        <ComboBox.ItemContainerStyle>
+                                            <Style TargetType="ComboBoxItem">
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Status}" Value="0">
+                                                        <Setter Property="Background" Value="Red"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Status}" Value="1">
+                                                        <Setter Property="Background" Value="MediumSeaGreen"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ComboBox.ItemContainerStyle>
+                                    </ComboBox>
+                                </Grid>
+                            </Border>
+                            <ScrollViewer Grid.Row="1">
+                                <StackPanel Orientation="Vertical" x:Name="border">
+                                    <Border>
+                                        <StackPanel Orientation="Horizontal">
+                                            <ItemsControl ItemsSource="{Binding SelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border BorderThickness="0,0,0,1" BorderBrush="#1C3879" Width="{Binding ActualWidth, ElementName=border}" Height="50">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="50"/>
+                                                                    <ColumnDefinition Width="150"/>
+                                                                    <ColumnDefinition Width="60"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button 
+                                                                    Command="{Binding ElementName=vm, Path=RemoveItemFeature_Command}"
+                                                                    CommandParameter="{Binding}"
+                                                                    Background="Transparent" 
+                                                                    BorderThickness="0">
+                                                                    <fa:IconImage Icon="TrashCan" Foreground="#1C3879" Height="14" Width="14" />
+                                                                </Button>
+                                                                <TextBlock Grid.Column="1"  
+                                                                           TextAlignment="Left" 
+                                                                           VerticalAlignment="Center" 
+                                                                           FontSize="14" 
+                                                                           FontWeight="SemiBold"
+                                                                           Text="{Binding FoodName}"/>
+
+                                                                <TextBlock Grid.Column="2"  
+                                                                           TextAlignment="Center" 
+                                                                           FontSize="14" 
+                                                                           FontWeight="SemiBold" 
+                                                                           VerticalAlignment="Center"
+                                                                           Text="{Binding Quantity}"/>
+
+                                                                <TextBlock Grid.Column="3"  
+                                                                           ToolTip="Đơn giá" 
+                                                                           TextAlignment="Right" 
+                                                                           VerticalAlignment="Center" 
+                                                                           FontSize="14" 
+                                                                           FontWeight="SemiBold" 
+                                                                           Text="{Binding PriceVNDCurrency}"/>
+                                                            </Grid>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </ScrollViewer>
+                            <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0 15 0 0">
+                                <Separator Margin="20 20"/>
+                                <StackPanel Orientation="Horizontal"  VerticalAlignment="Top" Margin="10 0 0 0" >
+                                    <TextBlock Text="Tổng" 
+                                               FontSize="17" 
+                                               FontWeight="SemiBold" 
+                                               Width="250"/>
+                                    <TextBlock Text="{Binding Path=StrSubtotal}" 
+                                               FontSize="15" 
+                                               FontWeight="SemiBold" 
+                                               Foreground="#1C3879"
+                                               TextAlignment="Right"/>
+                                </StackPanel>
+                                
+
+                                <StackPanel Orientation="Horizontal"  VerticalAlignment="Top" Margin="20 40 0 0" >
+                                    <Button Background="#1C3879" 
+                                            BorderBrush="#1C3879" 
+                                            BorderThickness="1"
+                                            Width="155"
+                                            Command="{Binding ClearAllSelectedDishes}"
+                                           >
+                                        <TextBlock 
+                                            Foreground="White" 
+                                            Text="Xoá chọn tất cả"
+                                            FontSize="15"
+                                            />
+                                    </Button>
+                                    <Button Command="{Binding Inform_Chef_Of_OrderedDishes}"
+                                            Background="#1C3879" 
+                                            BorderThickness="0" 
+                                            Width="155" 
+                                            Margin="50 0 0 0">
+                                        <TextBlock Foreground="White" 
+                                                   Text="Báo chế biến" 
+                                                   FontSize="15" />
+                                    </Button>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

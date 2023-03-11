@@ -1,0 +1,80 @@
+﻿<Window x:Class="Billiard4Life.MyMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Billiard4Life"
+        mc:Ignorable="d"
+        Title="MyMessageBox" Height="150" Width="330" 
+        WindowStyle="None" 
+        AllowsTransparency="True" 
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen" >
+    <Border Background="White"
+            CornerRadius="10"
+            BorderThickness="3"
+            BorderBrush="#1C3879">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Name="lbMessage"
+               Margin="5"
+               TextWrapping="WrapWithOverflow"
+               TextAlignment="Center"
+               VerticalAlignment="Center"
+               FontFamily="Comfortaa"
+               FontSize="16"
+               Foreground="#1C3879"/>
+
+            <Button Name="btnOKcenter"
+                    Grid.Row="1"
+                        Content="OK"
+                        Click="btnOKcenter_Click"
+                        BorderThickness = "0"
+                        Background="#1C3879"
+                        Foreground="White"
+                        Width="150"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand"
+                        FontFamily="Comfortaa"
+                        FontSize="16">
+            </Button>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        Name="btnYES"
+                        Content="YES"
+                        Click="btnYES_Click"
+                        BorderThickness = "0"
+                        Background="#1C3879"
+                        Foreground="White"
+                        Cursor="Hand"
+                        HorizontalAlignment="Center"
+                        Width="150"
+                        FontFamily="Comfortaa"
+                        FontSize="16">
+                </Button>
+                <Button Grid.Column="1"
+                        Name="btnNO"
+                        Content="NO"
+                        Click="btnNO_Click"
+                        BorderThickness = "0"
+                        Background="#1C3879"
+                        Foreground="White"
+                        Cursor="Hand"
+                        Width="150"
+                        HorizontalAlignment="Center"
+                        FontFamily="Comfortaa"
+                        FontSize="16">
+                </Button>
+            </Grid>
+        </Grid>
+
+    </Border>
+</Window>

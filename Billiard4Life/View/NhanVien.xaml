@@ -1,0 +1,287 @@
+﻿<UserControl x:Class="Billiard4Life.View.NhanVien"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Billiard4Life.View"
+             mc:Ignorable="d" 
+             TextElement.FontSize="15"
+             d:DesignHeight="660" d:DesignWidth="1060">
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                  Margin="10 0 10 0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="0"
+                         FontFamily="Comfortaa"
+                         FontSize="16"
+                         Foreground="#1C3879"
+                         Margin="10 40 50 40"
+                         materialDesign:HintAssist.Hint="Tìm kiếm">
+                </TextBox>
+
+                <Button Name="btnDeleteStaff"
+                        Grid.Column="2"
+                        Command="{Binding DeleteCM}"
+                        Background="#1C3879"
+                        Margin="5 5 5 10"
+                        Foreground="White"
+                        FontSize="16"
+                        FontFamily="Comfortaa"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Content="Xóa">
+                </Button>
+
+
+                <Button Name="btnCheckStaff"
+                        Grid.Column="1"
+                        Command="{Binding CheckCM}"
+                        Background="#1C3879"
+                        Margin="5 5 10 10"
+                        Foreground="White"
+                        FontSize="16"
+                        FontFamily="Comfortaa"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Content="Chấm công">
+                </Button>
+
+
+            </Grid>
+
+
+            <Grid Grid.Row="1">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding ListStaff}"
+                              SelectedItem="{Binding Selected, Mode=OneWayToSource}"
+                              Margin="20 0 20 20"
+                              FontFamily="Comfortaa"
+                              FontSize="16">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding HoTen}"
+                                                Width="300"
+                                                Header="Họ tên" />
+                                <GridViewColumn DisplayMemberBinding="{Binding ChucVu}"
+                                                Width="150"
+                                                Header="Chức vụ" />
+                                <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
+                                                Width="220"
+                                                Header="Ngày vào làm" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1"
+                      Margin="20">
+
+            <Border Background="#EEEE"
+                            CornerRadius="20"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox materialDesign:HintAssist.Hint="ID"
+                                 Text="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Comfortaa"
+                                 Grid.Column="0"
+                                 FontSize="16"
+                                 Margin="15 26 5 26"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox materialDesign:HintAssist.Hint="Họ tên"
+                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Comfortaa"
+                                 Grid.Column="1"
+                                 FontSize="16"
+                                 Margin="5 26 15 26"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <ComboBox materialDesign:HintAssist.Hint="Chức vụ"
+                                      Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
+                                      FontFamily="Comfortaa"
+                                      FontSize="16"
+                                      Margin="15 20 5 23"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBoxItem>
+                                    Quản lý
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Bếp trưởng
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Phụ bếp
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Order
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Bảo vệ
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Shipper
+                                </ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <ComboBox FontFamily="Comfortaa"
+                                      FontSize="16"
+                                      Text="{Binding Fulltime, UpdateSourceTrigger=PropertyChanged}"
+                                      Margin="5 23 15 12">
+                                <ComboBoxItem IsSelected="True">
+                                    Full-time
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Part-time
+                                </ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBox materialDesign:HintAssist.Hint="Địa chỉ"
+                                     Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="Comfortaa"
+                                     FontSize="16"
+                                     Margin="15 26 5 26"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBox materialDesign:HintAssist.Hint="SĐT"
+                                     Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="Comfortaa"
+                                     FontSize="16"
+                                     Margin="5 26 15 26"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <DatePicker Grid.Column="0"
+                                    SelectedDate="{Binding DateBorn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                    FontFamily="Comfortaa"
+                                    FontSize="15"
+                                    Margin="15 21 5 21"
+                                    materialDesign:HintAssist.Hint="Ngày sinh"
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
+                        <DatePicker Grid.Column="1"
+                                    SelectedDate="{Binding DateStartWork, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                    FontFamily="Comfortaa"
+                                    FontSize="15"
+                                    Margin="5 21 15 21"
+                                    materialDesign:HintAssist.Hint="Ngày vào làm"
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                    </Grid>
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBox materialDesign:HintAssist.Hint="Tài khoản"
+                                     Text="{Binding Account, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="Comfortaa"
+                                     FontSize="16"
+                                     Margin="15 26 5 26"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBox materialDesign:HintAssist.Hint="Mật khẩu"
+                                     Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="Comfortaa"
+                                     FontSize="16"
+                                     Margin="5 26 15 26"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="btnAddStaff"
+                            Grid.Column="0"
+                            Command="{Binding AddCM}"
+                            Background="#1C3879"
+                            Margin="10 5 5 10"
+                            Foreground="White"
+                            FontSize="16"
+                            FontFamily="Comfortaa"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Content="Thêm">
+                    </Button>
+                    <Button Name="btnEditStaff"
+                            Grid.Column="1"
+                            Command="{Binding EditCM}"
+                            Background="#1C3879"
+                            Margin="5 5 5 10"
+                            Foreground="White"
+                            FontSize="16"
+                            FontFamily="Comfortaa"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Content="Sửa">
+                    </Button>
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

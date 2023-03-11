@@ -1,0 +1,202 @@
+﻿<Window x:Class="RestaurantManagement.View.ChamCong"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:local1="clr-namespace:Billiard4Life.ViewModel"
+        mc:Ignorable="d"
+        Name="chamCong"
+        Title="ChamCong" Height="550" Width="950"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="16"
+        TextElement.FontFamily="Comfortaa"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="Transparent"
+        FontFamily="Comfortaa"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local1:ChamCongViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Border CornerRadius="10"
+                BorderThickness="2"
+                BorderBrush="Black"
+                Background="#EEEEEE"/>
+        <Button Margin="926 4 4 526"
+                Height="20"
+                Width="20"
+                Cursor="Hand"
+                Command="{Binding CloseCM}"
+                CommandParameter="{Binding ElementName=chamCong}"
+                materialDesign:ButtonAssist.CornerRadius="0,10,0,0"
+                BorderThickness="0"
+                Background="Transparent">
+            <fa:IconImage Icon="PowerOff"
+                          Height="20"
+                          Width="20"
+                          Margin="-27 -4 -15 -4"/>
+        </Button>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="8*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Bảng chấm công tháng :"
+                           FontSize="16"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+
+                    <ComboBox ItemsSource="{Binding ListMonth}"
+                              SelectedItem="{Binding MonthSelected}"
+                              Grid.Column="1" Height="31">
+                    </ComboBox>
+
+                    <Button Grid.Column="2"
+                            Command="{Binding ExportCM}"
+                            Background="#1C3879"
+                            Margin="15 5 15 5"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Content="Xuất file chi tiết"
+                            Cursor="Hand">
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ListView ItemsSource="{Binding ListStaff}"
+                                  Margin="10 0 10 10">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="250"
+                                                    Header="Họ tên">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding HoTen}"
+                                                           VerticalAlignment="Center"
+                                                           Height="23"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="130"
+                                                    Header="Chức vụ" >
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding ChucVu}"
+                                                           VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="100">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Fulltime}"
+                                                           VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="150"
+                                                    Header="Tổng số giờ">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding TongSoGio}"
+                                                           VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="8*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Ngày : "
+                           FontSize="16"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+
+                    <ComboBox Grid.Column="1"
+                              ItemsSource="{Binding ListDay}"
+                              SelectedItem="{Binding DaySelected}"
+                              Height="31"
+                              Margin="0 0 5 0"/>
+                    <Button Content="Lưu"
+                            Command="{Binding SaveCM}"
+                            Grid.Column="2"
+                            Background="#1C3879"
+                            Margin="5 5 40 5"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ListView ItemsSource="{Binding ListCheck}"
+                                  SelectedItem="{Binding Selected, Mode=OneWayToSource}"
+                                  Margin="10 0 10 10">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Số giờ"
+                                                    Width="120">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding SoGioCong, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                         Width="70"
+                                                         Height="23"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Ghi chú"
+                                                    Width="150">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding GhiChu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                         Width="150"
+                                                         Height="23"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+            
+        </Grid>
+    </Grid>
+</Window>
