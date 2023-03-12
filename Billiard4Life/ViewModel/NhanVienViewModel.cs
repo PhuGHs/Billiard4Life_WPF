@@ -17,6 +17,15 @@ namespace Billiard4Life.ViewModel
 {
     public class NhanVienViewModel : BaseViewModel
     {
-        
+        public ICommand CheckCM { get; set; }
+        public NhanVienViewModel()
+        {
+            CheckCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                RestaurantManagement.View.ChamCong chamCong = new RestaurantManagement.View.ChamCong();
+                chamCong.Show();
+                return;
+            });
+        }
     }
 }

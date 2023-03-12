@@ -53,8 +53,4 @@
     <Resource Include="images\logo.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
-
 </Project>

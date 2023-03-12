@@ -25,11 +25,11 @@
         <local1:ChamCongViewModel/>
     </Window.DataContext>
     <Grid>
-        <Border CornerRadius="10"
-                BorderThickness="2"
-                BorderBrush="Black"
+        <Border CornerRadius="5"
+                BorderThickness="4"
+                BorderBrush="#61876E"
                 Background="#EEEEEE"/>
-        <Button Margin="926 4 4 526"
+        <Button Margin="917 15 13 515"
                 Height="20"
                 Width="20"
                 Cursor="Hand"
@@ -44,165 +44,166 @@
                           Width="20"
                           Margin="-27 -4 -15 -4"/>
         </Button>
+        <Grid Margin="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="8*"/>
+                    </Grid.RowDefinitions>
 
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="8*"/>
-                </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
 
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Bảng chấm công tháng :"
+                        <Label Content="Bảng chấm công tháng :"
                            FontSize="16"
                            Foreground="#3C6255"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
 
-                    <ComboBox ItemsSource="{Binding ListMonth}"
+                        <ComboBox ItemsSource="{Binding ListMonth}"
                               SelectedItem="{Binding MonthSelected}"
                               Grid.Column="1" Height="31">
-                    </ComboBox>
+                        </ComboBox>
 
-                    <Button Grid.Column="2"
+                        <Button Grid.Column="2"
                             Command="{Binding ExportCM}"
-                            Background="#3C6255"
+                            Background="#61876E"
                             Margin="15 5 15 5"
                             Foreground="White"
                             BorderThickness="0"
                             Content="Xuất file chi tiết"
                             Cursor="Hand">
-                    </Button>
-                </Grid>
+                        </Button>
+                    </Grid>
 
-                <Grid Grid.Row="1">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ListView ItemsSource="{Binding ListStaff}"
+                    <Grid Grid.Row="1">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ListView ItemsSource="{Binding ListStaff}"
                                   Foreground="#3C6255"
                                   Margin="10 0 10 10">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Width="250"
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="250"
                                                     Header="Họ tên">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding HoTen}"
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding HoTen}"
                                                            VerticalAlignment="Center"
                                                            Height="23"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Width="130"
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="130"
                                                     Header="Chức vụ" >
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding ChucVu}"
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding ChucVu}"
                                                            VerticalAlignment="Center"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Width="100">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Fulltime}"
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Fulltime}"
                                                            VerticalAlignment="Center"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Width="150"
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="150"
                                                     Header="Tổng số giờ">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding TongSoGio}"
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding TongSoGio}"
                                                            VerticalAlignment="Center"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </ScrollViewer>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
                 </Grid>
-            </Grid>
 
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="8*"/>
-                </Grid.RowDefinitions>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="8*"/>
+                    </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="110"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <Label Content="Ngày : "
+                        <Label Content="Ngày : "
                            FontSize="16"
                            Foreground="#3C6255"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
 
-                    <ComboBox Grid.Column="1"
+                        <ComboBox Grid.Column="1"
                               ItemsSource="{Binding ListDay}"
                               SelectedItem="{Binding DaySelected}"
                               Height="31"
                               Margin="0 0 5 0"/>
-                    <Button Content="Lưu"
+                        <Button Content="Lưu"
                             Command="{Binding SaveCM}"
                             Grid.Column="2"
-                            Background="#3C6255"
+                            Background="#61876E"
                             Margin="5 5 40 5"/>
-                </Grid>
+                    </Grid>
 
-                <Grid Grid.Row="1">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ListView ItemsSource="{Binding ListCheck}"
+                    <Grid Grid.Row="1">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ListView ItemsSource="{Binding ListCheck}"
                                   Foreground="#3C6255"
                                   SelectedItem="{Binding Selected, Mode=OneWayToSource}"
                                   Margin="10 0 10 10">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Số giờ"
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Số giờ"
                                                     Width="120">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBox Text="{Binding SoGioCong, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding SoGioCong, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                          Width="70"
                                                          Height="23"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="Ghi chú"
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Ghi chú"
                                                     Width="150">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBox Text="{Binding GhiChu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding GhiChu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                          Width="150"
                                                          Height="23"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </ScrollViewer>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
                 </Grid>
+
             </Grid>
-            
         </Grid>
     </Grid>
 </Window>

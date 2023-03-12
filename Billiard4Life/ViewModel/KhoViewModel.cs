@@ -16,6 +16,15 @@ namespace Billiard4Life.ViewModel
 {
     public class KhoViewModel : BaseViewModel
     {
-
+        public ICommand DetailCM { get; set; }
+        public KhoViewModel()
+        {
+            DetailCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Billiard4Life.View.ChiTietNhapKho ctn = new View.ChiTietNhapKho();
+                ctn.Show();
+                return;
+            });
+        }
     }
 }
