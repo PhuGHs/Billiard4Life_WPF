@@ -37,11 +37,11 @@
                         CornerRadius="5"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="160"/>
-                        <ColumnDefinition Width="720"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="690"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="  Chi tiết nhập kho:"
+                    <Label Content="  CHI TIẾT NHẬP KHO:"
                            Foreground="#3C6255"
                            Grid.Column="0"
                            VerticalAlignment="Center"/>
@@ -68,39 +68,178 @@
             </Grid>
             <Grid Grid.Row="1"
                   Margin="0 7 0 0">
-                <Border Background="#EEEEEE"
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0 0 4 0"
+                          Grid.Column="0">
+                        <Border Background="#EEEEEE"
                         CornerRadius="5"/>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ListView ItemsSource="{Binding ListStaff}"
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ListView ItemsSource="{Binding ListStaff}"
                               Foreground="#3C6255"
                               SelectedItem="{Binding Selected, Mode=OneWayToSource}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding HoTen}"
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn DisplayMemberBinding="{Binding HoTen}"
                                                 Width="90"
                                                 Header="Mã" />
-                                <GridViewColumn DisplayMemberBinding="{Binding ChucVu}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding ChucVu}"
                                                 Width="130"
                                                 Header="Số lượng" />
-                                <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
                                                 Width="120"
                                                 Header="Đơn vị" />
-                                <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
                                                 Width="140"
                                                 Header="Giá nhập" />
-                                <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
                                                 Width="140"
                                                 Header="Ngày nhập" />
-                                <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
-                                                Width="150"
-                                                Header="Nguồn nhập" />
-                                <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
-                                                Width="140"
-                                                Header="Liên lạc" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </ScrollViewer>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                    <Grid Grid.Column="1"
+                          Margin="4 0 0 0">
+                        <Border Background="#EEEEEE"
+                                CornerRadius="5"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox materialDesign:HintAssist.Hint="Mã nhập"
+                                 Grid.Column="0"
+                                 Margin="15 28 5 28"
+                                 Text="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                <TextBox materialDesign:HintAssist.Hint="Tên sản phẩm"
+                                 Grid.Column="1"
+                                 Margin="5 28 15 28"
+                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0">
+                                    <TextBox materialDesign:HintAssist.Hint="Số lượng"
+                                     Margin="15 28 5 28"
+                                     Text="{Binding Count, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <DatePicker materialDesign:HintAssist.Hint="Ngày nhập"
+                                        Margin="5,0,15,0"
+                                        SelectedDate="{Binding DateIn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0">
+                                    <TextBox materialDesign:HintAssist.Hint="Giá nhập (VNĐ)"
+                                     Margin="15 28 5 28.5"
+                                     Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <ComboBox materialDesign:HintAssist.Hint="Đơn vị"
+                                      Margin="5,0,15,0"
+                                      Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                        <ComboBoxItem>
+                                            Kg
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Chai
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Quả
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Gói
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Con
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Lát
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Cây
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Lon
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Bó
+                                        </ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0">
+                                    <TextBox materialDesign:HintAssist.Hint="Nguồn nhập"
+                                     Margin="15 28 5 28"
+                                     Text="{Binding Suplier, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <TextBox materialDesign:HintAssist.Hint="Liên lạc"
+                                            Margin="5 28 15 28"
+                                            Text="{Binding SuplierInfo, UpdateSourceTrigger=PropertyChanged}"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Row="4">
+                                <Grid Grid.Row="1">
+                                    <Button Command="{Binding AddCM}"
+                                            Background="#61876E"
+                                            Margin="10 5 5 10"
+                                            Foreground="White"
+                                            FontSize="16"
+                                            FontFamily="Comfortaa"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            Content="Sửa">
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
