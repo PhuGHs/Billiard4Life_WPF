@@ -39,6 +39,7 @@
                 BorderThickness="0"
                 Background="Transparent">
             <fa:IconImage Icon="PowerOff"
+                          Foreground="#3C6255"
                           Height="20"
                           Width="20"
                           Margin="-27 -4 -15 -4"/>
