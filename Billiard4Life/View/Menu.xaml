@@ -149,7 +149,7 @@
                                                 Grid.Row="2"
                                                 Style="{StaticResource MaterialDesignRaisedButton}"
                                                 Width="100"
-                                                Background="#1C3879"
+                                                Background="#3C6255"
                                                 Command="{Binding ElementName=vm, Path=OrderFeature_Command}"
                                                 CommandParameter="{Binding}">
                                                 _ĐẶT
@@ -177,7 +177,7 @@
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" 
                                     Padding="20" 
-                                    Background="#1C3879" 
+                                    Background="#3C6255" 
                                     CornerRadius="20 20 0 0" 
                                     Margin="0 20 0 0">
                                 <Grid>
@@ -300,7 +300,7 @@
                                 
 
                                 <StackPanel Orientation="Horizontal"  VerticalAlignment="Top" Margin="20 40 0 0" >
-                                    <Button Background="#1C3879" 
+                                    <Button Background="#3C6255" 
                                             BorderBrush="#1C3879" 
                                             BorderThickness="1"
                                             Width="155"
@@ -313,7 +313,7 @@
                                             />
                                     </Button>
                                     <Button Command="{Binding Inform_Chef_Of_OrderedDishes}"
-                                            Background="#1C3879" 
+                                            Background="#3C6255" 
                                             BorderThickness="0" 
                                             Width="155" 
                                             Margin="50 0 0 0">

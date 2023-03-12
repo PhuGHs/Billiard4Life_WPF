@@ -62,7 +62,7 @@
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" 
                             Padding="20" 
-                            Background="#CF0A0A" 
+                            Background="#3C6255" 
                             Margin="0 20 0 0">
                         <Grid>
                             <TextBlock HorizontalAlignment="Center"
@@ -154,8 +154,8 @@
                         <StackPanel Orientation="Horizontal"  VerticalAlignment="Top" Margin="0 5 0 0">
                             <Button     
                                 HorizontalAlignment="Center"                               
-                                Background="Red" 
-                                BorderBrush="Yellow" 
+                                Background="#DF2E38" 
+                                BorderThickness="0"
                                 Width="150"
                                 Command="{Binding GetPaymentCommand}">
 
@@ -175,6 +175,7 @@
                         <StackPanel Orientation="Horizontal"  VerticalAlignment="Top" Margin="0 0 0 0">
                             <Button 
                                 Margin="0,5,0,0"
+                                Background="#3C6255"
                                 HorizontalAlignment="Center"
                                 Width="150"
                                 Command="{Binding GetSwitchTableCommand}">

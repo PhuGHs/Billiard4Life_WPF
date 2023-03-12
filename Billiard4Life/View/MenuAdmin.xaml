@@ -32,12 +32,14 @@
                          materialDesign:HintAssist.Hint="Tìm kiếm món ăn" 
                          Width="180" 
                          Height="35"/>
-                <Button Background="#1c3879" 
-                        Command="{Binding AddDishes_Command}"
+                <Button Background="#3C6255" 
+                        BorderThickness="0"
+                        Command="{Binding AddOneMenuDish}"
                         Margin="60 0 0 0" 
                         Content="Thêm món" 
                         Width="150"/>
-                <Button Background="#1C3879" 
+                <Button Background="#3C6255"
+                        BorderThickness="0"
                         Command="{Binding RemoveDish_Command}"
                         CommandParameter="{Binding ElementName=Dishes_ListView}"
                         Margin="20 0 0 0" 
@@ -50,7 +52,7 @@
                       FontSize="15"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ItemsSource="{Binding MenuItemCollection, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding MenuItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20" Grid.Row="1" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                      SelectedItem="{Binding MenuItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20" Grid.Row="1" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Center" VerticalAlignment="Stretch" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Mã món" Width="90" DisplayMemberBinding="{Binding ID}"/>
@@ -85,7 +87,7 @@
                     Background="Transparent" 
                     Width="50" 
                     BorderThickness="0">
-                <fa:IconImage Icon="Edit" Foreground="#1C3879"/>
+                <fa:IconImage Icon="Edit" Foreground="#3C6255"/>
             </Button>
             
             <Border Padding="20" Grid.Row="2" Background="#EAEAEA" CornerRadius="8">
@@ -132,119 +134,28 @@
                     </Grid>
                     <Button Margin="20 60 20 0"
                             Content="Sửa, xem nguyên liệu"
+                            BorderThickness="0"
                             Command="{Binding EditIngredient_Command}"
-                            Background="#1C3879"/>
+                            Background="#3C6255"/>
                     <Grid Margin="0 30 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="20" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Button Background="#1C3879" 
+                        <Button Background="#3C6255" 
                                 Content="Huỷ bỏ thay đổi"
+                                BorderThickness="0"
                                 Command="{Binding DiscardChanges_Command}"/>
-                        <Button Background="#1C3879" 
+                        <Button Background="#3C6255" 
                                 Grid.Column="2" 
                                 Content="Lưu thay đổi" 
+                                BorderThickness="0"
                                 Command="{Binding SaveChanges_Command}"/>
                     </Grid>
                 </StackPanel>
             </Border>
         </Grid>
         <!--ADD VIEW-->
-        <Grid Grid.Column="2" 
-              x:Name="AddGrid"
-              Visibility="{Binding AddView}"
-              Margin="0 20 20 20" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="60" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-
-            <Rectangle MaxWidth="400" MaxHeight="200">
-                <Rectangle.Fill>
-                    <ImageBrush ImageSource="{Binding AddItem.FoodImage}" Stretch="Uniform"/>
-                </Rectangle.Fill>
-            </Rectangle>
-
-            <Button Grid.Row="1"
-                    Command="{Binding AddImage_Command}"
-                    Background="Transparent" 
-                    Width="50" 
-                    BorderThickness="0">
-                <fa:IconImage Icon="Edit" Foreground="#1C3879"/>
-            </Button>
-
-            <Border Padding="20" Grid.Row="3" Background="#EAEAEA" CornerRadius="8">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="*Thực hiện theo thứ tự (thêm món -> thêm nguyên liệu)" 
-                               TextAlignment="Center"
-                               FontSize="13"
-                               Foreground="OrangeRed"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="20" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox
-                          Text="{Binding AddItem.ID, Mode=TwoWay}"
-                          Grid.Column="0"
-                          FontSize="16"
-                          materialDesign:HintAssist.Hint="Mã món"
-                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <TextBox
-                          Text="{Binding AddItem.FoodName, Mode=TwoWay}"
-                          FontSize="16"
-                          Grid.Column="2"
-                          materialDesign:HintAssist.Hint="Tên món"
-                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    </Grid>
-
-                    <Grid Margin="0 50 0 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="20" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox
-                          Text="{Binding AddItem.Str_Price, Mode=TwoWay}"
-                          Grid.Column="0"
-                          FontSize="16"
-                          materialDesign:HintAssist.Hint="Giá (VNĐ)"
-                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <TextBox
-                          Text="{Binding AddItem.Str_CookingTime, Mode=TwoWay}"
-                          Grid.Column="2"
-                          FontSize="16"
-                          materialDesign:HintAssist.Hint="Thời gian nấu (Phút)"
-                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    </Grid>
-                    <Grid Margin="0 50 0 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="20" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Button Background="#1C3879" 
-                                x:Name="Add_button"
-                                Content="Thêm"
-                                Command="{Binding AddDish_Command}"
-                                CommandParameter="{Binding ElementName=Add_button}"
-                                />
-                        <Button Background="#1C3879" 
-                                Command="{Binding SwitchToEditView_Command}"
-                                Grid.Column="2" 
-                                Content="Chỉnh sửa" />
-                    </Grid>
-                    <Button Margin="20 30 20 0"
-                            Content="Thêm, xem nguyên liệu"
-                            Command="{Binding AddIngredient_Command}"
-                            Background="#1C3879"/>
-                </StackPanel>
-            </Border>
-        </Grid>
     </Grid>
 </UserControl>

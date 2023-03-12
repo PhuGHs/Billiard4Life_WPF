@@ -25,7 +25,16 @@ namespace Billiard4Life.ViewModel
     {
         public MenuAdminViewModel()
         {
-
+            AddOneMenuDish = new RelayCommand<Object>((p) => true, (p) =>
+            {
+                MenuAdmin_ThemMon window = new MenuAdmin_ThemMon();
+                window.DataContext = this;
+                window.ShowDialog();
+            });
         }
+        #region Commands
+            public ICommand AddOneMenuDish { get; set; }
+        #endregion
+
     }
 }
