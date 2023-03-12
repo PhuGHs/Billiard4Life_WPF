@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:Billiard4Life.View"
              mc:Ignorable="d" 
              TextElement.FontSize="15"
+             TextElement.Foreground="#3C6255"
              d:DesignHeight="660" d:DesignWidth="1060">
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -33,8 +34,7 @@
                 <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Column="0"
                          FontFamily="Comfortaa"
-                         FontSize="16"
-                         Foreground="#1C3879"
+                         Foreground="#3C6255"
                          Margin="10 40 50 40"
                          materialDesign:HintAssist.Hint="Tìm kiếm">
                 </TextBox>
@@ -42,10 +42,9 @@
                 <Button Name="btnDeleteStaff"
                         Grid.Column="2"
                         Command="{Binding DeleteCM}"
-                        Background="#1C3879"
+                        Background="#3C6255"
                         Margin="5 5 5 10"
-                        Foreground="White"
-                        FontSize="16"
+                        Foreground="#EAE7B1"
                         FontFamily="Comfortaa"
                         BorderThickness="0"
                         Cursor="Hand"
@@ -56,10 +55,9 @@
                 <Button Name="btnCheckStaff"
                         Grid.Column="1"
                         Command="{Binding CheckCM}"
-                        Background="#1C3879"
+                        Background="#3C6255"
                         Margin="5 5 10 10"
-                        Foreground="White"
-                        FontSize="16"
+                        Foreground="#EAE7B1"
                         FontFamily="Comfortaa"
                         BorderThickness="0"
                         Cursor="Hand"
@@ -96,10 +94,10 @@
             </Grid>
         </Grid>
         <Grid Grid.Column="1"
-                      Margin="20">
+              Margin="20">
 
             <Border Background="#EEEE"
-                            CornerRadius="20"/>
+                    CornerRadius="20"/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*"/>
@@ -126,14 +124,12 @@
                                  Text="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
                                  FontFamily="Comfortaa"
                                  Grid.Column="0"
-                                 FontSize="16"
                                  Margin="15 26 5 26"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         <TextBox materialDesign:HintAssist.Hint="Họ tên"
                                  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                  FontFamily="Comfortaa"
                                  Grid.Column="1"
-                                 FontSize="16"
                                  Margin="5 26 15 26"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     </Grid>
@@ -146,32 +142,22 @@
                             <ComboBox materialDesign:HintAssist.Hint="Chức vụ"
                                       Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
                                       FontFamily="Comfortaa"
-                                      FontSize="16"
                                       Margin="15 20 5 23"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <ComboBoxItem>
                                     Quản lý
                                 </ComboBoxItem>
                                 <ComboBoxItem>
-                                    Bếp trưởng
-                                </ComboBoxItem>
-                                <ComboBoxItem>
-                                    Phụ bếp
-                                </ComboBoxItem>
-                                <ComboBoxItem>
-                                    Order
+                                    Nhân viên
                                 </ComboBoxItem>
                                 <ComboBoxItem>
                                     Bảo vệ
-                                </ComboBoxItem>
-                                <ComboBoxItem>
-                                    Shipper
                                 </ComboBoxItem>
                             </ComboBox>
                         </Grid>
                         <Grid Grid.Column="1">
                             <ComboBox FontFamily="Comfortaa"
-                                      FontSize="16"
+                                      materialDesign:HintAssist.Hint="Loại nhân viên"
                                       Text="{Binding Fulltime, UpdateSourceTrigger=PropertyChanged}"
                                       Margin="5 23 15 12">
                                 <ComboBoxItem IsSelected="True">
@@ -192,7 +178,6 @@
                             <TextBox materialDesign:HintAssist.Hint="Địa chỉ"
                                      Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
-                                     FontSize="16"
                                      Margin="15 26 5 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
@@ -200,7 +185,6 @@
                             <TextBox materialDesign:HintAssist.Hint="SĐT"
                                      Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
-                                     FontSize="16"
                                      Margin="5 26 15 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
@@ -213,14 +197,12 @@
                         <DatePicker Grid.Column="0"
                                     SelectedDate="{Binding DateBorn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                                     FontFamily="Comfortaa"
-                                    FontSize="15"
                                     Margin="15 21 5 21"
                                     materialDesign:HintAssist.Hint="Ngày sinh"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
                         <DatePicker Grid.Column="1"
                                     SelectedDate="{Binding DateStartWork, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                                     FontFamily="Comfortaa"
-                                    FontSize="15"
                                     Margin="5 21 15 21"
                                     materialDesign:HintAssist.Hint="Ngày vào làm"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
@@ -234,7 +216,6 @@
                             <TextBox materialDesign:HintAssist.Hint="Tài khoản"
                                      Text="{Binding Account, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
-                                     FontSize="16"
                                      Margin="15 26 5 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
@@ -242,7 +223,6 @@
                             <TextBox materialDesign:HintAssist.Hint="Mật khẩu"
                                      Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
-                                     FontSize="16"
                                      Margin="5 26 15 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
@@ -257,10 +237,9 @@
                     <Button Name="btnAddStaff"
                             Grid.Column="0"
                             Command="{Binding AddCM}"
-                            Background="#1C3879"
+                            Background="#3C6255"
                             Margin="10 5 5 10"
-                            Foreground="White"
-                            FontSize="16"
+                            Foreground="#EAE7B1"
                             FontFamily="Comfortaa"
                             BorderThickness="0"
                             Cursor="Hand"
@@ -269,10 +248,9 @@
                     <Button Name="btnEditStaff"
                             Grid.Column="1"
                             Command="{Binding EditCM}"
-                            Background="#1C3879"
+                            Background="#3C6255"
                             Margin="5 5 5 10"
-                            Foreground="White"
-                            FontSize="16"
+                            Foreground="#EAE7B1"
                             FontFamily="Comfortaa"
                             BorderThickness="0"
                             Cursor="Hand"

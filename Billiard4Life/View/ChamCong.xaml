@@ -11,6 +11,7 @@
         Title="ChamCong" Height="550" Width="950"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="16"
+        TextElement.Foreground="#3C6255"
         TextElement.FontFamily="Comfortaa"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
@@ -64,6 +65,7 @@
 
                     <Label Content="Bảng chấm công tháng :"
                            FontSize="16"
+                           Foreground="#3C6255"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
 
@@ -74,7 +76,7 @@
 
                     <Button Grid.Column="2"
                             Command="{Binding ExportCM}"
-                            Background="#1C3879"
+                            Background="#3C6255"
                             Margin="15 5 15 5"
                             Foreground="White"
                             BorderThickness="0"
@@ -86,6 +88,7 @@
                 <Grid Grid.Row="1">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ListView ItemsSource="{Binding ListStaff}"
+                                  Foreground="#3C6255"
                                   Margin="10 0 10 10">
                             <ListView.View>
                                 <GridView>
@@ -148,6 +151,7 @@
 
                     <Label Content="Ngày : "
                            FontSize="16"
+                           Foreground="#3C6255"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
 
@@ -159,13 +163,14 @@
                     <Button Content="Lưu"
                             Command="{Binding SaveCM}"
                             Grid.Column="2"
-                            Background="#1C3879"
+                            Background="#3C6255"
                             Margin="5 5 40 5"/>
                 </Grid>
 
                 <Grid Grid.Row="1">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ListView ItemsSource="{Binding ListCheck}"
+                                  Foreground="#3C6255"
                                   SelectedItem="{Binding Selected, Mode=OneWayToSource}"
                                   Margin="10 0 10 10">
                             <ListView.View>
