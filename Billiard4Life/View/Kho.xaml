@@ -40,7 +40,14 @@
                               Grid.Row="1"
                               Foreground="#3C6255"
                               Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}"
-                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                              Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                    <ComboBoxItem>
+                        Đồ ăn
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        Nước uống
+                    </ComboBoxItem>
+                </ComboBox>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>

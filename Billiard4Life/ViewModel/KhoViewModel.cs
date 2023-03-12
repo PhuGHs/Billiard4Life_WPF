@@ -17,12 +17,19 @@ namespace Billiard4Life.ViewModel
     public class KhoViewModel : BaseViewModel
     {
         public ICommand DetailCM { get; set; }
+        public ICommand AddCM { get; set; }
         public KhoViewModel()
         {
             DetailCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 Billiard4Life.View.ChiTietNhapKho ctn = new View.ChiTietNhapKho();
                 ctn.Show();
+                return;
+            });
+            AddCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Billiard4Life.View.NhapHangMoi adding = new View.NhapHangMoi();
+                adding.Show();
                 return;
             });
         }
