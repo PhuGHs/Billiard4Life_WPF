@@ -77,27 +77,28 @@
                           Grid.Column="0">
                         <Border Background="#EEEEEE"
                         CornerRadius="5"/>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                      Margin="5 0 5 0">
                             <ListView ItemsSource="{Binding ListStaff}"
-                              Foreground="#3C6255"
-                              SelectedItem="{Binding Selected, Mode=OneWayToSource}">
+                                      Foreground="#3C6255"
+                                      SelectedItem="{Binding Selected, Mode=OneWayToSource}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn DisplayMemberBinding="{Binding HoTen}"
-                                                Width="90"
-                                                Header="Mã" />
+                                                        Width="90"
+                                                        Header="Mã" />
                                         <GridViewColumn DisplayMemberBinding="{Binding ChucVu}"
-                                                Width="130"
-                                                Header="Số lượng" />
+                                                        Width="130"
+                                                        Header="Số lượng" />
                                         <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
-                                                Width="120"
-                                                Header="Đơn vị" />
+                                                        Width="120"
+                                                        Header="Đơn vị" />
                                         <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
-                                                Width="140"
-                                                Header="Giá nhập" />
+                                                        Width="140"
+                                                        Header="Giá nhập" />
                                         <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
-                                                Width="140"
-                                                Header="Ngày nhập" />
+                                                        Width="140"
+                                                        Header="Ngày nhập" />
                                     </GridView>
                                 </ListView.View>
                             </ListView>

@@ -156,15 +156,19 @@
                             </ComboBox>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <ComboBox FontFamily="Comfortaa"
-                                      materialDesign:HintAssist.Hint="Loại nhân viên"
-                                      Text="{Binding Fulltime, UpdateSourceTrigger=PropertyChanged}"
-                                      Margin="5 23 15 12">
-                                <ComboBoxItem IsSelected="True">
-                                    Full-time
+                            <ComboBox materialDesign:HintAssist.Hint="Loại nhân viên"
+                                      Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
+                                      FontFamily="Comfortaa"
+                                      Margin="5 20 15 23"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBoxItem>
+                                    Quản lý
                                 </ComboBoxItem>
                                 <ComboBoxItem>
-                                    Part-time
+                                    Nhân viên
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Bảo vệ
                                 </ComboBoxItem>
                             </ComboBox>
                         </Grid>
