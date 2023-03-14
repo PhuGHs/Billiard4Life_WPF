@@ -14,6 +14,8 @@ namespace TinhTrangBan.Models
         private string numoftable;
         private int status;
         private string coloroftable;
+        private string kindOfTable;
+        private Decimal price;
         private int id;
         private int id_bill;
         public string NumOfTable
@@ -22,6 +24,22 @@ namespace TinhTrangBan.Models
             set
             {
                 numoftable = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Decimal Price
+        {
+            get { return price; }
+            set { price = value; OnPropertyChanged(); }
+        }
+
+        public string KindOfTable
+        {
+            get { return kindOfTable; }
+            set
+            {
+                kindOfTable = value;
                 OnPropertyChanged();
             }
         }
