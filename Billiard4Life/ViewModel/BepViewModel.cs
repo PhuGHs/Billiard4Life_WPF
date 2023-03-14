@@ -22,6 +22,15 @@ namespace Billiard4Life.ViewModel
 
     public class BepViewModel : BaseViewModel
     {
-        
+        public ICommand AddCM { get; set; }
+        public BepViewModel()
+        {
+            AddCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Billiard4Life.View.ThemKhachHang adding = new View.ThemKhachHang();
+                adding.Show();
+                return;
+            });
+        }
     }
 }

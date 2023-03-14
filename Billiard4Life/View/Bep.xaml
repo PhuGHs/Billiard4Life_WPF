@@ -56,7 +56,7 @@
 
                 <Button Name="btnCheckStaff"
                         Grid.Column="1"
-                        Command="{Binding CheckCM}"
+                        Command="{Binding AddCM}"
                         Background="#3C6255"
                         Margin="5 5 10 10"
                         Foreground="#EAE7B1"
