@@ -93,6 +93,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0">
@@ -102,29 +103,8 @@
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
                         <Grid Grid.Column="1">
-                            <DatePicker materialDesign:HintAssist.Hint="Ngày nhập"
-                                        Margin="5,0,15,0"
-                                        SelectedDate="{Binding DateIn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
-                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                        </Grid>
-                    </Grid>
-
-                    <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid Grid.Column="0">
-                            <TextBox materialDesign:HintAssist.Hint="Giá nhập (VNĐ)"
-                                     Margin="15 28 5 28.8"
-                                     Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
-                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        </Grid>
-
-                        <Grid Grid.Column="1">
                             <ComboBox materialDesign:HintAssist.Hint="Đơn vị"
-                                      Margin="5,0,15,0"
+                                      Margin="5,0,5,0"
                                       Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <ComboBoxItem>
@@ -150,6 +130,33 @@
                                 </ComboBoxItem>
                             </ComboBox>
                         </Grid>
+                        <Grid Grid.Column="2">
+                            <TextBox materialDesign:HintAssist.Hint="Mức báo hết"
+                                     Margin="5 28 15 28.5"
+                                     Text="{Binding Count, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <TextBox materialDesign:HintAssist.Hint="Giá nhập (VNĐ)"
+                                     Margin="15 28 5 28.8"
+                                     Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <DatePicker materialDesign:HintAssist.Hint="Ngày nhập"
+                                        Margin="5,0,15,0"
+                                        SelectedDate="{Binding DateIn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                        </Grid>
+                        
                     </Grid>
 
                     <Grid Grid.Row="3">
