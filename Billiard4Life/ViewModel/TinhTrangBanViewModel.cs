@@ -25,6 +25,8 @@ using iTextSharp.text.pdf;
 using iTextSharp.text;
 using Documment = iTextSharp.text.Document;
 using System.IO;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace Billiard4Life.ViewModel
 {
@@ -34,17 +36,34 @@ namespace Billiard4Life.ViewModel
         public TinhTrangBanViewModel()
         {
             Tables = TinhTrangBanDP.Flag.GetTables();
+            LoadTableStatus();
+            LoadEmptyTables();
+            LoadOptions();
+            _tables_view = new CollectionViewSource();
+            _tables_view.Source = Tables;
             StatusOfTableCommand = new RelayCommand<Table>((p) => true, (p) => GetStatusOfTable(p.ID));
             GetPaymentCommand = new RelayCommand<Table>((p) => true, (p) => Payment());
             GetSwitchTableCommand = new RelayCommand<string>((p) => true, (p) => SwitchTable());
-            LoadTableStatus();
-            LoadEmptyTables();
+            SortingFeature_Command = new RelayCommand<object>((p) => true, (p) =>
+            {
+                TableView.Filter = item =>
+                {
+                    if (SelectedOption == "Tất cả")
+                    {
+                        return true;
+                    }
+                    return ((Table)item).KindOfTable == selectedOption;
+                };
+            });
         }
         #region attributes
         private ObservableCollection<Table> _tables = new ObservableCollection<Table>();
         private ObservableCollection<SelectedMenuItems> _selectedItems = new ObservableCollection<SelectedMenuItems>();
         private ObservableCollection<string> _emptytables = new ObservableCollection<string>();
+        private ObservableCollection<string> _combobox_option_kindoftables = new ObservableCollection<string>();
+        private CollectionViewSource _tables_view;
         private string titleofbill = "";
+        private string selectedOption = "Tất cả";
         private decimal dec_sumofbill = 0;
         private string sumofbill = "0 VND";
         private string selectedtable = "";
@@ -55,6 +74,8 @@ namespace Billiard4Life.ViewModel
         public ObservableCollection<Table> Tables { get { return _tables; } set { _tables = value; OnPropertyChanged(); } }
         public ObservableCollection<SelectedMenuItems> SelectedItems { get { return _selectedItems; } set { _selectedItems = value; } }
         public ObservableCollection<string> EmptyTables { get { return _emptytables; } set { _emptytables = value; } }
+        public ObservableCollection<string> Combobox_Option_KindOfTables { get { return _combobox_option_kindoftables; } set { _emptytables = value; } }
+        public ICollectionView TableView { get { return this._tables_view.View; }}
         public string TitleOfBill
         {
             get { return titleofbill; }
@@ -75,33 +96,31 @@ namespace Billiard4Life.ViewModel
             get { return selectedtable; }
             set { selectedtable = value; OnPropertyChanged(); }
         }
+        public string SelectedOption
+        {
+            get { return selectedOption; }
+            set { selectedOption = value; OnPropertyChanged(); }
+        }
         #endregion
         #region commands
         public ICommand StatusOfTableCommand { get; set; }
         public ICommand GetPaymentCommand { get; set; }
         public ICommand GetSwitchTableCommand { get; set; }
+        public ICommand SortingFeature_Command { get; set; }
         #endregion
         #region methods
-        //public void LoadTables()
-        //{
-        //    _tables.Add(new Table { NumOfTable = "Bàn 1", ID = 1 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 2", ID = 2 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 3", ID = 3 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 4", ID = 4 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 5", ID = 5 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 6", ID = 6 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 7", ID = 7 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 8", ID = 8 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 9", ID = 9 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 10", ID = 10 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 11", ID = 11 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 12", ID = 12 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 13", ID = 13 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 14", ID = 14 });
-        //    _tables.Add(new Table { NumOfTable = "Bàn 15", ID = 15 });
+        public void LoadOptions()
+        {
+            foreach (Table t in _tables)
+            {
+                if(!Combobox_Option_KindOfTables.Contains(t.KindOfTable))
+                {
+                    Combobox_Option_KindOfTables.Add(t.KindOfTable);
+                }
+            }
+            Combobox_Option_KindOfTables.Add("Tất cả");
+        }
 
-        //    Tables = _tables;
-        //}
         public void LoadEmptyTables()
         {
             string numoftable;
