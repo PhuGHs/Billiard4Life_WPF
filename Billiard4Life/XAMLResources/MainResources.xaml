@@ -35,4 +35,5 @@
     
     <viewmodel:ChamCongViewModel x:Key="ChamCong"/>
     <viewmodel:ThemNhanVienViewModel x:Key="ThemNhanVien"/>
+    <viewmodel:ChiTietNhapKhoViewModel x:Key="ChiTietNhapKho"/>
 </ResourceDictionary>

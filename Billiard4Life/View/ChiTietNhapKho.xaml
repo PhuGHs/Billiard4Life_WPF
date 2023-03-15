@@ -7,6 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Billiard4Life.View"
         mc:Ignorable="d"
+        Name="ctn"
         Title="ChiTietNhapKho" 
         Height="550" 
         Width="950"
@@ -54,7 +55,7 @@
                             Width="20"
                             Cursor="Hand"
                             Command="{Binding CloseCM}"
-                            CommandParameter="{Binding ElementName=chamCong}"
+                            CommandParameter="{Binding ElementName=ctn}"
                             materialDesign:ButtonAssist.CornerRadius="0,10,0,0"
                             BorderThickness="0"
                             Background="Transparent">
@@ -79,24 +80,24 @@
                         CornerRadius="5"/>
                         <ScrollViewer VerticalScrollBarVisibility="Auto"
                                       Margin="5 0 5 0">
-                            <ListView ItemsSource="{Binding ListStaff}"
+                            <ListView ItemsSource="{Binding ListIn}"
                                       Foreground="#3C6255"
                                       SelectedItem="{Binding Selected, Mode=OneWayToSource}">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding HoTen}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding MaNhap}"
                                                         Width="90"
                                                         Header="Mã" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding ChucVu}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding SoLuong}"
                                                         Width="130"
                                                         Header="Số lượng" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding DonVi}"
                                                         Width="120"
                                                         Header="Đơn vị" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding DonGia}"
                                                         Width="140"
                                                         Header="Giá nhập" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding NgayNhap}"
                                                         Width="140"
                                                         Header="Ngày nhập" />
                                     </GridView>
@@ -139,6 +140,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
                                 <Grid Grid.Column="0">
@@ -149,7 +151,7 @@
                                 </Grid>
                                 <Grid Grid.Column="1">
                                     <ComboBox materialDesign:HintAssist.Hint="Đơn vị"
-                                      Margin="5,0,15,0"
+                                      Margin="5,0,5,0"
                                       Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                         <ComboBoxItem>
@@ -178,6 +180,22 @@
                                         </ComboBoxItem>
                                         <ComboBoxItem>
                                             Bó
+                                        </ComboBoxItem>
+                                    </ComboBox>
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                    <ComboBox materialDesign:HintAssist.Hint="Nhóm"
+                                      Margin="5,0,15,0"
+                                      Text="{Binding Group, UpdateSourceTrigger=PropertyChanged}"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                        <ComboBoxItem>
+                                            Đồ ăn
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Nước uống
+                                        </ComboBoxItem>
+                                        <ComboBoxItem>
+                                            Khác
                                         </ComboBoxItem>
                                     </ComboBox>
                                 </Grid>
@@ -226,7 +244,7 @@
 
                             <Grid Grid.Row="4">
                                 <Grid Grid.Row="1">
-                                    <Button Command="{Binding AddCM}"
+                                    <Button Command="{Binding EditCM}"
                                             Background="#61876E"
                                             Margin="10 5 5 10"
                                             Foreground="White"

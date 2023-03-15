@@ -15,16 +15,15 @@ namespace Billiard4Life.Models
         public float TonDu { get => _TonDu; set { _TonDu = value; OnPropertyChanged(); } }
         private string _DonVi;
         public string DonVi { get => _DonVi; set { _DonVi = value; OnPropertyChanged(); } }
-        private string _DonGia;
-        public string DonGia { get => _DonGia; set { _DonGia = value; OnPropertyChanged(); } }
+        private string _NhomSP;
+        public string NhomSP { get => _NhomSP; set { _NhomSP = value; OnPropertyChanged(); } }
 
-
-        public Kho(string ten, float tondu, string donvi, string dongia)
+        public Kho(string ten, float tondu, string donvi, string nhom)
         {
             TenSanPham = ten;
             TonDu = tondu;
             DonVi = donvi;
-            DonGia = dongia;
+            NhomSP = nhom;
         }
         public Kho()
         {

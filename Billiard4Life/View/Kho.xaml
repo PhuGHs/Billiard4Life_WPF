@@ -36,17 +36,12 @@
                              materialDesign:HintAssist.Hint="Tìm kiếm">
                 </TextBox>
                 <ComboBox materialDesign:HintAssist.Hint="Nhóm sản phẩm"
-                              Margin="10,6,30,6"
-                              Grid.Row="1"
-                              Foreground="#3C6255"
-                              Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}"
-                              Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                    <ComboBoxItem>
-                        Đồ ăn
-                    </ComboBoxItem>
-                    <ComboBoxItem>
-                        Nước uống
-                    </ComboBoxItem>
+                          Margin="10,6,30,6"
+                          Grid.Row="1"
+                          Foreground="#3C6255"
+                          ItemsSource="{Binding Groups}"
+                          SelectedItem="{Binding GroupSelected}"
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                 </ComboBox>
             </Grid>
             <Grid Grid.Column="1">
@@ -127,7 +122,7 @@
         <Grid Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ListView ItemsSource="{Binding ListWareHouse}"
-                              SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
+                              SelectedItem="{Binding Selected, Mode=OneWayToSource}"
                               FontSize="17"
                               Foreground="#3C6255"
                               Margin="20 0 20 20">
@@ -142,7 +137,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding DonVi}"
                                                 Width="180"
                                                 Header="Đơn vị" />
-                            <GridViewColumn DisplayMemberBinding="{Binding NhomSanPham}"
+                            <GridViewColumn DisplayMemberBinding="{Binding NhomSP}"
                                                 Width="230"
                                                 Header="Nhóm sản phẩm" />
                         </GridView>
