@@ -36,7 +36,7 @@
                          Grid.Column="0"
                          FontFamily="Comfortaa"
                          Foreground="#3C6255"
-                         Margin="10 40 50 40"
+                         Margin="10 40 20 40"
                          materialDesign:HintAssist.Hint="Tìm kiếm">
                 </TextBox>
 
@@ -170,7 +170,7 @@
                         </Grid>
                         <Grid Grid.Column="1">
                             <ComboBox materialDesign:HintAssist.Hint="Loại nhân viên"
-                                      Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
+                                      Text="{Binding Fulltime, UpdateSourceTrigger=PropertyChanged}"
                                       FontFamily="Comfortaa"
                                       Margin="5 20 15 23"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}">

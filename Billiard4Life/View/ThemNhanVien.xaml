@@ -5,8 +5,10 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Billiard4Life.View"
+        xmlns:local="clr-namespace:Billiard4Life.View" 
+        xmlns:local1="clr-namespace:Billiard4Life.ViewModel"
         mc:Ignorable="d"
+        Name="themNV"
         Title="ThemNhanVien" Height="700" Width="450"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="15"
@@ -20,6 +22,9 @@
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local1:ThemNhanVienViewModel/>
+    </Window.DataContext>
     <Grid>
         <Border Background="White"
                 CornerRadius="5"
@@ -46,7 +51,7 @@
                             Width="20"
                             Cursor="Hand"
                             Command="{Binding CloseCM}"
-                            CommandParameter="{Binding ElementName=chamCong}"
+                            CommandParameter="{Binding ElementName=themNV}"
                             materialDesign:ButtonAssist.CornerRadius="0,10,0,0"
                             BorderThickness="0"
                             Background="Transparent">
@@ -121,7 +126,7 @@
                             </Grid>
                             <Grid Grid.Column="1">
                                 <ComboBox materialDesign:HintAssist.Hint="Loại nhân viên"
-                                      Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
+                                      Text="{Binding Fulltime, UpdateSourceTrigger=PropertyChanged}"
                                       FontFamily="Comfortaa"
                                       Margin="5 20 15 23"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}">
