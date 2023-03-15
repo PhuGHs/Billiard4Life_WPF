@@ -7,6 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Billiard4Life.View"
         mc:Ignorable="d"
+        Name="add"
         Title="NhapHangMoi" Height="550" Width="450"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="15"
@@ -46,7 +47,7 @@
                             Width="20"
                             Cursor="Hand"
                             Command="{Binding CloseCM}"
-                            CommandParameter="{Binding ElementName=chamCong}"
+                            CommandParameter="{Binding ElementName=add}"
                             materialDesign:ButtonAssist.CornerRadius="0,10,0,0"
                             BorderThickness="0"
                             Background="Transparent">
@@ -79,11 +80,13 @@
 
                         <TextBox materialDesign:HintAssist.Hint="Mã nhập"
                                  Grid.Column="0"
+                                 IsEnabled="False"
                                  Margin="15 28 5 28"
                                  Text="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         <TextBox materialDesign:HintAssist.Hint="Tên sản phẩm"
                                  Grid.Column="1"
+                                 IsEnabled="{Binding NameEnable}"
                                  Margin="5 28 15 28"
                                  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -131,10 +134,21 @@
                             </ComboBox>
                         </Grid>
                         <Grid Grid.Column="2">
-                            <TextBox materialDesign:HintAssist.Hint="Mức báo hết"
-                                     Margin="5 28 15 28.5"
-                                     Text="{Binding Count, UpdateSourceTrigger=PropertyChanged}"
-                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                            <ComboBox materialDesign:HintAssist.Hint="Nhóm"
+                                      Margin="5,0,5,0"
+                                      IsHitTestVisible="{Binding InfoEditable}"
+                                      Text="{Binding Group, UpdateSourceTrigger=PropertyChanged}"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBoxItem>
+                                    Nước uống
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Đồ ăn
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Khác
+                                </ComboBoxItem>
+                            </ComboBox>
                         </Grid>
                     </Grid>
 
@@ -142,15 +156,24 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
+
                         <Grid Grid.Column="0">
-                            <TextBox materialDesign:HintAssist.Hint="Giá nhập (VNĐ)"
+                            <TextBox materialDesign:HintAssist.Hint="Mức báo hết"
                                      Margin="15 28 5 28.8"
-                                     Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                     IsEnabled="{Binding GroupEnable}"
+                                     Text="{Binding Info, UpdateSourceTrigger=PropertyChanged}"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
                         <Grid Grid.Column="1">
+                            <TextBox materialDesign:HintAssist.Hint="Giá nhập (VNĐ)"
+                                     Margin="5 28 5 28.8"
+                                     Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        </Grid>
+                        <Grid Grid.Column="2">
                             <DatePicker materialDesign:HintAssist.Hint="Ngày nhập"
                                         Margin="5,0,15,0"
                                         SelectedDate="{Binding DateIn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"

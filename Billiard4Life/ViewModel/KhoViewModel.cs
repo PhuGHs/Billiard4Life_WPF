@@ -103,8 +103,26 @@ namespace Billiard4Life.ViewModel
             });
             AddCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                Billiard4Life.View.NhapHangMoi adding = new View.NhapHangMoi();
-                adding.Show();
+                Billiard4Life.View.NhapHangMoi adding;
+                if (Selected != null)
+                {
+                    MyMessageBox yn = new MyMessageBox("Bạn có muốn nhập thêm sản phẩm đang chọn?", true);
+                    yn.ShowDialog();
+                    if (yn.ACCEPT())
+                    {
+                        adding = new View.NhapHangMoi(Selected);
+                        if (adding.ShowDialog() == true) { }
+                        ListViewDisplay("SELECT * FROM KHO WHERE Xoa = 0");
+                        return;
+                    }
+                    adding = new View.NhapHangMoi();
+                    if (adding.ShowDialog() == true) { }
+                    ListViewDisplay("SELECT * FROM KHO WHERE Xoa = 0");
+                    return;
+                }
+                adding = new View.NhapHangMoi();
+                if (adding.ShowDialog() == true) { }
+                ListViewDisplay("SELECT * FROM KHO WHERE Xoa = 0");
                 return;
             });
             #region // delete command
