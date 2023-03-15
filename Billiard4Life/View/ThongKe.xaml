@@ -112,9 +112,30 @@
                                Foreground="#3C6255"
                                HorizontalAlignment="Center"/>
                         <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Content="{Binding PercentProOnRevenue}"
+                                       Grid.Row="0"
+                                       Foreground="#3C6255"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                                <Label Content="{Binding PercentTableOnRevenue}"
+                                       Grid.Row="1"
+                                       Foreground="#3C6255"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"/>
+                            </Grid>
                             <lvc:PieChart Series="{Binding SeriesCollectionTypeTable}" 
                                           LegendLocation="Right" 
                                           InnerRadius="100" 
+                                          Grid.Column="1"
                                           Margin="0 15">
                                 <lvc:PieChart.ChartLegend>
                                     <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>

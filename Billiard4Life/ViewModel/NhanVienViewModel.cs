@@ -18,12 +18,19 @@ namespace Billiard4Life.ViewModel
     public class NhanVienViewModel : BaseViewModel
     {
         public ICommand CheckCM { get; set; }
+        public ICommand AddCM { get; set; }
         public NhanVienViewModel()
         {
             CheckCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 RestaurantManagement.View.ChamCong chamCong = new RestaurantManagement.View.ChamCong();
                 chamCong.Show();
+                return;
+            });
+            AddCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Billiard4Life.View.ThemNhanVien adding = new View.ThemNhanVien();
+                adding.Show();
                 return;
             });
         }

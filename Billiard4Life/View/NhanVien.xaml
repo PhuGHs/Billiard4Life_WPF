@@ -29,6 +29,7 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
@@ -40,7 +41,7 @@
                 </TextBox>
 
                 <Button Name="btnDeleteStaff"
-                        Grid.Column="2"
+                        Grid.Column="3"
                         Command="{Binding DeleteCM}"
                         Background="#3C6255"
                         Margin="5 5 5 10"
@@ -51,9 +52,21 @@
                         Content="Xóa">
                 </Button>
 
+                <Button Name="btnAddStaff"
+                            Grid.Column="1"
+                            Command="{Binding AddCM}"
+                            Background="#3C6255"
+                            Margin="10 5 5 10"
+                            Foreground="#EAE7B1"
+                            FontFamily="Comfortaa"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Content="Thêm">
+                </Button>
+
 
                 <Button Name="btnCheckStaff"
-                        Grid.Column="1"
+                        Grid.Column="2"
                         Command="{Binding CheckCM}"
                         Background="#3C6255"
                         Margin="5 5 10 10"
@@ -162,13 +175,10 @@
                                       Margin="5 20 15 23"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <ComboBoxItem>
-                                    Quản lý
+                                    Full-time
                                 </ComboBoxItem>
                                 <ComboBoxItem>
-                                    Nhân viên
-                                </ComboBoxItem>
-                                <ComboBoxItem>
-                                    Bảo vệ
+                                    Part-time
                                 </ComboBoxItem>
                             </ComboBox>
                         </Grid>
@@ -234,23 +244,7 @@
                 </Grid>
 
                 <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Name="btnAddStaff"
-                            Grid.Column="0"
-                            Command="{Binding AddCM}"
-                            Background="#3C6255"
-                            Margin="10 5 5 10"
-                            Foreground="#EAE7B1"
-                            FontFamily="Comfortaa"
-                            BorderThickness="0"
-                            Cursor="Hand"
-                            Content="Thêm">
-                    </Button>
                     <Button Name="btnEditStaff"
-                            Grid.Column="1"
                             Command="{Binding EditCM}"
                             Background="#3C6255"
                             Margin="5 5 5 10"
