@@ -22,6 +22,7 @@ namespace Billiard4Life.View
         public ThemKhachHang()
         {
             InitializeComponent();
+            DataContext = new ViewModel.ThemKhachHangViewModel();
         }
     }
 }
