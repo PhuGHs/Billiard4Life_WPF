@@ -14,6 +14,7 @@ namespace Billiard4Life.State.Navigator
         NhanVien,
         Kho,
         Menu,
+        KhuyenMai,
         MenuAdmin,
         LichSuBan,
         TinhTrangBan,

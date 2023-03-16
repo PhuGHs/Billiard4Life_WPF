@@ -32,7 +32,7 @@ namespace Billiard4Life.ViewModel
 {
     public class TinhTrangBanViewModel : BaseViewModel
     {
-        string connectstring = ConfigurationManager.ConnectionStrings["QuanLyNhaHang"].ConnectionString;
+        string connectstring = ConfigurationManager.ConnectionStrings["Billiard4Life"].ConnectionString;
         public TinhTrangBanViewModel()
         {
             Tables = TinhTrangBanDP.Flag.GetTables();

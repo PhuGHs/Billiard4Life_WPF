@@ -16,7 +16,7 @@ namespace Billiard4Life.DataProvider
 
         public DBConnection()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["QuanLyNhaHang"].ToString();
+            _connectionString = ConfigurationManager.ConnectionStrings["Billiard4Life"].ToString();
             if(SqlCon == null)
             {
                 SqlCon = new SqlConnection(_connectionString);

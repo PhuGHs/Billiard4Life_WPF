@@ -50,6 +50,10 @@ namespace Billiard4Life.Command
                         _navigator1.CurrentTitle = "Thống kê";
                         _navigator.CurrentViewModel = new ThongKeViewModel();
                         break;
+                    case TypeOfView.KhuyenMai:
+                        _navigator1.CurrentTitle = "Khuyến mãi";
+                        _navigator.CurrentViewModel = new KhuyenMaiViewModel();
+                        break;
                     case TypeOfView.Menu:
                         _navigator1.CurrentTitle = "Menu";
                         _navigator.CurrentViewModel = new MenuViewModel();
