@@ -103,7 +103,8 @@ namespace Billiard4Life.ViewModel
             }, (p) =>
             {
                 Billiard4Life.View.ChiTietNhapKho ctn = new View.ChiTietNhapKho(Selected.TenSanPham);
-                ctn.Show();
+                if (ctn.ShowDialog() == true) { }
+                ListViewDisplay("SELECT * FROM KHO WHERE Xoa = 0");
                 return;
             });
             AddCM = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -203,7 +204,7 @@ namespace Billiard4Life.ViewModel
                 {
                     ten.Add(reader.GetString(0));
                     soluong.Add(reader.GetDouble(1).ToString());
-                    donvi.Add(reader.GetString(2));
+                    donvi.Add(reader.GetString(3));
                 }
 
                 if (ten.Count > 0)
@@ -215,7 +216,7 @@ namespace Billiard4Life.ViewModel
                     {
                         SaveFileDialog sfd = new SaveFileDialog();
                         sfd.Filter = "PDF (*.pdf)|*.pdf";
-                        sfd.FileName = "Danh sách cần nhập " + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year;
+                        sfd.FileName = "Danh sách cần nhập " + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year;
                         if (sfd.ShowDialog() == DialogResult.OK)
                         {
                             if (File.Exists(sfd.FileName))
@@ -289,6 +290,7 @@ namespace Billiard4Life.ViewModel
             });
             #endregion
 
+            #region // export command
             ExportCM = new RelayCommand<object>((p) =>
             {
                 return true;
@@ -391,6 +393,7 @@ namespace Billiard4Life.ViewModel
                         foreach(NhapKho temp in ListIn)
                         {
                             col = 1;
+                            if (temp.TenSP != ws.Cells[row, 2].Value.ToString()) row++;
                             row++;
                             ws.Cells[row, col++].Value = temp.MaNhap;
                             ws.Cells[row, col++].Value = temp.TenSP;
@@ -418,6 +421,7 @@ namespace Billiard4Life.ViewModel
 
                 CloseConnect();
             });
+            #endregion
 
             CloseConnect();
         }

@@ -125,15 +125,17 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBox materialDesign:HintAssist.Hint="Mã nhập"
-                                 Grid.Column="0"
-                                 Margin="15 28 5 28"
-                                 Text="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                         Grid.Column="0"
+                                         IsEnabled="False"
+                                         Margin="15 28 5 28"
+                                         Text="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                                 <TextBox materialDesign:HintAssist.Hint="Tên sản phẩm"
-                                 Grid.Column="1"
-                                 Margin="5 28 15 28"
-                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                         Grid.Column="1"
+                                         IsEnabled="False"
+                                         Margin="5 28 15 28"
+                                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                             </Grid>
 
                             <Grid Grid.Row="1">

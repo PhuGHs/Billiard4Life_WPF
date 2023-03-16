@@ -35,6 +35,8 @@ namespace Billiard4Life.ViewModel
                     Value = Selected.DonGia;
                     Suplier = Selected.NguonNhap;
                     SuplierInfo = Selected.LienLac;
+
+                    CountBeforeEdit = Count;
                 }
                 OnPropertyChanged();
             }
@@ -43,10 +45,9 @@ namespace Billiard4Life.ViewModel
         private SqlConnection sqlCon = null;
 
         #region // Right Card
-        private string IDBeforeEdit;
+        private string CountBeforeEdit;
         private string _ID;
         public string ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
-        private string NameBeforeEdit;
         private string _Name;
         public string Name { get => _Name; set { _Name = value; OnPropertyChanged(); } }
         private string _Count;
@@ -112,40 +113,28 @@ namespace Billiard4Life.ViewModel
                 OpenConnect();
 
 
-                if (Name != NameBeforeEdit)
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "UPDATE CHITIETNHAP SET NhomSanPham = N'" + Group + "', DonVi = N'" + Unit + "', DonGia = " + Value + ", SoLuong = " + Count + ", NgayNhap = '" + DateIn + "', NguonNhap = N'" + Suplier + "', LienLac = '" + SuplierInfo + "' WHERE MaNhap = '" + ID + "'";
+                cmd.Connection = sqlCon;
+
+                int result = cmd.ExecuteNonQuery();
+
+                if (result > 0)
                 {
-                    MyMessageBox mess = new MyMessageBox("Không được sửa Tên sản phẩm!");
-                    Name = NameBeforeEdit;
+                    MyMessageBox mess = new MyMessageBox("Sửa thành công!");
                     mess.ShowDialog();
                 }
                 else
-                if (ID != IDBeforeEdit)
                 {
-                    MyMessageBox mess = new MyMessageBox("Không được sửa Mã nhập!");
-                    ID = IDBeforeEdit;
+                    MyMessageBox mess = new MyMessageBox("Sửa không thành công!");
                     mess.ShowDialog();
                 }
-                else
-                {
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "UPDATE CHITIETNHAP SET NhomSanPham = N'" + Group + "', DonVi = N'" + Unit + "', DonGia = " + Value + ", SoLuong = " + Count + ", NgayNhap = '" + DateIn + "', NguonNhap = N'" + Suplier + "', LienLac = '" + SuplierInfo + "' WHERE MaNhap = '" + ID + "'";
-                    cmd.Connection = sqlCon;
+                int c = int.Parse(Count) - int.Parse(CountBeforeEdit);
+                cmd.CommandText = "UPDATE KHO SET TonDu = TonDu + " + c.ToString() + " WHERE TenSanPham = N'" + Name + "'";
+                cmd.ExecuteNonQuery();
 
-                    int result = cmd.ExecuteNonQuery();
-
-                    if (result > 0)
-                    {
-                        MyMessageBox mess = new MyMessageBox("Sửa thành công!");
-                        mess.ShowDialog();
-                    }
-                    else
-                    {
-                        MyMessageBox mess = new MyMessageBox("Sửa không thành công!");
-                        mess.ShowDialog();
-                    }
-                    GetListIn(itemName);
-                }
+                GetListIn(itemName);
 
                 CloseConnect();
             });
