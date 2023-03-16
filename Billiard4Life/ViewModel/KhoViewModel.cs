@@ -11,6 +11,10 @@ using System.Configuration;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using Document = iTextSharp.text.Document;
+using Billiard4Life.CustomMessageBox;
+using OfficeOpenXml.Style;
+using System.Linq;
+using OfficeOpenXml;
 
 namespace Billiard4Life.ViewModel
 {
@@ -77,6 +81,7 @@ namespace Billiard4Life.ViewModel
         public ICommand AddCM { get; set; }
         public ICommand DeleteCM { get; set; }
         public ICommand CheckCM { get; set; }
+        public ICommand ExportCM { get; set; }
         public KhoViewModel()
         {
             OpenConnect();
@@ -283,6 +288,136 @@ namespace Billiard4Life.ViewModel
                 CloseConnect();
             });
             #endregion
+
+            ExportCM = new RelayCommand<object>((p) =>
+            {
+                return true;
+            }, (p) =>
+            {
+                OpenConnect();
+
+                ChoseDate dt = new ChoseDate();
+                dt.ShowDialog();
+                string dtBegin = "", dtEnd = "";
+                string s = dt.GetDate();
+                int i = 0;
+                while (s[i] != ' ') dtBegin += s[i++];
+                while (s[i] != 'M') i++;
+                i += 2;
+                while (s[i] != ' ') dtEnd += s[i++];
+
+                List<NhapKho> ListIn = new List<NhapKho>();
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT * FROM CHITIETNHAP WHERE NgayNhap >= '" + dtBegin + "' AND NgayNhap <= '" + dtEnd + "' ORDER BY TenSanPham DESC";
+                cmd.Connection = sqlCon;
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                float SumOfPaid = 0;
+
+                while (reader.Read())
+                {
+                    string ma = reader.GetString(0);
+                    string ten = reader.GetString(1);
+                    string dvi = reader.GetString(2);
+                    string gia = reader.GetSqlMoney(3).ToString();
+                    string nhom = reader.GetString(4);
+                    string soluong = reader.GetDouble(5).ToString();
+                    string ngay = reader.GetDateTime(6).ToShortDateString();
+                    string nguon = reader.GetString(7);
+                    string lienlac = reader.GetString(8);
+
+                    SumOfPaid += float.Parse(gia) * float.Parse(soluong);
+
+                    ListIn.Add(new NhapKho(ma, ten, dvi, nhom, gia, soluong, ngay, nguon, lienlac));
+                }
+                reader.Close();
+
+                DateTime dt1 = DateTime.Parse(dtBegin);
+                DateTime dt2 = DateTime.Parse(dtEnd);
+
+                string filePath = "";
+
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "Excel (*.xlsx)|*.xlsx";
+                dialog.FileName = "Thông tin nhập kho từ " + dt1.Month + "-" + dt1.Day + "-" + dt1.Year + " đến " + dt2.Month + "-" + dt2.Day + "-" + dt2.Year;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = dialog.FileName;
+
+                    if (string.IsNullOrEmpty(filePath))
+                    {
+                        MyMessageBox mess = new MyMessageBox("Đường dẫn không hợp lệ!");
+                        mess.ShowDialog();
+                        return;
+                    }
+
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+                    using (ExcelPackage x = new ExcelPackage())
+                    {
+                        x.Workbook.Properties.Title = "Thông tin nhập kho từ " + dtBegin + " đến " + dtEnd;
+
+                        x.Workbook.Worksheets.Add("Sheet");
+
+                        ExcelWorksheet ws = x.Workbook.Worksheets[0];
+
+                        ws.Cells.Style.Font.Name = "Times New Roman";
+
+
+                        string[] columnHeader = { "Mã nhập", "Tên sản phẩm", "Đơn vị", "Đơn giá(VNĐ)", "Nhóm sản phẩm", "Số lượng", "Ngày nhập", "Nguồn nhập", "Liên lạc" };
+
+                        int countColumn = columnHeader.Count();
+                        ws.Cells[1, 1].Value = "Thông tin nhập kho từ " + dtBegin + " đến " + dtEnd;
+                        ws.Cells[1, 1, 1, countColumn].Merge = true;
+                        ws.Cells[1, 1, 1, countColumn].Style.Font.Bold = true;
+                        ws.Cells[1, 1, 1, countColumn].Style.Font.Size = 16;
+                        ws.Cells[1, 1, 1, countColumn].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                        int row = 2;
+                        int col = 1;
+
+                        foreach (string column in columnHeader)
+                        {
+                            var cell = ws.Cells[row, col];
+                            cell.Value = column;
+                            cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            col++;
+                        }
+
+                        foreach(NhapKho temp in ListIn)
+                        {
+                            col = 1;
+                            row++;
+                            ws.Cells[row, col++].Value = temp.MaNhap;
+                            ws.Cells[row, col++].Value = temp.TenSP;
+                            ws.Cells[row, col++].Value = temp.DonVi;
+                            ws.Cells[row, col++].Value = temp.DonGia;
+                            ws.Cells[row, col++].Value = temp.Nhom;
+                            ws.Cells[row, col++].Value = temp.SoLuong;
+                            ws.Cells[row, col++].Value = temp.NgayNhap;
+                            ws.Cells[row, col++].Value = temp.NguonNhap;
+                            ws.Cells[row, col++].Value = temp.LienLac;
+                        }
+
+                        row += 2;
+                        ws.Cells[row, 4].Value = "Tổng số tiền";
+                        ws.Cells[row, 4].Style.Font.Bold = true;
+                        ws.Cells[row + 1, 4].Value = SumOfPaid.ToString();
+                        
+
+                        Byte[] bin = x.GetAsByteArray();
+                        File.WriteAllBytes(filePath, bin);
+                    };
+                    MyMessageBox msb = new MyMessageBox("Xuất file thành công!");
+                    msb.ShowDialog();
+                }
+
+                CloseConnect();
+            });
 
             CloseConnect();
         }
