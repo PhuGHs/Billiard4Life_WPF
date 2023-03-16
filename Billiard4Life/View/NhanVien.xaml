@@ -137,6 +137,7 @@
                                  Text="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
                                  FontFamily="Comfortaa"
                                  Grid.Column="0"
+                                 IsEnabled="False"
                                  Margin="15 26 5 26"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         <TextBox materialDesign:HintAssist.Hint="Họ tên"

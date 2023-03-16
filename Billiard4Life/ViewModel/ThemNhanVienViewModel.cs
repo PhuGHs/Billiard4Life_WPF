@@ -108,6 +108,7 @@ namespace Billiard4Life.ViewModel
                     mess.ShowDialog();
                 }
                 Refresh();
+                ID = GetHighestID();
 
                 CloseConnect();
             });
