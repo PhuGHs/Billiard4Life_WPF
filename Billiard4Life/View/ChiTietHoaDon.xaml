@@ -8,6 +8,7 @@
         xmlns:local="clr-namespace:Billiard4Life.View"
         mc:Ignorable="d"
         Title="ChiTietHoaDon"
+        Name="cthd"
         Height="550" 
         Width="800"
         TextElement.FontWeight="Regular"
@@ -54,7 +55,7 @@
                             Width="20"
                             Cursor="Hand"
                             Command="{Binding CloseCM}"
-                            CommandParameter="{Binding ElementName=chamCong}"
+                            CommandParameter="{Binding ElementName=cthd}"
                             materialDesign:ButtonAssist.CornerRadius="0,10,0,0"
                             BorderThickness="0"
                             Background="Transparent">
@@ -78,24 +79,21 @@
                         CornerRadius="5"/>
                         <ScrollViewer VerticalScrollBarVisibility="Auto"
                                       Margin="5 0 5 0">
-                            <ListView ItemsSource="{Binding ListStaff}"
+                            <ListView ItemsSource="{Binding CTHD}"
                                       Foreground="#3C6255"
                                       SelectedItem="{Binding Selected, Mode=OneWayToSource}">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding HoTen}"
-                                                        Width="200"
-                                                        Header="Tên sản phẩm" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding ChucVu}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding TenSP}"
+                                                        Width="300"
+                                                        Header="Tên món" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding SoLuong}"
                                                         Width="130"
                                                         Header="Số lượng" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
-                                                        Width="120"
-                                                        Header="Đơn vị" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding DonGia}"
                                                         Width="140"
                                                         Header="Đơn giá" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
+                                        <GridViewColumn DisplayMemberBinding="{Binding ThanhTien}"
                                                         Width="140"
                                                         Header="Thành tiền" />
                                     </GridView>

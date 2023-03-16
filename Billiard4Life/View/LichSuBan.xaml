@@ -39,7 +39,7 @@
             </Grid>
             <Grid Grid.Column="1">
                 <DatePicker Grid.Column="0"
-                            SelectedDate="{Binding DateBorn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedDate="{Binding DateBegin, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                             FontFamily="Comfortaa"
                             Margin="15 5 5 5"
                             materialDesign:HintAssist.Hint="Từ ngày"
@@ -47,7 +47,7 @@
             </Grid>
             <Grid Grid.Column="2">
                 <DatePicker Grid.Column="0"
-                            SelectedDate="{Binding DateBorn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedDate="{Binding DateEnd, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                             FontFamily="Comfortaa"
                             Margin="15 5 5 5"
                             materialDesign:HintAssist.Hint="Đến ngày"
@@ -63,14 +63,15 @@
             <Grid Grid.Column="4">
                 <Button Content="Xuất file Excel"
                         Margin="10"
-                        Command="{Binding ExportFileCM}" 
+                        Command="{Binding ExportCM}" 
                         Background="#61876E">
                 </Button>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ListView ItemsSource="{Binding ListProduct}"
+                <ListView ItemsSource="{Binding ListBill}"
+                          SelectedItem="{Binding Selected}"
                           FontSize="16"
                           Margin="20 0 20 20">
                     <ListView.View>
@@ -78,7 +79,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding SoHD}"
                                             Width="200"
                                             Header="Số hóa đơn" />
-                            <GridViewColumn DisplayMemberBinding="{Binding KhachHang}"
+                            <GridViewColumn DisplayMemberBinding="{Binding TenKH}"
                                             Width="280"
                                             Header="Tên khách hàng" />
                             <GridViewColumn DisplayMemberBinding="{Binding SoGio}"
@@ -87,7 +88,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding TriGia}"
                                             Width="190"
                                             Header="Thành tiền" />
-                            <GridViewColumn DisplayMemberBinding="{Binding ngayHD}"
+                            <GridViewColumn DisplayMemberBinding="{Binding NgayHD}"
                                             Width="190"
                                             Header="Ngày hóa đơn" />
                         </GridView>
