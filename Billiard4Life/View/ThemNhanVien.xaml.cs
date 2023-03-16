@@ -1,8 +1,5 @@
-﻿using LichSuBan.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,29 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Globalization;
 
 namespace Billiard4Life.View
 {
     /// <summary>
-    /// Interaction logic for LichSuBan.xaml
+    /// Interaction logic for ThemNhanVien.xaml
     /// </summary>
-    public partial class LichSuBan : UserControl
+    public partial class ThemNhanVien : Window
     {
-        public LichSuBan()
+        public ThemNhanVien()
         {
             InitializeComponent();
-           
         }
-    
-        
- 
-           
-       
-      
-
-        
     }
 }

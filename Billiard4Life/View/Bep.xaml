@@ -11,105 +11,93 @@
              d:DesignHeight="670" 
              d:DesignWidth="1070" 
              Background="White">
-   
+
     <Grid Background="White">
-        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="6*"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+
+            <Grid Grid.Row="0"
+                  Margin="10 0 10 0">
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Background="#EEEE"
-                    CornerRadius="20"
-                    Grid.Column="0"
-                    Margin="10">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ListView x:Name="ListDone" ItemsSource="{Binding ListDone}"
-                          SelectedItem="{Binding DoneSelected}"
-                          FontSize="16"
-                          Margin="10 50 10 10" d:ItemsSource="{d:SampleData ItemCount=5}">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn DisplayMemberBinding="{Binding TenMon}"
-                                            Width="220"
-                                            Header="Tên món" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding SoLuong}"
-                                            Width="140"
-                                            Header="Số lượng" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding SoBan}"
-                                            Width="130"
-                                            Header="Số bàn" />
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </ScrollViewer>
-                </Border>
+                <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="0"
+                         FontFamily="Comfortaa"
+                         Foreground="#3C6255"
+                         Margin="10 40 50 40"
+                         materialDesign:HintAssist.Hint="Tìm kiếm theo SĐT">
+                </TextBox>
 
-                <Border Background="#EEEE"
-                    CornerRadius="20"
-                    Grid.Column="1"
-                    Margin="10">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                          Grid.Column="1">
-                        <ListView ItemsSource="{Binding ListOrder}"
-                          SelectedItem="{Binding OrderSelected}"
-                          FontSize="16"
-                          Margin="10 50 10 10">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn DisplayMemberBinding="{Binding TenMon}"
-                                            Width="220"
-                                            Header="Tên món" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding SoLuong}"
-                                            Width="140"
-                                            Header="Số lượng" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding SoBan}"
-                                            Width="130"
-                                            Header="Số bàn" />
-                                    
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </ScrollViewer>
-                </Border>
+                <Button Name="btnDeleteStaff"
+                        Grid.Column="2"
+                        Command="{Binding DeleteCM}"
+                        Background="#3C6255"
+                        Margin="5 5 5 10"
+                        Foreground="#EAE7B1"
+                        FontFamily="Comfortaa"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Content="Xóa">
+                </Button>
+
+
+                <Button Name="btnCheckStaff"
+                        Grid.Column="1"
+                        Command="{Binding AddCM}"
+                        Background="#3C6255"
+                        Margin="5 5 10 10"
+                        Foreground="#EAE7B1"
+                        FontFamily="Comfortaa"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Content="Thêm">
+                </Button>
+
+
             </Grid>
+
 
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding ListStaff}"
+                              SelectedItem="{Binding Selected, Mode=OneWayToSource}"
+                              Margin="20 0 20 20"
+                              FontFamily="Comfortaa"
+                              FontSize="16">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding HoTen}"
+                                                Width="300"
+                                                Header="Họ tên" />
+                                <GridViewColumn DisplayMemberBinding="{Binding ChucVu}"
+                                                Width="200"
+                                                Header="SĐT" />
+                                <GridViewColumn DisplayMemberBinding="{Binding ChucVu}"
+                                                Width="310"
+                                                Header="Email" />
+                                <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
+                                                Width="220"
+                                                Header="Số điểm" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
 
-                <Button Height="60"
-                        Grid.Column="0"
-                        Background="#1C3879"
-                        Command="{Binding DoneCM}"
-                        Margin="40 0 40 0"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Content="Đã thực hiện xong"
-                        FontSize="18"/>
-
-                <Button Height="60"
-                        Grid.Column="1"
-                        Background="#1C3879"
-                        Command="{Binding OrderCM}"
-                        Margin="40 0 40 0"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Content="Đã phục vụ cho khách"
-                        FontSize="18"/>
             </Grid>
         </Grid>
-        <Label Content="Danh sách món cần thực hiện :"
-               Margin="20 20 750 535"/>
-        <Label Content="Danh sách món cần phục vụ :"
-               Margin="552,20,-27,535"/>
     </Grid>
 </UserControl>
 

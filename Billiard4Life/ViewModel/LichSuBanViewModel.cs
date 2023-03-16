@@ -31,9 +31,15 @@ namespace Billiard4Life.ViewModel
 {
     public class LichSuBanViewModel : BaseViewModel
     {
+        public ICommand DetailCM { get; set; }
         public LichSuBanViewModel()
         {
-
+            DetailCM = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Billiard4Life.View.ChiTietHoaDon cthd = new View.ChiTietHoaDon();
+                cthd.Show();
+                return;
+            });
         }
     }
 }
