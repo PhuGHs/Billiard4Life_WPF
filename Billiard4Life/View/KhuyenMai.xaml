@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:Billiard4Life.View"
              xmlns:vm="clr-namespace:Billiard4Life.ViewModel"
              mc:Ignorable="d" 
@@ -11,8 +13,19 @@
         <vm:KhuyenMaiViewModel />
     </UserControl.DataContext>
     <Grid Background="White">
+        <Grid.Resources>
+            <Style x:Key="Txtbox" TargetType="TextBox">
+                <Setter Property="Foreground" Value="#413F42"/>
+                <Setter Property="Margin" Value="10 0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Padding" Value="4"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
@@ -20,21 +33,61 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="450"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="260"/>
             </Grid.ColumnDefinitions>
-            <TextBox Text="Tìm kiếm khuyến mãi" Height="50" FontSize="18" VerticalContentAlignment="Center"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Background="Transparent" Width="50" Margin="10 0 0 0" BorderThickness="0">
+                    <fa:IconImage Icon="Search" Foreground="#3C6255"/>
+                </Button>
+                <TextBox 
+                    Margin="20 0 0 0"
+                    Width="370"
+                    materialDesign:HintAssist.HintOpacity="0.8"
+                    materialDesign:HintAssist.Hint="Tìm kiếm khuyến mãi bằng tên khuyến mãi..." 
+                    
+                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                    FontSize="17"
+                    BorderThickness="0"
+                    Foreground="#3C6255"
+                    VerticalContentAlignment="Center"
+                />
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Command="{Binding AddKhuyenMai_Command}" Content="Thêm" Background="#3C6255" Margin="10 0" BorderThickness="0"/>
+                <Button Command="{Binding EditKhuyenMai_Command}" Content="Sửa" Background="#3C6255" Margin="10 0" BorderThickness="0"/>
+                <Button Content="Xoá (7)" Background="#3C6255" Margin="10 0" BorderThickness="0"/>
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1">
             <ListView 
+                Margin="10"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ItemsSource="{Binding KhuyenMais, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                FontSize="14">
+                FontSize="15" d:ItemsSource="{d:SampleData ItemCount=5}" IsSynchronizedWithCurrentItem="True" FlowDirection="LeftToRight" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True">
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn Width="70">
+                            <GridViewColumnHeader Padding="7,10,10,10" Grid.IsSharedSizeScope="True">
+                                <CheckBox IsChecked="True" Background="#3C6255" HorizontalContentAlignment="Left">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                            </GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="True" Background="#3C6255">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Header="Tên khuyến mãi" DisplayMemberBinding="{Binding TenKM}"/>
                         <GridViewColumn Header="Mã khuyến mãi" DisplayMemberBinding="{Binding MAKM}"/>
-                        <GridViewColumn Header="Giảm" DisplayMemberBinding="{Binding GiamGia}"/>
+                        <GridViewColumn Header="Giảm (%)" DisplayMemberBinding="{Binding GiamGia}"/>
                         <GridViewColumn Header="Mức áp dụng" DisplayMemberBinding="{Binding MucApDung}"/>
                         <GridViewColumn Header="Ngày bắt đầu" DisplayMemberBinding="{Binding NgayBatDau}"/>
                         <GridViewColumn Header="Ngày kết thúc" DisplayMemberBinding="{Binding NGayKetThuc}"/>

@@ -45,7 +45,7 @@ namespace Billiard4Life.DataProvider
                     {
                         throw new ArgumentNullException("Thieu property khong the lay len tu database");
                     }
-                    KhuyenMais.Add(new KhuyenMai(makm, tenkm, giamgia, mucapdung, ngaybd, ngaykt, mota));
+                    KhuyenMais.Add(new KhuyenMai(makm, tenkm, giamgia, mucapdung, DateOnly.FromDateTime(ngaybd), DateOnly.FromDateTime(ngaykt), mota));
                 }
             }
             catch (Exception ex)

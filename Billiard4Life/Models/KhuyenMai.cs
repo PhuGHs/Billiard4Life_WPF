@@ -14,8 +14,8 @@ namespace Billiard4Life.Models
         private string _TenKM;
         private int _GiamGia;
         private Decimal _MucApDung;
-        private DateTime _NgayBatDau;
-        private DateTime _NgayKetThuc;
+        private DateOnly _NgayBatDau;
+        private DateOnly _NgayKetThuc;
         private string _MoTa;
         #endregion
 
@@ -24,12 +24,12 @@ namespace Billiard4Life.Models
         public string TenKM { get { return _TenKM; } set { _TenKM = value; OnPropertyChanged(); } }
         public int GiamGia { get { return _GiamGia; } set { _GiamGia = value; OnPropertyChanged(); } }
         public Decimal MucApDung { get { return _MucApDung; } set { _MucApDung = value; OnPropertyChanged(); } }
-        public DateTime NgayBatDau { get { return _NgayBatDau; } set { _NgayBatDau = value; OnPropertyChanged(); } }
-        public DateTime NGayKetThuc { get { return _NgayKetThuc; } set { _NgayKetThuc = value; OnPropertyChanged(); } }
+        public DateOnly NgayBatDau { get { return _NgayBatDau; } set { _NgayBatDau = value; OnPropertyChanged(); } }
+        public DateOnly NGayKetThuc { get { return _NgayKetThuc; } set { _NgayKetThuc = value; OnPropertyChanged(); } }
         public string MoTa { get { return _MoTa; } set { _MoTa = value; OnPropertyChanged(); } }
         #endregion
 
-        public KhuyenMai(string makm, string tenkm, int giamgia, Decimal mucgiam, DateTime ngaybd, DateTime ngayketthuc, string mota)
+        public KhuyenMai(string makm, string tenkm, int giamgia, Decimal mucgiam, DateOnly ngaybd, DateOnly ngayketthuc, string mota)
         {
             _MAKM = makm;
             _TenKM = tenkm;
