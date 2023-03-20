@@ -77,17 +77,20 @@
                               FontSize="16">
                         <ListView.View>
                             <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Ma}"
+                                                Width="200"
+                                                Header="Mã khách hàng" />
                                 <GridViewColumn DisplayMemberBinding="{Binding TenKH}"
-                                                Width="300"
+                                                Width="270"
                                                 Header="Họ tên" />
                                 <GridViewColumn DisplayMemberBinding="{Binding SDT}"
-                                                Width="200"
+                                                Width="170"
                                                 Header="SĐT" />
                                 <GridViewColumn DisplayMemberBinding="{Binding Email}"
-                                                Width="310"
+                                                Width="250"
                                                 Header="Email" />
                                 <GridViewColumn DisplayMemberBinding="{Binding Diem}"
-                                                Width="220"
+                                                Width="150"
                                                 Header="Số điểm" />
                             </GridView>
                         </ListView.View>
