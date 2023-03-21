@@ -44,35 +44,35 @@
             <RowDefinition Height="400"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Width="730">
+        <Grid Width="730" x:Name="info_field">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="40" />
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical">
-                <StackPanel Margin="0 5 0 20">
+            <StackPanel Orientation="Vertical" x:Name="stack1">
+                <StackPanel Margin="0 5 0 20" x:Name="stack2">
                     <Label Content="Mã khuyến mãi" Style="{StaticResource label}"/>
-                    <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.HoTen}"/>
+                    <Border Style="{StaticResource SearchBar}" x:Name="border">
+                        <TextBox IsReadOnly="True" x:Name="textbox" Style="{StaticResource Txtbox}" Text="{Binding SelectedItem.MAKM, Mode=TwoWay}"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Ngày bắt đầu" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding CaiDatViewModel.NhanVien.NgaySinh}" Foreground="#413F42" Margin="10 0"/>
+                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding SelectedItem.NgayBatDau, Mode=TwoWay}" Foreground="#413F42" Margin="10 0"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
-                    <Label Content="Giá trị giảm" Style="{StaticResource label}"/>
+                    <Label Content="Giá trị giảm (%)" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.HoTen}"/>
+                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding SelectedItem.GiamGia, Mode=TwoWay}"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Margin="0 0 0 20">
                     <Label Content="Mô tả" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}"  Text="{Binding CaiDatViewModel.NhanVien.DiaChi}"/>
+                        <TextBox Style="{StaticResource Txtbox}"  Text="{Binding SelectedItem.MoTa, Mode=TwoWay}"/>
                     </Border>
                 </StackPanel>
             </StackPanel>
@@ -80,25 +80,25 @@
                 <StackPanel Margin="0 5 0 20">
                     <Label Content="Tên khuyến mãi" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.MaNV}" IsReadOnly="True"/>
+                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding SelectedItem.TenKM, Mode=TwoWay}"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Ngày kết thúc" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding CaiDatViewModel.NhanVien.NgaySinh}" Foreground="#413F42" Margin="10 0"/>
+                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding SelectedItem.NGayKetThuc, Mode=TwoWay}" Foreground="#413F42" Margin="10 0"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Mức áp dụng" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.SDT}"/>
+                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding SelectedItem.MucApDung, Mode=TwoWay}"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Trạng thái" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.LoaiNhanVien_Str}" IsReadOnly="True"/>
+                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding SelectedItem.TrangThai, Mode=TwoWay}"/>
                     </Border>
                 </StackPanel>
             </StackPanel>
@@ -106,6 +106,7 @@
         <Button Content="Lưu" 
                 Background="#3C6255" 
                 Grid.Row="1"
+                Command="{Binding EditKhuyenMaiItem_Command}"
                 Width="90" 
                 BorderThickness="0"
                 HorizontalAlignment="Right" 

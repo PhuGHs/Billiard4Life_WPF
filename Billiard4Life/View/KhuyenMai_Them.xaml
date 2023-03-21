@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Billiard4Life.ViewModel"
         xmlns:local="clr-namespace:Billiard4Life.View"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
@@ -44,35 +45,35 @@
             <RowDefinition Height="400"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Width="730">
+        <Grid Width="730" x:Name="info_field">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="40" />
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical">
-                <StackPanel Margin="0 5 0 20">
+            <StackPanel Orientation="Vertical" x:Name="stack1">
+                <StackPanel Margin="0 5 0 20" x:Name="stack2">
                     <Label Content="Mã khuyến mãi" Style="{StaticResource label}"/>
-                    <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.HoTen}"/>
+                    <Border Style="{StaticResource SearchBar}" x:Name="border">
+                        <TextBox x:Name="textbox" Style="{StaticResource Txtbox}" Text="{Binding AddKhuyenMaiItem.MAKM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Ngày bắt đầu" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding CaiDatViewModel.NhanVien.NgaySinh}" Foreground="#413F42" Margin="10 0"/>
+                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding AddKhuyenMaiItem.NgayBatDau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#413F42" Margin="10 0"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
-                    <Label Content="Giá trị giảm" Style="{StaticResource label}"/>
+                    <Label Content="Giá trị giảm (%)" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.HoTen}"/>
+                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding AddKhuyenMaiItem.GiamGia, Mode=TwoWay}"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Margin="0 0 0 20">
                     <Label Content="Mô tả" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}"  Text="{Binding CaiDatViewModel.NhanVien.DiaChi}"/>
+                        <TextBox Style="{StaticResource Txtbox}"  Text="{Binding AddKhuyenMaiItem.MoTa, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </Border>
                 </StackPanel>
             </StackPanel>
@@ -80,31 +81,33 @@
                 <StackPanel Margin="0 5 0 20">
                     <Label Content="Tên khuyến mãi" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.MaNV}" IsReadOnly="True"/>
+                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding AddKhuyenMaiItem.TenKM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Ngày kết thúc" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding CaiDatViewModel.NhanVien.NgaySinh}" Foreground="#413F42" Margin="10 0"/>
+                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding AddKhuyenMaiItem.NGayKetThuc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#413F42" Margin="10 0"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Mức áp dụng" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.SDT}"/>
+                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding AddKhuyenMaiItem.MucApDung, Mode=TwoWay}"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Trạng thái" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.LoaiNhanVien_Str}" IsReadOnly="True"/>
+                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding AddKhuyenMaiItem.TrangThai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </Border>
                 </StackPanel>
             </StackPanel>
         </Grid>
         <Button Content="Thêm" 
                 Background="#3C6255" 
+                Command="{Binding AddKhuyenMaiItem_Command}"
+                CommandParameter="{Binding ElementName=info_field}"
                 Grid.Row="1"
                 Width="90" 
                 BorderThickness="0"
