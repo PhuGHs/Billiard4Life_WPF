@@ -19,9 +19,10 @@ namespace Billiard4Life.View
     /// </summary>
     public partial class ChiTietHoaDon : Window
     {
-        public ChiTietHoaDon()
+        public ChiTietHoaDon(string SoHD)
         {
             InitializeComponent();
+            DataContext = new ViewModel.ChiTietHoaDonViewModel(SoHD);
         }
     }
 }

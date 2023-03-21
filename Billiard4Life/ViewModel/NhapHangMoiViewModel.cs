@@ -144,6 +144,7 @@ namespace Billiard4Life.ViewModel
             DateIn = DateTime.Now.ToShortDateString();
             Name = kho.TenSanPham;
             Group = kho.NhomSP;
+            Unit = kho.DonVi;
 
             OpenConnect();
 

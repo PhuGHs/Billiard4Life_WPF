@@ -18,28 +18,28 @@
     </UserControl.DataContext>
 
     <Grid Background="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0"
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0"
                   Margin="5">
                 <Border Background="#EEEEEE"
                         CornerRadius="5"/>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="6*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
@@ -47,56 +47,100 @@
                                Foreground="#3C6255"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"/>
+                        <ComboBox Margin="10,0,10,0"
+                                  Grid.Column="1"
+                                  Foreground="#3C6255"
+                                  ItemsSource="{Binding Types}"
+                                  SelectedItem="{Binding TypeSelected}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        </ComboBox>
+                        <ComboBox Margin="10,4,10,4"
+                                  Grid.Column="2"
+                                  Foreground="#3C6255"
+                                  Visibility="{Binding ListTimeVisible}"
+                                  ItemsSource="{Binding ListTime}"
+                                  SelectedItem="{Binding TimeSelected}"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        </ComboBox>
                         <DatePicker materialDesign:HintAssist.Hint="Bắt đầu"
-                                    Grid.Column="1"
-                                    Foreground="#3C6255"
-                                    Margin="5,0,5,0"
-                                    SelectedDate="{Binding DateIn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
-                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                        <DatePicker materialDesign:HintAssist.Hint="Kết thúc"
                                     Grid.Column="2"
                                     Foreground="#3C6255"
+                                    Visibility="{Binding DateBeginVisible}"
                                     Margin="5,0,5,0"
-                                    SelectedDate="{Binding DateIn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedDate="{Binding DateBegin, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                        <DatePicker materialDesign:HintAssist.Hint="Kết thúc"
+                                    Grid.Column="3"
+                                    Foreground="#3C6255"
+                                    Margin="5,0,5,0"
+                                    Visibility="{Binding DateEndVisible}"
+                                    SelectedDate="{Binding DateEnd, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                     </Grid>
-                    <Grid Grid.Row="1">
+                    
+                    <Grid Grid.Row="1"
+                          Margin="5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="4*"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="{Binding SumOfPaid}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Grid.Column="0"/>
-                        <Label Content="{Binding SumOfProfit}"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Grid.Column="1"/>
-                    </Grid>
-                    <Grid Grid.Row="2"
-                          Margin="5">
                         <lvc:CartesianChart Series="{Binding SeriesCollectionRevenue}"
-                                            Visibility="{Binding Visibility}"
+                                            Grid.Column="0"
                                             LegendLocation="Bottom">
                             <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Labels="{Binding Labels}"
+                                <lvc:Axis Labels="{Binding LabelsRevenue}"
                                           FontFamily="Comfortaa"
                                           Foreground="#3C6255"
                                           FontSize="10"></lvc:Axis>
                             </lvc:CartesianChart.AxisX>
                             <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="Triệu đồng" 
+                                <lvc:Axis Title="VNĐ" 
                                           FontFamily="Comfortaa"
                                           Foreground="#3C6255"
                                           FontSize="13"
                                           LabelFormatter="{Binding Formatter}"></lvc:Axis>
                             </lvc:CartesianChart.AxisY>
                         </lvc:CartesianChart>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Content="Thu: "
+                                   FontSize="16"
+                                   FontWeight="SemiBold"
+                                   Foreground="Green"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+                            <Label Content="{Binding SumOfProfit}"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Grid.Row="1"/>
+                            <Label Grid.Row="2"
+                                   Content="Chi: "
+                                   FontSize="16"
+                                   FontWeight="SemiBold"
+                                   Foreground="Red"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+                            <Label Content="{Binding SumOfPaid}"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Grid.Row="3"/>
+                            <Label Grid.Row="4"
+                                   Content="{Binding PercentProOnRevenue}"
+                                   Foreground="Green"
+                                   VerticalContentAlignment="Center"
+                                   HorizontalContentAlignment="Center"/>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1"
+            <Grid Grid.Column="1"
                   Margin="5">
                 <Border Background="#EEEEEE"
                         CornerRadius="5"/>
@@ -106,36 +150,29 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="6*"/>
                         </Grid.RowDefinitions>
-                        <Label Content="Tỉ lệ chọn loại bàn của khách hàng"
-                               VerticalAlignment="Center"
-                               Grid.Row="0"
-                               Foreground="#3C6255"
-                               HorizontalAlignment="Center"/>
-                        <Grid Grid.Row="1">
+                        <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Label Content="{Binding PercentProOnRevenue}"
-                                       Grid.Row="0"
-                                       Foreground="#3C6255"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"/>
-                                <Label Content="{Binding PercentTableOnRevenue}"
-                                       Grid.Row="1"
-                                       Foreground="#3C6255"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"/>
-                            </Grid>
+                            <Label Content="Tỉ lệ chọn loại bàn"
+                                   VerticalAlignment="Center"
+                                   Grid.Row="0"
+                                   Foreground="#3C6255"
+                                   HorizontalAlignment="Center"/>
+                            <ComboBox materialDesign:HintAssist.Hint="Tháng"
+                                      Margin="5,0,15,0"
+                                      Foreground="#3C6255"
+                                      Grid.Column="1"
+                                      ItemsSource="{Binding ListMonths}"
+                                      Text="{Binding TypeTableMonth, UpdateSourceTrigger=PropertyChanged}"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+
                             <lvc:PieChart Series="{Binding SeriesCollectionTypeTable}" 
-                                          LegendLocation="Right" 
-                                          InnerRadius="100" 
-                                          Grid.Column="1"
+                                          LegendLocation="Bottom" 
+                                          InnerRadius="10"
                                           Margin="0 15">
                                 <lvc:PieChart.ChartLegend>
                                     <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
@@ -149,12 +186,12 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0"
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0"
                   Margin="5">
                 <Border Background="#EEEEEE"
                         CornerRadius="5"/>
@@ -178,16 +215,21 @@
                                       Margin="5,0,15,0"
                                       Foreground="#3C6255"
                                       Grid.Column="1"
-                                      Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding ListCrowdMonths}"
+                                      Text="{Binding CrowdMonth, UpdateSourceTrigger=PropertyChanged}"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
                         </Grid>
                         <Grid Grid.Row="1"
                               Margin="5">
-                            <lvc:CartesianChart Series="{Binding SeriesCollectionRevenue}"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="226*"/>
+                                <ColumnDefinition Width="29*"/>
+                            </Grid.ColumnDefinitions>
+                            <lvc:CartesianChart Series="{Binding SeriesCollectionCrowd}"
                                                 Visibility="{Binding Visibility}"
-                                                LegendLocation="Bottom">
+                                                LegendLocation="Bottom" Grid.ColumnSpan="2">
                                 <lvc:CartesianChart.AxisX>
-                                    <lvc:Axis Labels="{Binding Labels}"
+                                    <lvc:Axis Labels="{Binding LabelsCrowd}"
                                               FontFamily="Comfortaa"
                                               Foreground="#3C6255"
                                               FontSize="10"/>
@@ -204,7 +246,7 @@
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1"
+            <Grid Grid.Column="1"
                   Margin="5">
                 <Border Background="#EEEEEE"
                         CornerRadius="5"/>
@@ -228,20 +270,22 @@
                                       Margin="5,0,15,0"
                                       Foreground="#3C6255"
                                       Grid.Column="1"
-                                      Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding ListMonths}"
+                                      Text="{Binding StaffMonth, UpdateSourceTrigger=PropertyChanged}"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
                         </Grid>
                         <Grid Grid.Row="1"
                               Margin="5">
-                            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Left">
+                            <lvc:CartesianChart Series="{Binding SeriesCollectionStaff}" 
+                                                LegendLocation="Left">
                                 <lvc:CartesianChart.AxisX>
-                                    <lvc:Axis Labels="{Binding Labels}"
+                                    <lvc:Axis Labels="{Binding LabelsStaff}"
                                               FontFamily="Comfortaa"
                                               Foreground="#3C6255"
                                               FontSize="13"></lvc:Axis>
                                 </lvc:CartesianChart.AxisX>
                                 <lvc:CartesianChart.AxisY>
-                                    <lvc:Axis Title="Tổng giá trị hóa đơn(Triệu đồng)" 
+                                    <lvc:Axis Title="Tổng giá trị hóa đơn(VNĐ)" 
                                               LabelFormatter="{Binding Formatter}"
                                               FontFamily="Comfortaa"
                                               Foreground="#3C6255"

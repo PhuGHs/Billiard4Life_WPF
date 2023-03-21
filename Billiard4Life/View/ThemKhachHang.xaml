@@ -7,6 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Billiard4Life.View"
         mc:Ignorable="d"
+        Name="them"
         Title="ThemKhachHang"
         Height="450" Width="450"
         TextElement.FontWeight="Regular"
@@ -47,7 +48,7 @@
                             Width="20"
                             Cursor="Hand"
                             Command="{Binding CloseCM}"
-                            CommandParameter="{Binding ElementName=chamCong}"
+                            CommandParameter="{Binding ElementName=them}"
                             materialDesign:ButtonAssist.CornerRadius="0,10,0,0"
                             BorderThickness="0"
                             Background="Transparent">
@@ -72,9 +73,18 @@
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox materialDesign:HintAssist.Hint="Mã khách hàng"
+                                 Grid.Column="0"
+                                 Margin="15 28 5 28"
+                                 Text="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         <TextBox materialDesign:HintAssist.Hint="Tên khách hàng"
                                  Grid.Column="1"
-                                 Margin="15 28 15 28"
+                                 Margin="5 28 15 28"
                                  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     </Grid>
@@ -83,7 +93,7 @@
                         <Grid>
                             <TextBox materialDesign:HintAssist.Hint="Số điện thoại"
                                      Margin="15 28 15 28.5"
-                                     Text="{Binding Count, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
                     </Grid>
@@ -92,7 +102,7 @@
                         <Grid>
                             <TextBox materialDesign:HintAssist.Hint="Email"
                                      Margin="15 28 15 28.8"
-                                     Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
                     </Grid>

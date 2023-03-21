@@ -1,0 +1,58 @@
+﻿<Window x:Class="Billiard4Life.CustomMessageBox.ChoseDate"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Billiard4Life.CustomMessageBox"
+        mc:Ignorable="d"
+        Title="ChoseDate" 
+        Height="180" Width="360"
+        TextElement.FontFamily="Comfortaa"
+        TextElement.FontSize="14"
+        WindowStyle="None" 
+        AllowsTransparency="True" 
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Border Background="White"
+            CornerRadius="5"
+            BorderThickness="3"
+            BorderBrush="#3C6255">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Content="Hãy chọn khoảng thời gian bạn muốn"
+                   Foreground="#3C6255"
+                   Grid.Row="0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <DatePicker materialDesign:HintAssist.Hint="Bắt đầu"
+                            Grid.Column="0"
+                            Name="dtBegin"
+                            Foreground="#3C6255"
+                            Margin="5,0,5,0"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                <DatePicker materialDesign:HintAssist.Hint="Kết thúc"
+                            Grid.Column="1"
+                            Name="dtEnd"
+                            Foreground="#3C6255"
+                            Margin="5,0,5,0"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+            </Grid>
+            <Button Grid.Row="2"
+                    Name="btnOK"
+                    Content="OK"
+                    Margin="30 10 30 10"
+                    Background="#3C6255" 
+                    Click="btnOK_Click"/>
+        </Grid>
+    </Border>
+</Window>

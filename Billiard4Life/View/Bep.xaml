@@ -41,8 +41,7 @@
                          materialDesign:HintAssist.Hint="Tìm kiếm theo SĐT">
                 </TextBox>
 
-                <Button Name="btnDeleteStaff"
-                        Grid.Column="2"
+                <Button Grid.Column="2"
                         Command="{Binding DeleteCM}"
                         Background="#3C6255"
                         Margin="5 5 5 10"
@@ -54,8 +53,7 @@
                 </Button>
 
 
-                <Button Name="btnCheckStaff"
-                        Grid.Column="1"
+                <Button Grid.Column="1"
                         Command="{Binding AddCM}"
                         Background="#3C6255"
                         Margin="5 5 10 10"
@@ -72,24 +70,27 @@
 
             <Grid Grid.Row="1">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ListView ItemsSource="{Binding ListStaff}"
+                    <ListView ItemsSource="{Binding ListCustomer}"
                               SelectedItem="{Binding Selected, Mode=OneWayToSource}"
                               Margin="20 0 20 20"
                               FontFamily="Comfortaa"
                               FontSize="16">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding HoTen}"
-                                                Width="300"
-                                                Header="Họ tên" />
-                                <GridViewColumn DisplayMemberBinding="{Binding ChucVu}"
+                                <GridViewColumn DisplayMemberBinding="{Binding Ma}"
                                                 Width="200"
+                                                Header="Mã khách hàng" />
+                                <GridViewColumn DisplayMemberBinding="{Binding TenKH}"
+                                                Width="270"
+                                                Header="Họ tên" />
+                                <GridViewColumn DisplayMemberBinding="{Binding SDT}"
+                                                Width="170"
                                                 Header="SĐT" />
-                                <GridViewColumn DisplayMemberBinding="{Binding ChucVu}"
-                                                Width="310"
+                                <GridViewColumn DisplayMemberBinding="{Binding Email}"
+                                                Width="250"
                                                 Header="Email" />
-                                <GridViewColumn DisplayMemberBinding="{Binding NgayVaoLam}"
-                                                Width="220"
+                                <GridViewColumn DisplayMemberBinding="{Binding Diem}"
+                                                Width="150"
                                                 Header="Số điểm" />
                             </GridView>
                         </ListView.View>

@@ -42,10 +42,6 @@ namespace Billiard4Life.ViewModel
                     DateStartWork = Selected.NgayVaoLam;
                     Account = Selected.TaiKhoan;
                     Password = Selected.MatKhau;
-
-                    IDBeforeEdit = ID;
-                    AccBeforeEdit = Account;
-                    PosBeforeEdit = Position;
                 }
                 OnPropertyChanged();
             }
@@ -96,9 +92,6 @@ namespace Billiard4Life.ViewModel
         }
         #endregion
 
-        string IDBeforeEdit;
-        string AccBeforeEdit;
-        string PosBeforeEdit;
         public ICommand AddCM { get; set; }
         public ICommand EditCM { get; set; }
         public ICommand DeleteCM { get; set; }
@@ -147,83 +140,35 @@ namespace Billiard4Life.ViewModel
                     return false;
                 if (!isNumber(Phone)) return false;
                 if ((!String.IsNullOrEmpty(Account) && String.IsNullOrEmpty(Password)) || (String.IsNullOrEmpty(Account) && !String.IsNullOrEmpty(Password))) return false;
+                return true;
 
-                if (PosBeforeEdit == "Quản lý" && PosBeforeEdit != Position) return false;
-                if (PosBeforeEdit != Position && Position == "Quản lý") return false;
-
-                foreach (NhanVien item in ListStaff)
-                {
-                    if (ID == item.MaNV) return true;
-                }
-                return false;
             }, (p) =>
             {
                 OpenConnect();
 
-                if (ID != IDBeforeEdit)
+                int ft;
+                if (Fulltime == "Full-time") ft = 1;
+                else ft = 0;
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "UPDATE NHANVIEN SET TenNV = N'" + Name + "', ChucVu = N'" + Position + "', DiaChi = N'" + Address + "', Fulltime = " + ft + ", SDT = '" + Phone + "', NgayVaoLam = '" + DateStartWork + "', NgaySinh = '" + DateBorn + "' WHERE MaNV = '" + ID + "'";
+                cmd.Connection = sqlCon;
+
+                int result = cmd.ExecuteNonQuery();
+
+                if (result > 0)
                 {
-                    MyMessageBox mess = new MyMessageBox("Không được sửa ID!");
-                    ID = IDBeforeEdit;
+                    MyMessageBox mess = new MyMessageBox("Sửa thành công!");
+                    mess.ShowDialog();
+                    Refresh();
+                }
+                else
+                {
+                    MyMessageBox mess = new MyMessageBox("Sửa không thành công!");
                     mess.ShowDialog();
                 }
-                else
-                if (Account != AccBeforeEdit)
-                {
-                    if (string.IsNullOrEmpty(AccBeforeEdit))
-                    {
-                        SqlCommand cmd = new SqlCommand();
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = sqlCon;
-                        cmd.CommandText = "INSERT INTO TAIKHOAN VALUES('" + Account + "', '" + Password + "', 'Staff', '" + ID + "')";
-
-                        int result = cmd.ExecuteNonQuery();
-
-                        if (result > 0)
-                        {
-                            MyMessageBox mess = new MyMessageBox("Sửa thành công!");
-                            mess.ShowDialog();
-                            Refresh();
-                        }
-                        else
-                        {
-                            MyMessageBox mess = new MyMessageBox("Sửa không thành công!");
-                            mess.ShowDialog();
-                        }
-                        ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV");
-                    }
-                    else
-                    {
-                        MyMessageBox mess = new MyMessageBox("Không được sửa Tài khoản!");
-                        Account = AccBeforeEdit;
-                        mess.ShowDialog();
-                    }
-                }
-                else
-                {
-                    int ft;
-                    if (Fulltime == "Full-time") ft = 1;
-                    else ft = 0;
-
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "UPDATE NHANVIEN SET TenNV = N'" + Name + "', ChucVu = N'" + Position + "', DiaChi = N'" + Address + "', Fulltime = " + ft + ", SDT = '" + Phone + "', NgayVaoLam = '" + DateStartWork + "', NgaySinh = '" + DateBorn + "' WHERE MaNV = '" + ID + "'";
-                    cmd.Connection = sqlCon;
-
-                    int result = cmd.ExecuteNonQuery();
-
-                    if (result > 0)
-                    {
-                        MyMessageBox mess = new MyMessageBox("Sửa thành công!");
-                        mess.ShowDialog();
-                        Refresh();
-                    }
-                    else
-                    {
-                        MyMessageBox mess = new MyMessageBox("Sửa không thành công!");
-                        mess.ShowDialog();
-                    }
-                    ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV");
-                }
+                ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV");
 
                 CloseConnect();
             });
