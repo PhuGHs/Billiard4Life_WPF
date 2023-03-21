@@ -22,6 +22,8 @@ namespace Billiard4Life.ViewModel
         {
             KhuyenMais = KhuyenMaiDP.Flag.GetKhuyenMais();
             AddKhuyenMaiItem = new KhuyenMai();
+            SelectedItem = new KhuyenMai();
+            LoadTrangThai();
             khuyenmai_view = new CollectionViewSource();
             khuyenmai_view.Source = KhuyenMais;
             khuyenmai_view.Filter += KhuyenMais_Filter;
@@ -150,6 +152,7 @@ namespace Billiard4Life.ViewModel
 
         #region attributes
         private ObservableCollection<KhuyenMai> khuyenMais = new ObservableCollection<KhuyenMai>();
+        private ObservableCollection<string> trangthais = new ObservableCollection<string>();
         private KhuyenMai selectedKhuyenMaiItem;
         private KhuyenMai addKhuyenMaiItem;
         private KhuyenMai selectedItem;
@@ -163,6 +166,7 @@ namespace Billiard4Life.ViewModel
         public KhuyenMai SelectedKhuyenMai { get { return selectedKhuyenMaiItem; } set { selectedKhuyenMaiItem = value; OnPropertyChanged(); } }
         public KhuyenMai AddKhuyenMaiItem { get { return addKhuyenMaiItem; } set { addKhuyenMaiItem = value; OnPropertyChanged(); } }
         public KhuyenMai SelectedItem { get { return selectedItem; } set { selectedItem = value; OnPropertyChanged(); } }
+        public ObservableCollection<string> TrangThais { get { return trangthais; } set { trangthais = value; OnPropertyChanged(); } }
         public ICollectionView KhuyenMaiView { get { return khuyenmai_view.View; } }
         public string SearchText { get { return _searchText; } set { _searchText = value; this.khuyenmai_view.View.Refresh(); OnPropertyChanged(); } }
         public bool IsAllSelected { 
@@ -200,6 +204,12 @@ namespace Billiard4Life.ViewModel
                 }
             }
             return false;
+        }
+        private void LoadTrangThai()
+        {
+            TrangThais.Add("Hết hạn");
+            TrangThais.Add("Đang diễn ra");
+            TrangThais.Add("Chưa đến kỳ hạn");
         }
         private bool NgayBDBeHonNgayKT(string ngaybd, string ngaykt)
         {

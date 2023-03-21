@@ -98,7 +98,7 @@
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Trạng thái" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding SelectedItem.TrangThai, Mode=TwoWay}"/>
+                        <ComboBox Style="{StaticResource combobox}" ItemsSource="{Binding TrangThais}" SelectedItem="{Binding SelectedItem.TrangThai}"/>
                     </Border>
                 </StackPanel>
             </StackPanel>
