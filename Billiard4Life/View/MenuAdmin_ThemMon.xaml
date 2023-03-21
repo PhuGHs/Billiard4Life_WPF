@@ -18,8 +18,8 @@
                         <ColumnDefinition Width="50"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Vertical">
-                        <Rectangle MaxWidth="400" MaxHeight="200">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <Rectangle MaxWidth="400" MaxHeight="200" Height="200">
                             <Rectangle.Fill>
                                 <ImageBrush ImageSource="{Binding AddItem.FoodImage}" Stretch="Uniform"/>
                             </Rectangle.Fill>
@@ -56,25 +56,13 @@
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                             </Grid>
 
-                            <Grid Margin="0 50 0 0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="20" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBox
-                                  Text="{Binding AddItem.Str_Price, Mode=TwoWay}"
-                                  Grid.Column="0"
-                                  FontSize="16"
-                                  materialDesign:HintAssist.Hint="Giá (VNĐ)"
-                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                                <TextBox
-                                  Text="{Binding AddItem.Str_CookingTime, Mode=TwoWay}"
+                            <TextBox
+                                Margin="40 50 40 0"
+                                  Text="{Binding AddItem.Price, Mode=TwoWay}"
                                   Grid.Column="2"
                                   FontSize="16"
-                                  materialDesign:HintAssist.Hint="Thời gian nấu (Phút)"
+                                  materialDesign:HintAssist.Hint="Giá (VND)"
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                            </Grid>
                             <Grid Margin="0 50 0 0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -82,6 +70,7 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Button Background="#3C6255" 
+                                        Foreground="White"
                                         BorderThickness="0"
                                         x:Name="Add_button"
                                         Content="Lưu"
@@ -90,6 +79,7 @@
                                 />
                                 <Button Background="#3C6255" 
                                         BorderThickness="0"
+                                        Foreground="White"
                                         Command="{Binding SwitchToEditView_Command}"
                                         Grid.Column="2" 
                                         Content="Thêm nguyên liệu" />
@@ -137,12 +127,14 @@
                                  Width="180" 
                                  Height="35"/>
                             <Button Background="#3C6255"
+                                    Foreground="White"
                                     BorderThickness="0"
                                     Command="{Binding SaveDishIngredients_Command}"
                                     Margin="20 0 0 0"
                                     Width="100"
                                     Content="Lưu"/>
                             <Button Background="#3C6255" 
+                                    Foreground="White"
                                     BorderThickness="0"
                                     Command="{Binding AddIngredientsToDish_Command}"
                                     Margin="20 0 0 0" 
@@ -173,7 +165,7 @@
                                         <ItemsControl x:Name="itemsource" ItemsSource="{Binding Ingredients_ForDishes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border BorderThickness="0,0,0,1" BorderBrush="#1C3879" Width="{Binding ActualWidth, ElementName=border}" Height="50">
+                                                    <Border BorderThickness="0,0,0,1" BorderBrush="#3C6255" Width="{Binding ActualWidth, ElementName=border}" Height="50">
                                                         <Grid>
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="50"/>
@@ -185,7 +177,7 @@
                                                                     CommandParameter="{Binding}"
                                                                     Background="Transparent" 
                                                                     BorderThickness="0">
-                                                                <fa:IconImage Icon="TrashCan" Foreground="#1C3879" Height="14" Width="14" />
+                                                                <fa:IconImage Icon="TrashCan" Foreground="#3C6255" Height="14" Width="14" />
                                                             </Button>
                                                             <TextBlock Grid.Column="1"  
                                                                TextAlignment="Left" 

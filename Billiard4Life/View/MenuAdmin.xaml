@@ -6,6 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:local="clr-namespace:Billiard4Life"
              xmlns:vm="clr-namespace:Billiard4Life.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="660" d:DesignWidth="1060"
@@ -14,6 +15,9 @@
     <UserControl.DataContext>
         <vm:MenuAdminViewModel />
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <local:IndexConverter x:Key="IndexConverter"/>
+    </UserControl.Resources>
     <Grid x:Name="MainSec">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
@@ -33,12 +37,14 @@
                          Width="180" 
                          Height="35"/>
                 <Button Background="#3C6255" 
+                        Foreground="White"
                         BorderThickness="0"
                         Command="{Binding AddOneMenuDish}"
                         Margin="60 0 0 0" 
                         Content="Thêm món" 
                         Width="150"/>
                 <Button Background="#3C6255"
+                        Foreground="White"
                         BorderThickness="0"
                         Command="{Binding RemoveDish_Command}"
                         CommandParameter="{Binding ElementName=Dishes_ListView}"
@@ -49,16 +55,18 @@
 
             <ListView x:Name="Dishes_ListView" 
                       SelectedIndex="0" 
-                      FontSize="15"
+                      FontSize="17"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ItemsSource="{Binding MenuItemCollection, UpdateSourceTrigger=PropertyChanged}"
                       SelectedItem="{Binding MenuItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20" Grid.Row="1" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Center" VerticalAlignment="Stretch" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Mã món" Width="90" DisplayMemberBinding="{Binding ID}"/>
-                        <GridViewColumn Header="Tên món" Width="150" DisplayMemberBinding="{Binding FoodName}"/>
-                        <GridViewColumn Header="Giá (VNĐ)" Width="140"  DisplayMemberBinding="{Binding PriceVNDCurrency}"/>
-                        <GridViewColumn Header="Thời gian nấu (Phút)" Width="210" DisplayMemberBinding="{Binding CookingTime}" />
+                        <GridViewColumn Header="Số thứ tự" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                         AncestorType={x:Type ListViewItem}}, 
+                                         Converter={StaticResource IndexConverter}}"/>
+                        <GridViewColumn Header="Mã món" DisplayMemberBinding="{Binding ID}"/>
+                        <GridViewColumn Header="Tên món" DisplayMemberBinding="{Binding FoodName}"/>
+                        <GridViewColumn Header="Giá (VNĐ)" DisplayMemberBinding="{Binding PriceVNDCurrency}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -113,27 +121,17 @@
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     </Grid>
 
-                    <Grid Margin="0 50 0 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="20" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox
+                    <TextBox
+                        Margin="40 40 40 0"
                           Text="{Binding MenuItem.Str_Price, Mode=TwoWay}"
                           Grid.Column="0"
                           FontSize="16"
                           materialDesign:HintAssist.Hint="Giá (VNĐ)"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <TextBox
-                          Text="{Binding MenuItem.Str_CookingTime, Mode=TwoWay}"
-                          Grid.Column="2"
-                          FontSize="16"
-                          materialDesign:HintAssist.Hint="Thời gian nấu (Phút)"
-                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    </Grid>
+                    
                     <Button Margin="20 60 20 0"
                             Content="Sửa, xem nguyên liệu"
+                            Foreground="White"
                             BorderThickness="0"
                             Command="{Binding EditIngredient_Command}"
                             Background="#3C6255"/>
@@ -145,10 +143,12 @@
                         </Grid.ColumnDefinitions>
                         <Button Background="#3C6255" 
                                 Content="Huỷ bỏ thay đổi"
+                                Foreground="White"
                                 BorderThickness="0"
                                 Command="{Binding DiscardChanges_Command}"/>
                         <Button Background="#3C6255" 
                                 Grid.Column="2" 
+                                Foreground="White"
                                 Content="Lưu thay đổi" 
                                 BorderThickness="0"
                                 Command="{Binding SaveChanges_Command}"/>
