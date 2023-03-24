@@ -83,7 +83,7 @@ namespace Billiard4Life.Models
         }
         public bool IsNullOrEmpty()
         {
-            if (foodImage == null || id == "" || foodName == "" || cookingTime == 0 || price == 0)
+            if (foodImage == null || id == "" || foodName == "" || price == 0)
             {
                 return true;
             }

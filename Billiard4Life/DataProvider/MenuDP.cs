@@ -123,7 +123,7 @@ public class MenuDP : DataProvider
         {
             DBOpen();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "INSERT INTO MENU VALUES (@MaMon, @TenMon, @Gia, @AnhMonAn, @ThoiGianLam)";
+            cmd.CommandText = "INSERT INTO MENU VALUES (@MaMon, @TenMon, @Gia, @AnhMonAn)";
             cmd.Parameters.AddWithValue("@MaMon", x.ID);
             cmd.Parameters.AddWithValue("@TenMon", x.FoodName);
             cmd.Parameters.AddWithValue("@AnhMonAn", Converter.ImageConverter.ConvertImageToBytes(x.FoodImage));

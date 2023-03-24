@@ -104,6 +104,7 @@
             </StackPanel>
         </Grid>
         <Button Content="Lưu" 
+                Foreground="White"
                 Background="#3C6255" 
                 Grid.Row="1"
                 Command="{Binding EditKhuyenMaiItem_Command}"

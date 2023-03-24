@@ -105,6 +105,7 @@
             </StackPanel>
         </Grid>
         <Button Content="Thêm" 
+                Foreground="White"
                 Background="#3C6255" 
                 Command="{Binding AddKhuyenMaiItem_Command}"
                 CommandParameter="{Binding ElementName=info_field}"

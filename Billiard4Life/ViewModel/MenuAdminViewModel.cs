@@ -37,7 +37,6 @@ namespace Billiard4Life.ViewModel
             _ingredientsView.Filter += Ingredients_Filter;
             addItem = new Models.MenuItem();
             MenuItem = new Models.MenuItem();
-            DishHasBeenAdded = false;
             AddItem.FoodImage = converting("pack://application:,,,/images/menu_default_image.jpg");
 
             #region Command executes
@@ -45,6 +44,7 @@ namespace Billiard4Life.ViewModel
             {
                 MenuAdmin_ThemMon window = new MenuAdmin_ThemMon();
                 window.DataContext = this;
+                IsAdding = true;
                 window.ShowDialog();
             });
             RemoveDish_Command = new RelayCommand<object>((p) =>
@@ -67,22 +67,20 @@ namespace Billiard4Life.ViewModel
             });
             AddDish_Command = new RelayCommand<Button>((p) =>
             {
-                if (AddItem.IsNullOrEmpty()
-                || IsListedInMenuList(AddItem.ID)) return false;
+                if (AddItem.IsNullOrEmpty()) return false;
                 return true;
             }, (p) =>
             {
                 try
                 {
                     MenuDP.Flag.AddDish(AddItem);
-                    MenuItems.Add(AddItem);
-                    DishHasBeenAdded = true;
+                    MenuItems.Add(new Models.MenuItem(AddItem.ID, AddItem.FoodName, AddItem.Price, AddItem.FoodImage));
                     MyMessageBox msb = new MyMessageBox("Thêm thành công!");
                     msb.Show();
                 }
                 catch (SqlException e)
                 {
-                    MyMessageBox msb = new MyMessageBox("Mã món không được trùng với \n mã món của các món đã tồn tại");
+                    MyMessageBox msb = new MyMessageBox(e.Message);
                     msb.Show();
                     return;
                 }
@@ -153,29 +151,29 @@ namespace Billiard4Life.ViewModel
             });
 
             #region Thêm nguyên liệu command execution
-            //AddIngredientsToDish_Command = new RelayCommand<object>((p) =>
-            //{
-            //    if (Selected_Ingredient == null) return false;
-            //    return true;
-            //}, (p) =>
-            //{
-            //    if (!IsListedInIngredientList(Selected_Ingredient.TenSanPham))
-            //    {
-            //        if (AddView == Visibility.Visible)
-            //        {
-            //            Ingredients_ForDishes.Add(new ChiTietMon(Selected_Ingredient.TenSanPham, AddItem.ID));  // can xem lai ve tinh logic , neu chua co ma mon
-            //        }
-            //        else if (EditView == Visibility.Visible)
-            //        {
-            //            Ingredients_ForDishes.Add(new ChiTietMon(Selected_Ingredient.TenSanPham, MenuItem.ID));
-            //        }
-            //    }
-            //    else
-            //    {
-            //        MyMessageBox msb = new MyMessageBox("Nguyên liệu này đã được thêm!");
-            //        msb.Show();
-            //    }
-            //});
+            AddIngredientsToDish_Command = new RelayCommand<object>((p) =>
+            {
+                if (Selected_Ingredient == null) return false;
+                return true;
+            }, (p) =>
+            {
+                if (!IsListedInIngredientList(Selected_Ingredient.TenSanPham))
+                {
+                    if (IsAdding)
+                    {
+                        Ingredients_ForDishes.Add(new ChiTietMon(Selected_Ingredient.TenSanPham, AddItem.ID));  // can xem lai ve tinh logic , neu chua co ma mon
+                    }
+                    else if (!IsAdding)
+                    {
+                        Ingredients_ForDishes.Add(new ChiTietMon(Selected_Ingredient.TenSanPham, MenuItem.ID));
+                    }
+                }
+                else
+                {
+                    MyMessageBox msb = new MyMessageBox("Nguyên liệu này đã được thêm!");
+                    msb.Show();
+                }
+            });
             SaveDishIngredients_Command = new RelayCommand<object>((p) =>
             {
                 if (Ingredients_ForDishes.Count == 0) return false;
@@ -275,6 +273,7 @@ namespace Billiard4Life.ViewModel
             });
             EditIngredient_Command = new RelayCommand<object>((p) => true, (p) =>
             {
+                IsAdding = false;
                 Ingredients_ForDishes = MenuDP.Flag.GetIngredientsForDish(MenuItem.ID);
                 MenuAdmin_ThemNLieu IngreAddView = new MenuAdmin_ThemNLieu();
                 IngreAddView.DataContext = this;
@@ -298,6 +297,7 @@ namespace Billiard4Life.ViewModel
             private Models.MenuItem _menuitem;
             private Models.Kho _selected_Ingredient;
             private Models.MenuItem addItem;
+            private bool IsAdding;
         private bool _dishHasBeenAdded;
         #endregion
 
