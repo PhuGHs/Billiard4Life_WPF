@@ -1,0 +1,108 @@
+﻿<Window x:Class="Billiard4Life.View.ChiTietHoaDon"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Billiard4Life.View"
+        mc:Ignorable="d"
+        Title="ChiTietHoaDon"
+        Name="cthd"
+        Height="550" 
+        Width="800"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="15"
+        TextElement.Foreground="#3C6255"
+        TextElement.FontFamily="Comfortaa"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="Transparent"
+        FontFamily="Comfortaa"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Border Background="White"
+                CornerRadius="5"
+                BorderBrush="#61876E"
+                BorderThickness="4"/>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Border Background="#EEEEEE"
+                        CornerRadius="5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="520"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="  CHI TIẾT HÓA ĐƠN:"
+                           Foreground="#3C6255"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"/>
+                    <Label Content="{Binding ItemName}"
+                           Foreground="#3C6255"
+                           Grid.Column="1"
+                           VerticalAlignment="Center"/>
+                    <Button Grid.Column="2"
+                            Height="20"
+                            Width="20"
+                            Cursor="Hand"
+                            Command="{Binding CloseCM}"
+                            CommandParameter="{Binding ElementName=cthd}"
+                            materialDesign:ButtonAssist.CornerRadius="0,10,0,0"
+                            BorderThickness="0"
+                            Background="Transparent">
+                        <fa:IconImage Icon="PowerOff"
+                                      Foreground="#3C6255"
+                                      Margin="-27 -4 -15 -4"
+                                      Height="20"
+                                      Width="20"/>
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1"
+                  Margin="0 7 0 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0 0 4 0"
+                          Grid.Column="0">
+                        <Border Background="#EEEEEE"
+                        CornerRadius="5"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                      Margin="5 0 5 0">
+                            <ListView ItemsSource="{Binding CTHD}"
+                                      Foreground="#3C6255"
+                                      SelectedItem="{Binding Selected, Mode=OneWayToSource}">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn DisplayMemberBinding="{Binding TenSP}"
+                                                        Width="300"
+                                                        Header="Tên món" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding SoLuong}"
+                                                        Width="130"
+                                                        Header="Số lượng" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding DonGia}"
+                                                        Width="140"
+                                                        Header="Đơn giá" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding ThanhTien}"
+                                                        Width="140"
+                                                        Header="Thành tiền" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

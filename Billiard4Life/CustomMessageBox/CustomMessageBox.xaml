@@ -13,7 +13,7 @@
     <Border Background="White"
             CornerRadius="10"
             BorderThickness="3"
-            BorderBrush="#1C3879">
+            BorderBrush="#3C6255">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -26,14 +26,14 @@
                VerticalAlignment="Center"
                FontFamily="Comfortaa"
                FontSize="16"
-               Foreground="#1C3879"/>
+               Foreground="#3C6255"/>
 
             <Button Name="btnOKcenter"
                     Grid.Row="1"
                         Content="OK"
                         Click="btnOKcenter_Click"
                         BorderThickness = "0"
-                        Background="#1C3879"
+                        Background="#3C6255"
                         Foreground="White"
                         Width="150"
                         HorizontalAlignment="Center"
@@ -52,7 +52,7 @@
                         Content="YES"
                         Click="btnYES_Click"
                         BorderThickness = "0"
-                        Background="#1C3879"
+                        Background="#3C6255"
                         Foreground="White"
                         Cursor="Hand"
                         HorizontalAlignment="Center"
@@ -65,7 +65,7 @@
                         Content="NO"
                         Click="btnNO_Click"
                         BorderThickness = "0"
-                        Background="#1C3879"
+                        Background="#3C6255"
                         Foreground="White"
                         Cursor="Hand"
                         Width="150"

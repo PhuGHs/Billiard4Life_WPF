@@ -37,4 +37,7 @@
     <viewmodel1:LoginWindowVM x:Key="LoginVM"></viewmodel1:LoginWindowVM>
     
     <viewmodel:ChamCongViewModel x:Key="ChamCong"/>
+    <viewmodel:ThemNhanVienViewModel x:Key="ThemNhanVien"/>
+    <viewmodel:ChiTietNhapKhoViewModel x:Key="ChiTietNhapKho"/>
+    <viewmodel:NhapHangMoiViewModel x:Key="NhapHangMoi"/>
 </ResourceDictionary>
