@@ -149,7 +149,8 @@
                                                 Grid.Row="2"
                                                 Style="{StaticResource MaterialDesignRaisedButton}"
                                                 Width="100"
-                                                Background="#1C3879"
+                                                Foreground="White"
+                                                Background="#3C6255"
                                                 Command="{Binding ElementName=vm, Path=OrderFeature_Command}"
                                                 CommandParameter="{Binding}">
                                                 _ĐẶT
@@ -172,12 +173,12 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="120"/>
-                                <RowDefinition Height="360"/>
+                                <RowDefinition Height="300"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" 
                                     Padding="20" 
-                                    Background="#1C3879" 
+                                    Background="#3C6255" 
                                     CornerRadius="20 20 0 0" 
                                     Margin="0 20 0 0">
                                 <Grid>
@@ -297,10 +298,14 @@
                                                Foreground="#1C3879"
                                                TextAlignment="Right"/>
                                 </StackPanel>
-                                
 
-                                <StackPanel Orientation="Horizontal"  VerticalAlignment="Top" Margin="20 40 0 0" >
-                                    <Button Background="#1C3879" 
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20 20 0 0" >
+                                    <Button Background="#3C6255" 
                                             BorderBrush="#1C3879" 
                                             BorderThickness="1"
                                             Width="155"
@@ -313,16 +318,34 @@
                                             />
                                     </Button>
                                     <Button Command="{Binding Inform_Chef_Of_OrderedDishes}"
-                                            Background="#1C3879" 
+                                            Background="#3C6255" 
                                             BorderThickness="0" 
-                                            Width="155" 
-                                            Margin="50 0 0 0">
+                                            Margin="0 20 0 0"
+                                            Width="155">
                                         <TextBlock Foreground="White" 
-                                                   Text="Báo chế biến" 
+                                                   Text="Đặt bàn" 
                                                    FontSize="15" />
                                     </Button>
-                                </StackPanel>
 
+                                    <Button Command=""
+                                            Content="Đặt bàn trước"
+                                            Background="#3C6255"
+                                            Foreground="White"
+                                            FontSize="15"
+                                            Margin="0 20 0 0"
+                                            />
+                                </StackPanel>
+                                    <StackPanel Margin="0 20 0 0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="SDT: " FontSize="18" FontWeight="SemiBold"/>
+                                            <TextBox FontSize="18" FontWeight="SemiBold" Width="120" Margin="20 0 0 0"/>
+                                        </StackPanel>
+                                        <StackPanel Margin="0 20 0 0"  Orientation="Horizontal">
+                                            <Label Content="Ngày: " FontSize="18" FontWeight="SemiBold"/>
+                                            <TextBox FontSize="18" FontWeight="SemiBold" Width="120" Margin="12 0 0 0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
                             </StackPanel>
                         </Grid>
                     </Border>

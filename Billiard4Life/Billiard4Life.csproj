@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <None Remove="images\logo.png" />
+    <None Remove="images\menu_default_image.jpg" />
     <None Remove="images\poweroff.png" />
     <None Remove="images\power_off_button_64px.png" />
   </ItemGroup>
@@ -51,6 +52,7 @@
 
   <ItemGroup>
     <Resource Include="images\logo.png" />
+    <Resource Include="images\menu_default_image.jpg" />
   </ItemGroup>
 
 </Project>

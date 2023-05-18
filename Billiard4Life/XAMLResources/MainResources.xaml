@@ -15,6 +15,9 @@
     <DataTemplate DataType="{x:Type viewmodel:KhoViewModel}">
         <view:Kho />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:KhuyenMaiViewModel}">
+        <view:KhuyenMai />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodel:TinhTrangBanViewModel}">
         <view:TinhTrangBan />
     </DataTemplate>

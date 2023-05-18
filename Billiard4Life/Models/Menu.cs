@@ -14,13 +14,12 @@ namespace Billiard4Life.Models
 
     public class MenuItem : BaseViewModel
     {
-        public MenuItem(string id = "", string foodName = "", decimal price = 0, BitmapImage foodImage = null, int cookingTime = 0)
+        public MenuItem(string id = "", string foodName = "", decimal price = 0, BitmapImage foodImage = null)
         {
             this.id = id;
             this.foodName = foodName;
             this.price = price;
             this.foodImage = foodImage;
-            this.cookingTime = cookingTime;
         }
         private string id;
         private string foodName;
@@ -82,40 +81,9 @@ namespace Billiard4Life.Models
                 OnPropertyChanged();
             }
         }
-        public string Str_CookingTime
-        {
-            get
-            {
-                return CookingTime.ToString();
-            }
-            set
-            {
-                if (!IsNumber(value))
-                {
-                    CookingTime = 0;
-                }
-                else
-                {
-                    CookingTime = Convert.ToInt32(value);
-                }
-                OnPropertyChanged();
-            }
-        }
-        public int CookingTime
-        {
-            get
-            {
-                return cookingTime;
-            }
-            set
-            {
-                cookingTime = value;
-                OnPropertyChanged();
-            }
-        }
         public bool IsNullOrEmpty()
         {
-            if (foodImage == null || id == "" || foodName == "" || cookingTime == 0 || price == 0)
+            if (foodImage == null || id == "" || foodName == "" || price == 0)
             {
                 return true;
             }
@@ -126,7 +94,6 @@ namespace Billiard4Life.Models
         {
             this.FoodName = "";
             this.Price = 0;
-            this.CookingTime = 0;
             this.ID = "";
         }
 

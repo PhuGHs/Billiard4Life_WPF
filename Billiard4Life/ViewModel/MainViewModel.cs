@@ -58,7 +58,7 @@ namespace Billiard4Life.ViewModel
                 System.Windows.Forms.Application.Restart();
                 p.Close();
             });
-            Navigator = new Navigator("admin");
+            Navigator = new Navigator("user");
             HeaderViewModel = new HeaderViewModel();
             bep = new BepViewModel();
             //NumberOfDishesNeedServing = bep.NumberOfDishesNeedServing;

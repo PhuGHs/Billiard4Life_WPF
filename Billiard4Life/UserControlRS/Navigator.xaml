@@ -125,6 +125,13 @@
                         <TextBlock Text="Khách Hàng" Style="{StaticResource sideBarRadioButtonText}" />
                     </StackPanel>
                 </RadioButton>
+                <!--discount-->
+                <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.KhuyenMai}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Tags" Style="{StaticResource sidebarRadioButtonIcon}" />
+                        <TextBlock Text="Khuyến mãi" Style="{StaticResource sideBarRadioButtonText}" />
+                    </StackPanel>
+                </RadioButton>
                 <!--storage-->
                 <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.Kho}">
                     <StackPanel Orientation="Horizontal">
