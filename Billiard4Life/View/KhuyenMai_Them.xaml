@@ -61,7 +61,11 @@
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Ngày bắt đầu" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding AddKhuyenMaiItem.NgayBatDau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#413F42" Margin="10 0"/>
+                        <DatePicker x:Name="datepickerstart" 
+                                    Height="45" 
+                                    FontSize="20" 
+                                    SelectedDateChanged="DatePicker_SelectedDateChanged" Loaded="DatePicker_Loaded"
+                                    SelectedDate="{Binding AddKhuyenMaiItem.NgayBatDau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#413F42" Margin="10 0"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">
@@ -87,7 +91,11 @@
                 <StackPanel Margin="0 0 0 20">
                     <Label Content="Ngày kết thúc" Style="{StaticResource label}"/>
                     <Border Style="{StaticResource SearchBar}">
-                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding AddKhuyenMaiItem.NGayKetThuc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#413F42" Margin="10 0"/>
+                        <DatePicker x:Name="datepickerend" 
+                                    Height="45" 
+                                    FontSize="20" 
+                                    SelectedDateChanged="DatePickerend_SelectedDateChanged" Loaded="DatePickerend_Loaded"
+                                    SelectedDate="{Binding AddKhuyenMaiItem.NGayKetThuc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="#413F42" Margin="10 0"/>
                     </Border>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 20">

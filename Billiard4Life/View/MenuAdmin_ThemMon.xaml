@@ -107,9 +107,9 @@
                           Margin="20" 
                           Grid.Row="0" 
                           IsSynchronizedWithCurrentItem="True" 
-                          HorizontalAlignment="Center"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          VerticalAlignment="Stretch">
+                          HorizontalAlignment="Center" 
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                          VerticalAlignment="Stretch"> 
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Tên sản phẩm" Width="160" DisplayMemberBinding="{Binding TenSanPham}"/>

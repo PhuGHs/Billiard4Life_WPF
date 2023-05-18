@@ -81,7 +81,7 @@ public class MenuDP : DataProvider
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "Exec PAY_A_BILL_PD @trigia, @manv, @soban, @ngayHD, @trangthai";
             cmd.Parameters.AddWithValue("@trigia", sum);
-            cmd.Parameters.AddWithValue("@manv", MaNV);
+            cmd.Parameters.AddWithValue("@manv", "NV01");
             cmd.Parameters.AddWithValue("@soban", soban);
             cmd.Parameters.AddWithValue("@ngayHD", DateTime.Now);
             cmd.Parameters.AddWithValue("@trangthai", "Chưa trả");

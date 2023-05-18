@@ -21,6 +21,7 @@ namespace Billiard4Life.ViewModel
         public KhuyenMaiViewModel()
         {
             KhuyenMais = KhuyenMaiDP.Flag.GetKhuyenMais();
+            KhuyenMaiDP.Flag.AutoUpdateStatusKhuyenMai(KhuyenMais);
             AddKhuyenMaiItem = new KhuyenMai();
             SelectedItem = new KhuyenMai();
             LoadTrangThai();
@@ -31,6 +32,7 @@ namespace Billiard4Life.ViewModel
             {
                 KhuyenMai_Them view = new KhuyenMai_Them();
                 view.DataContext = this;
+                AddKhuyenMaiItem.TrangThai = "Đang diễn ra";
                 view.ShowDialog();
             });
 

@@ -47,6 +47,36 @@
                     </i:Interaction.Triggers>
                 </ComboBox>
             </StackPanel>
+            <Canvas>
+                <StackPanel Orientation="Horizontal" Canvas.Left="199" Canvas.Top="9">
+                    <Rectangle
+                    Width="50"
+                    Height="30"
+                    Fill="#05BFDB" Canvas.Left="217" Canvas.Top="15"/>
+                    <TextBlock
+                        Margin="10 0 0 0"
+                        VerticalAlignment="center"
+                        FontSize="18"
+                        Foreground="#05BFDB"
+                        FontWeight="SemiBold"
+                        Text="Đang trống"/>
+                </StackPanel>
+            </Canvas>
+            <Canvas>
+                <StackPanel Orientation="Horizontal" Canvas.Left="364" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Rectangle
+                    Width="50"
+                    Height="30"
+                    Fill="#FF6D60" Canvas.Left="217" Canvas.Top="15"/>
+                    <TextBlock
+                        Margin="10 0 0 0"
+                        VerticalAlignment="center"
+                        FontSize="18"
+                        Foreground="#FF6D60"
+                        FontWeight="SemiBold"
+                        Text="Đang được sử dụng"/>
+                </StackPanel>
+            </Canvas>
             <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl x:Name="item"
                           ItemsSource="{Binding TableView ,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
@@ -61,6 +91,8 @@
                                 Height="105"
                                 Margin="5,15,15,15"
                                 FontSize="20"
+                                Foreground="White"
+                                BorderThickness="0"
                                 Content="{Binding NumOfTable}"
                                 Background="{Binding Coloroftable}"
                                 Command="{Binding ElementName=vm, Path=StatusOfTableCommand}"
@@ -82,7 +114,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"/>
-                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="270"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
@@ -91,12 +123,36 @@
                             Background="#3C6255" 
                             Margin="0 20 0 0">
                         <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
                             <TextBlock HorizontalAlignment="Center"
+                                       Grid.Column="0"
                                        Foreground="#fff" 
                                        FontWeight="SemiBold" 
                                        FontSize="35"
                                        Text="{Binding TitleOfBill}">
                             </TextBlock>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Số giờ chơi: "
+                                               Foreground="White"
+                                               FontSize="18"/>
+                                    <TextBlock Margin="10 0 0 0" Text="{Binding TimeSpanPlayer, StringFormat='{}{0:hh\\:mm\\:ss}'}" FontSize="18" Foreground="White"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                                    <TextBlock Text="Tiền bàn: "
+                                               Foreground="White"
+                                               FontSize="18"/>
+                                    <TextBlock Margin="10 0 0 0" Text="{Binding S_TienBan}" FontSize="18" Foreground="White"/>
+                                </StackPanel>
+                            </Grid>
                         </Grid>
                     </Border>
                     <ScrollViewer Grid.Row="1"
@@ -163,6 +219,31 @@
 
                                     <Label Grid.Column="0"
                                            VerticalContentAlignment="Center"  
+                                           Content="Khách hàng (SĐT)"
+                                           FontSize="17" 
+                                           FontWeight="SemiBold"/>
+
+                                    <TextBox Grid.Column="1"
+                                           Text="{Binding CustomerPhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                           VerticalContentAlignment="Center"
+                                           HorizontalContentAlignment="Right"
+                                           Width="130"
+                                           FontSize="15" 
+                                           FontWeight="SemiBold" 
+                                           Foreground="#3C6255"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderThickness="0 0 0 0" BorderBrush="#3C6255">
+                            <StackPanel Orientation="Horizontal" Height="40">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="210"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0"
+                                           VerticalContentAlignment="Center"  
                                            Content="Tổng"
                                            FontSize="17" 
                                            FontWeight="SemiBold"/>
@@ -183,25 +264,23 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="200"/>
-                                        <ColumnDefinition Width="130"/>
                                         <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="120"/>
                                     </Grid.ColumnDefinitions>
 
                                     <Label     Grid.Column="0"
                                            VerticalContentAlignment="Center"  
-                                           Content="Voucher"
+                                           Content="Khuyến mãi"
                                            FontSize="17" 
                                            FontWeight="SemiBold" 
-                                           Width="300"/>
-
-                                    <TextBox Grid.Column="1"
-                                           VerticalContentAlignment="Center"
-                                           HorizontalContentAlignment="Center"
-                                           Text="XAMLW" 
-                                           FontSize="15" 
-                                           FontWeight="SemiBold" 
-                                           Foreground="#3C6255"/>
-                                    <TextBlock Text="v" Grid.Column="2"/>
+                                           Width="200"/>
+                                    <Label Content="{Binding TotalDiscount}" 
+                                               Grid.Column="2" 
+                                               VerticalAlignment="Center" 
+                                               HorizontalAlignment="Right" 
+                                               Foreground="#3c6255"
+                                               FontWeight="SemiBold"
+                                               FontSize="15"/>
                                 </Grid>
                             </StackPanel>
                         </Border>
@@ -223,7 +302,7 @@
                                     <Label Grid.Column="1"
                                            HorizontalContentAlignment="Right"
                                            VerticalContentAlignment="Center"
-                                           Content="{Binding SumofBill}" 
+                                           Content="{Binding OverallBill}" 
                                            FontSize="15" 
                                            Width="130"
                                            FontWeight="SemiBold" 

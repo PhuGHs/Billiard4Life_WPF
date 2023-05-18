@@ -23,5 +23,39 @@ namespace Billiard4Life.View
         {
             InitializeComponent();
         }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime selectedDate = (DateTime)e.AddedItems[0];
+            DateTime currentDate = DateTime.Now;
+
+            if (selectedDate < currentDate.Date)
+            {
+                datepickerstart.SelectedDate = currentDate.Date;
+            }
+        }
+
+        private void DatePicker_Loaded(object sender, RoutedEventArgs e)
+        {
+            DateTime currentDate = DateTime.Now;
+            datepickerstart.SelectedDate = currentDate.Date;
+        }
+
+        private void DatePickerend_Loaded(object sender, RoutedEventArgs e)
+        {
+            DateTime currentDate = DateTime.Now;
+            datepickerend.SelectedDate = currentDate.Date;
+        }
+
+        private void DatePickerend_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime selectedDate = (DateTime)e.AddedItems[0];
+            DateTime currentDate = DateTime.Now;
+
+            if (selectedDate < currentDate.Date)
+            {
+                datepickerend.SelectedDate = currentDate.Date;
+            }
+        }
     }
 }
