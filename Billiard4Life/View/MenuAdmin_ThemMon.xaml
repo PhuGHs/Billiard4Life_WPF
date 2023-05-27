@@ -5,13 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
-        xmlns:local="clr-namespace:Billiard4Life.View"
+        xmlns:local="clr-namespace:Billiard4Life" 
+        xmlns:local1="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Thêm món" Height="600" Width="900">
+    <Window.Resources>
+        <local1:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
     <Grid>
-        <TabControl Style="{StaticResource MaterialDesignTabControl}" Foreground="#3C6255">
-            <TabItem Header="Thêm món ăn" Cursor="Hand" Foreground="#3C6255">
+        <TabControl SelectedItem="{Binding SelectedTab}" Style="{StaticResource MaterialDesignTabControl}" Foreground="#3C6255">
+            <TabControl.Resources>
+                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            </TabControl.Resources>
+            <TabItem Header="Thêm món ăn" Visibility="{Binding IsFirstTabVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Cursor="Hand" Foreground="#3C6255">
                 <Grid Width="800" Margin="30">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
@@ -88,7 +95,7 @@
                     </Border>
                 </Grid>
             </TabItem>
-            <TabItem Header="Thêm nguyên liệu" Cursor="Hand" Foreground="#3C6255">
+            <TabItem Visibility="{Binding TabIngredient}" Header="Thêm nguyên liệu" Cursor="Hand" Foreground="#3C6255">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>

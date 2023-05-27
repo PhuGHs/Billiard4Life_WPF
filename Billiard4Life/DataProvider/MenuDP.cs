@@ -123,7 +123,7 @@ public class MenuDP : DataProvider
         {
             DBOpen();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "INSERT INTO MENU VALUES (@MaMon, @TenMon, @Gia, @AnhMonAn)";
+            cmd.CommandText = "INSERT INTO MENU VALUES (@MaMon, @TenMon, @AnhMonAn, @Gia)";
             cmd.Parameters.AddWithValue("@MaMon", x.ID);
             cmd.Parameters.AddWithValue("@TenMon", x.FoodName);
             cmd.Parameters.AddWithValue("@AnhMonAn", Converter.ImageConverter.ConvertImageToBytes(x.FoodImage));
@@ -206,14 +206,15 @@ public class MenuDP : DataProvider
         ObservableCollection<Kho> NLs = new ObservableCollection<Kho>();
         try
         {
-            DataTable dt = LoadInitialData("Select * from KHO");
+            DataTable dt = LoadInitialData("Select * from KHO WHERE Xoa = 0");
             foreach (DataRow dr in dt.Rows)
             {
                 string tensp = dr["TenSanPham"].ToString();
                 float tondu = (float)Convert.ToDouble(dr["TonDu"]);
+                //float MucBaoNhap = (float)Convert.ToDouble(dr["MucBaoNhap"]);
+                string nhom = dr["NhomSanPham"].ToString();
                 string donvi = dr["DonVi"].ToString();
-                string dongia = dr["DonGia"].ToString();
-                NLs.Add(new Kho(tensp, tondu, donvi, dongia));
+                NLs.Add(new Kho(tensp, tondu, donvi, nhom));
             }
         }
         finally
