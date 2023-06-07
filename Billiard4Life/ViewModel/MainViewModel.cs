@@ -25,28 +25,28 @@ namespace Billiard4Life.ViewModel
         {
             LoadWindowCommand = new RelayCommand<Window>((p) => true, (p) =>
             {
-                //if(p == null)
-                //{
-                //    return;
-                //}
-                //p.Hide();
-                //LoginWindow window = new LoginWindow();
-                //window.ShowDialog();
-                //var loginVM = window.DataContext as LoginWindowVM;
-                //if(loginVM == null)
-                //{
-                //    return;
-                //}
-                //if(loginVM.IsLoggedIn)
-                //{
-                //    Navigator = new Navigator(loginVM.Role);
-                //    CaiDatViewModel = new CaiDatViewModel(LoginWindowVM.MaNV, loginVM.UserName, loginVM.Password, loginVM.Role);
-                //    p.Show();
-                //}
-                //else
-                //{
-                //    p.Close();
-                //}
+                if (p == null)
+                {
+                    return;
+                }
+                p.Hide();
+                LoginWindow window = new LoginWindow();
+                window.ShowDialog();
+                var loginVM = window.DataContext as LoginWindowVM;
+                if (loginVM == null)
+                {
+                    return;
+                }
+                if (loginVM.IsLoggedIn)
+                {
+                    Navigator = new Navigator(loginVM.Role);
+                    CaiDatViewModel = new CaiDatViewModel(LoginWindowVM.MaNV, loginVM.UserName, loginVM.Password, loginVM.Role);
+                    p.Show();
+                }
+                else
+                {
+                    p.Close();
+                }
             });
 
             LogOutCommand = new RelayCommand<Window>((p) => true, (p) =>

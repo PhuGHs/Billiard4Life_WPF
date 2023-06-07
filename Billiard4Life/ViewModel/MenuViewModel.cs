@@ -61,7 +61,6 @@ namespace Billiard4Life.ViewModel
             });
             Inform_Chef_Of_OrderedDishes = new RelayCommand<object>((p) =>
             {
-                if (SelectedItems.Count == 0) return false;
                 return true;
             }, (p) =>
             {
@@ -71,53 +70,56 @@ namespace Billiard4Life.ViewModel
                 {
                     if (SelectedTable != null)
                     {
-                        HasEnoughIngredients();
-                        if (SelectedTable.Status == 0)
+                        if (SelectedItems.Count > 0)
                         {
-                            MyMessageBox typeOfCustomerAnnouncement = new MyMessageBox("Bạn muốn order thêm món ăn?", true);
-                            typeOfCustomerAnnouncement.ShowDialog();
-                            if (typeOfCustomerAnnouncement.ACCEPT() == false)
+                            HasEnoughIngredients();
+                            if (SelectedTable.Status == 0)
                             {
-                                mess = "Bàn hiện đang được sử dụng! Hãy chọn bàn khác";
+                                MyMessageBox typeOfCustomerAnnouncement = new MyMessageBox("Bạn muốn order thêm món ăn?", true);
+                                typeOfCustomerAnnouncement.ShowDialog();
+                                if (typeOfCustomerAnnouncement.ACCEPT() == false)
+                                {
+                                    mess = "Bàn hiện đang được sử dụng! Hãy chọn bàn khác";
+                                    return;
+                                }
+                            }
+                            if (_sumIngredients.Count == 0)
+                            {
+                                mess = "Hãy thêm thông tin nguyên liệu cho món!";
                                 return;
                             }
+                            if (_selectedIngredientsName.Count > 0)
+                            {
+                                tennl += $"{_selectedIngredientsName[0]}";
+                                if (_selectedIngredientsName.Count > 1)
+                                {
+                                    for (int i = 1; i < _selectedIngredientsName.Count; i++)
+                                    {
+                                        tennl += $" , {_selectedIngredientsName[i]}";
+                                    }
+                                }
+                                mess = $"Không đủ nguyên liệu ({tennl}). Hãy nhập thêm!";
+                                return;
+                            }
+                            MaNV = getMaNV();
+                            MenuDP.Flag.PayABill(Convert.ToInt16(SelectedTable.NumOfTable), DecSubtotal, MaNV);
+                            foreach (SelectedMenuItem orderdish in SelectedItems)
+                            {
+                                MenuDP.Flag.Fill_CTHD(orderdish.ID, orderdish.Quantity);
+                            }
+                            mess = "Đã đặt bàn và báo chế biến thành công!";
+                            SelectedItems.Clear();
+                            DecSubtotal = 0;
+                            StrSubtotal = "0 VND";
+                            _selectedIngredientsName.Clear();
+                            _sumIngredients.Clear();
                         }
-                        //if (_sumIngredients.Count == 0)
-                        //{
-                        //    mess = "Hãy thêm thông tin nguyên liệu cho món!";
-                        //    return;
-                        //}
-                        //if (_selectedIngredientsName.Count > 0)
-                        //{
-                        //    tennl += $"{_selectedIngredientsName[0]}";
-                        //    if (_selectedIngredientsName.Count > 1)
-                        //    {
-                        //        for (int i = 1; i < _selectedIngredientsName.Count; i++)
-                        //        {
-                        //            tennl += $" , {_selectedIngredientsName[i]}";
-                        //        }
-                        //    }
-                        //    mess = $"Không đủ nguyên liệu ({tennl}). Hãy nhập thêm!";
-                        //    return;
-                        //}
-                        //foreach (SelectedMenuItem orderDish in SelectedItems)
-                        //{
-                        //    MenuDP.Flag.InformChef(orderDish.ID, Convert.ToInt32(SelectedTable.NumOfTable), orderDish.Quantity);
-                        //}
-                        //FILL CTHD AFTER INFORM CHEF ORDERED DISHES
-                        //FIX AFTER 
-                        //MaNV = getMaNV();
-                        MenuDP.Flag.PayABill(Convert.ToInt16(SelectedTable.NumOfTable), DecSubtotal, "");
-                        foreach (SelectedMenuItem orderdish in SelectedItems)
+                        else
                         {
-                            MenuDP.Flag.Fill_CTHD(orderdish.ID, orderdish.Quantity);
+                            MaNV = getMaNV();
+                            MenuDP.Flag.PayABill(Convert.ToInt16(SelectedTable.NumOfTable), 0, MaNV);
+                            mess = "Đã đặt bàn thành công!";
                         }
-                        mess = "Đã báo chế biến thành công!";
-                        SelectedItems.Clear();
-                        DecSubtotal = 0;
-                        StrSubtotal = "0 VND";
-                        _selectedIngredientsName.Clear();
-                        _sumIngredients.Clear();
                         Tables = MenuDP.Flag.GetTables();
                     }
                     else if (SelectedTable == null)

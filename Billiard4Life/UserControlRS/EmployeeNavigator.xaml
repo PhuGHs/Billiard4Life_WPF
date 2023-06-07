@@ -45,7 +45,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="RadioButton">
-                                    <Border Background="{TemplateBinding Background}" BorderThickness="4 0 0 0" BorderBrush="#a5a1f5">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="4 0 0 0" BorderBrush="#ECF9FF">
                                         <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                                     </Border>
                                 </ControlTemplate>
@@ -99,7 +99,7 @@
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
             <StackPanel>
-                <Separator Height="0.8" Margin="20 30" Background="#46558a"/>
+                <Separator Height="0.8" Margin="20 30" Background="#EAE7B1"/>
                 <!--sidebarRadioButton-->
                 <!--Menu-->
                 <RadioButton IsChecked="True"  Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.Menu}">
@@ -115,11 +115,11 @@
                         <TextBlock Text="Tình Trạng Bàn" Style="{StaticResource sideBarRadioButtonText}" />
                     </StackPanel>
                 </RadioButton>
-                <!--Bếp-->
+                <!--Khách Hàng-->
                 <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.Bep}">
                     <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="KitchenSet" Style="{StaticResource sidebarRadioButtonIcon}" />
-                        <TextBlock Text="Bếp" Style="{StaticResource sideBarRadioButtonText}" />
+                        <fa:IconImage Icon="PeopleRoof" Style="{StaticResource sidebarRadioButtonIcon}" />
+                        <TextBlock Text="Khách Hàng" Style="{StaticResource sideBarRadioButtonText}" />
                     </StackPanel>
                 </RadioButton>
             </StackPanel>

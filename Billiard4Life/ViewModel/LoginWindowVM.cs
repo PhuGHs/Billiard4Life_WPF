@@ -68,8 +68,8 @@ namespace RestaurantManagement.ViewModel
                 while (reader.Read())
                 {
                     IsLoggedIn = true;
-                    Role = reader.GetString(3);
-                    MaNV = reader.GetString(4);
+                    Role = reader.GetString(2);
+                    MaNV = reader.GetString(3);
                 }
                 reader.Close();
 

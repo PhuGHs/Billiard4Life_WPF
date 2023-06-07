@@ -327,7 +327,7 @@ namespace Billiard4Life.ViewModel
                     gia.Add(reader.GetDecimal(2).ToString());
                 }
 
-                if (ten.Count > 0)
+                if (true)
                 {
                     DisplayBill(BillID);
                     MyMessageBox yesno = new MyMessageBox("Bạn có muốn in hóa đơn?", true);
@@ -360,19 +360,22 @@ namespace Billiard4Life.ViewModel
 
                                 BaseFont bf = BaseFont.CreateFont(Environment.GetEnvironmentVariable("windir") + @"\fonts\TIMES.TTF", BaseFont.IDENTITY_H, true);
                                 Font f = new Font(bf, 16, Font.NORMAL);
-
-                                PdfPCell cell = new PdfPCell(new Phrase("Tên món", f));
-                                pdfTable.AddCell(cell);
-                                cell = new PdfPCell(new Phrase("Số lượng", f));
-                                pdfTable.AddCell(cell);
-                                cell = new PdfPCell(new Phrase("Giá", f));
-                                pdfTable.AddCell(cell);
-                                for (int i = 0; i < ten.Count; i++)
+                                if (ten.Count > 0)
                                 {
-                                    pdfTable.AddCell(new Phrase(ten[i], f));
-                                    pdfTable.AddCell(new Phrase(soluong[i], f));
-                                    pdfTable.AddCell(new Phrase(gia[i], f));
+                                    PdfPCell cell = new PdfPCell(new Phrase("Tên món", f));
+                                    pdfTable.AddCell(cell);
+                                    cell = new PdfPCell(new Phrase("Số lượng", f));
+                                    pdfTable.AddCell(cell);
+                                    cell = new PdfPCell(new Phrase("Giá", f));
+                                    pdfTable.AddCell(cell);
+                                    for (int i = 0; i < ten.Count; i++)
+                                    {
+                                        pdfTable.AddCell(new Phrase(ten[i], f));
+                                        pdfTable.AddCell(new Phrase(soluong[i], f));
+                                        pdfTable.AddCell(new Phrase(gia[i], f));
+                                    }
                                 }
+                                
 
                                 using (FileStream stream = new FileStream(sfd.FileName, FileMode.Create))
                                 {
@@ -382,8 +385,8 @@ namespace Billiard4Life.ViewModel
                                     pdfDoc.Add(new Paragraph("                                                 HÓA ĐƠN ", f));
                                     pdfDoc.Add(new Paragraph("    "));
                                     pdfDoc.Add(new Paragraph("Số bàn: " + TableID.ToString() + "                                                                    Mã hóa đơn: " + BillID.ToString(), f));
-                                    pdfDoc.Add(new Paragraph("Thời gian chơi: " + TimeSpanPlayer.TotalHours.ToString(), f));
                                     pdfDoc.Add(new Paragraph("Thời gian: " + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Year.ToString() + " " + DateTime.Now.TimeOfDay.ToString(), f));
+                                    pdfDoc.Add(new Paragraph("Thời gian chơi: " + TimeSpanPlayer.ToString(@"hh\:mm\:ss"), f));
                                     pdfDoc.Add(new Paragraph("    "));
                                     pdfDoc.Add(pdfTable);
                                     pdfDoc.Add(new Paragraph("Tổng cộng:                                                                    " + OverallBill, f));
@@ -410,43 +413,48 @@ namespace Billiard4Life.ViewModel
                 }
                 else
                 {
-                    MyMessageBox mess = new MyMessageBox("Không tồn tại hóa đơn!");
-                    mess.ShowDialog();
+                    //MyMessageBox mess = new MyMessageBox("Không tồn tại hóa đơn!");
+                    //mess.ShowDialog();
                 }
             }
         }
 
         public void Payment()
         {
+            bool next = true;
             foreach (Table table in _tables)
             {
                 if (table.ID == IDofPaidTable)
                 {
                     if(KM == null)
                     {
-                        TinhTrangBanDP.Flag.UpdateBillNonDiscount(table.Bill_ID, CustomerPhoneNumber, D_OverAllBill, TimeSpanPlayer);
+                        next = TinhTrangBanDP.Flag.UpdateBillNonDiscount(table.Bill_ID, CustomerPhoneNumber, D_OverAllBill, TimeSpanPlayer);
                     } else
                     {
-                        TinhTrangBanDP.Flag.UpdateBill(table.Bill_ID, CustomerPhoneNumber, D_OverAllBill, TimeSpanPlayer, KM.MAKM);
+                        next = TinhTrangBanDP.Flag.UpdateBill(table.Bill_ID, CustomerPhoneNumber, D_OverAllBill, TimeSpanPlayer, KM.MAKM);
                     }
-                    TinhTrangBanDP.Flag.UpdateKhachHangAccumulatedPoint(((int)D_OverAllBill / 50000) * 20, CustomerPhoneNumber);
-                    table.Coloroftable = "#05BFDB";
-                    table.Status = 0;
-                    TinhTrangBanDP.Flag.UpdateTable(table.ID, true);
+                    if (next)
+                    {
+                        TinhTrangBanDP.Flag.UpdateKhachHangAccumulatedPoint(((int)D_OverAllBill / 50000) * 20, CustomerPhoneNumber);
+                        table.Coloroftable = "#05BFDB";
+                        table.Status = 0;
+                        TinhTrangBanDP.Flag.UpdateTable(table.ID, true);
 
-                    PrintBill(table.Bill_ID, table.ID);
-                    Dec_sumofbill = 0;
-                    D_TotalDiscount = 0;
-                    D_OverAllBill = 0;
-                    SumofBill = String.Format("{0:0,0 VND}", Dec_sumofbill);
-                    TotalDiscount = String.Format("{0:0,0 VND}", D_TotalDiscount);
-                    OverallBill = String.Format("{0:0,0 VND}", D_OverAllBill);
+                        PrintBill(table.Bill_ID, table.ID);
+                        Dec_sumofbill = 0;
+                        D_TotalDiscount = 0;
+                        D_OverAllBill = 0;
+                        SumofBill = String.Format("{0:0,0 VND}", Dec_sumofbill);
+                        TotalDiscount = String.Format("{0:0,0 VND}", D_TotalDiscount);
+                        OverallBill = String.Format("{0:0,0 VND}", D_OverAllBill);
 
-                    SelectedItems.Clear();
-                    TitleOfBill = "";
-                    MyMessageBox msb = new MyMessageBox("Đã thanh toán thành công!");
-                    msb.Show();
-                    break;
+                        SelectedItems.Clear();
+                        TitleOfBill = "";
+                        MyMessageBox msb = new MyMessageBox("Đã thanh toán thành công!");
+                        msb.Show();
+                        break;
+                    }
+                    
                 }
             }
         }
