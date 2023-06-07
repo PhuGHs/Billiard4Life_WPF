@@ -56,7 +56,7 @@ namespace Billiard4Life.ViewModel
                 return true;
             }, (p) =>
             {
-                MyMessageBox msb = new MyMessageBox($"Việc xoá món ăn có thể dẫn đến mất mát dữ liệu của các phần khác. Bạn có muốn tiếp tục?", true);
+                MyMessageBox msb = new MyMessageBox($"Bạn có muốn xoá món này?", true);
                 msb.ShowDialog();
                 if (msb.ACCEPT() == true)
                 {

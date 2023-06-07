@@ -32,7 +32,7 @@ public class MenuDP : DataProvider
         ObservableCollection<MenuItem> menuItems = new ObservableCollection<MenuItem>();
         try
         {
-            DataTable dt = LoadInitialData("Select * from MENU");
+            DataTable dt = LoadInitialData("Select * from MENU WHERE Deleted = 0");
             foreach (DataRow row in dt.Rows)
             {
                 string maMon = row["MaMon"].ToString();
@@ -144,7 +144,7 @@ public class MenuDP : DataProvider
         {
             DBOpen();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Delete from MENU where MaMon = @mamon";
+            cmd.CommandText = "UPDATE MENU SET Deleted = 1 WHERE MaMon = @mamon";
             cmd.Parameters.AddWithValue("@mamon", MaMon);
 
             cmd.Connection = SqlCon;

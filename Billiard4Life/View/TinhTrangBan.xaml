@@ -219,7 +219,7 @@
 
                                     <Label Grid.Column="0"
                                            VerticalContentAlignment="Center"  
-                                           Content="Khách hàng (SĐT)"
+                                           Content="Mã khách hàng: "
                                            FontSize="17" 
                                            FontWeight="SemiBold"/>
 
