@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Name="loginWindow"
         Title="LoginWindow" Height="450" Width="800"
-        TextElement.Foreground="#1C3879"
+        TextElement.Foreground="#3C6255"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="18"
         TextOptions.TextFormattingMode="Ideal"
@@ -100,7 +100,8 @@
                             Command="{Binding LoginCM}"
                             CommandParameter="{Binding ElementName=loginWindow}"
                             Content="Đăng nhập"
-                            Background="#1C3879"/>
+                            Foreground="#EAE7B1"
+                            Background="#3C6255"/>
                 </Grid>
             </Border>
 

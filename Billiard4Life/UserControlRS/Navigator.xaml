@@ -118,7 +118,7 @@
                         <TextBlock Text="Lịch Sử Bàn" Style="{StaticResource sideBarRadioButtonText}" />
                     </StackPanel>
                 </RadioButton>
-                <!--Bếp-->
+                <!--Khách Hàng-->
                 <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.Bep}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="PeopleRoof" Style="{StaticResource sidebarRadioButtonIcon}" />

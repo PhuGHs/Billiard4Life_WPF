@@ -7,7 +7,6 @@
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             xmlns:nav="clr-namespace:Billiard4Life.State.Navigator"
              xmlns:vm="clr-namespace:Billiard4Life.ViewModel"
              d:DesignHeight="660" d:DesignWidth="1060"
              Background="Transparent"
@@ -28,7 +27,7 @@
                     <Setter Property="Height" Value="35"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsFocused, ElementName=txtInput}" Value="True">
-                            <Setter Property="BorderBrush" Value="#1C3879"/>
+                            <Setter Property="BorderBrush" Value="#3C6255"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -54,7 +53,7 @@
                     <Setter Property="Foreground" Value="#D8D8D8"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsFocused, ElementName=txtInput}" Value="True">
-                            <Setter Property="Foreground" Value="#1C3879"/>
+                            <Setter Property="Foreground" Value="#3C6255"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -253,7 +252,7 @@
                                                                     CommandParameter="{Binding}"
                                                                     Background="Transparent" 
                                                                     BorderThickness="0">
-                                                                    <fa:IconImage Icon="TrashCan" Foreground="#1C3879" Height="14" Width="14" />
+                                                                    <fa:IconImage Icon="TrashCan" Foreground="#3C6255" Height="14" Width="14" />
                                                                 </Button>
                                                                 <TextBlock Grid.Column="1"  
                                                                            TextAlignment="Left" 
@@ -295,7 +294,7 @@
                                     <TextBlock Text="{Binding Path=StrSubtotal}" 
                                                FontSize="15" 
                                                FontWeight="SemiBold" 
-                                               Foreground="#1C3879"
+                                               Foreground="#3C6255"
                                                TextAlignment="Right"/>
                                 </StackPanel>
 
@@ -306,8 +305,6 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20 20 0 0" >
                                     <Button Background="#3C6255" 
-                                            BorderBrush="#1C3879" 
-                                            BorderThickness="1"
                                             Width="155"
                                             Command="{Binding ClearAllSelectedDishes}"
                                            >

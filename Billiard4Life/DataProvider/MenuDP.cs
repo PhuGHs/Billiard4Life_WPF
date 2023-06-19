@@ -32,7 +32,7 @@ public class MenuDP : DataProvider
         ObservableCollection<MenuItem> menuItems = new ObservableCollection<MenuItem>();
         try
         {
-            DataTable dt = LoadInitialData("Select * from MENU");
+            DataTable dt = LoadInitialData("Select * from MENU WHERE Deleted = 0");
             foreach (DataRow row in dt.Rows)
             {
                 string maMon = row["MaMon"].ToString();
@@ -81,7 +81,7 @@ public class MenuDP : DataProvider
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "Exec PAY_A_BILL_PD @trigia, @manv, @soban, @ngayHD, @trangthai";
             cmd.Parameters.AddWithValue("@trigia", sum);
-            cmd.Parameters.AddWithValue("@manv", "NV01");
+            cmd.Parameters.AddWithValue("@manv", MaNV);
             cmd.Parameters.AddWithValue("@soban", soban);
             cmd.Parameters.AddWithValue("@ngayHD", DateTime.Now);
             cmd.Parameters.AddWithValue("@trangthai", "Chưa trả");
@@ -123,7 +123,7 @@ public class MenuDP : DataProvider
         {
             DBOpen();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "INSERT INTO MENU VALUES (@MaMon, @TenMon, @Gia, @AnhMonAn)";
+            cmd.CommandText = "INSERT INTO MENU VALUES (@MaMon, @TenMon, @AnhMonAn, @Gia)";
             cmd.Parameters.AddWithValue("@MaMon", x.ID);
             cmd.Parameters.AddWithValue("@TenMon", x.FoodName);
             cmd.Parameters.AddWithValue("@AnhMonAn", Converter.ImageConverter.ConvertImageToBytes(x.FoodImage));
@@ -144,7 +144,7 @@ public class MenuDP : DataProvider
         {
             DBOpen();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Delete from MENU where MaMon = @mamon";
+            cmd.CommandText = "UPDATE MENU SET Deleted = 1 WHERE MaMon = @mamon";
             cmd.Parameters.AddWithValue("@mamon", MaMon);
 
             cmd.Connection = SqlCon;
@@ -206,14 +206,15 @@ public class MenuDP : DataProvider
         ObservableCollection<Kho> NLs = new ObservableCollection<Kho>();
         try
         {
-            DataTable dt = LoadInitialData("Select * from KHO");
+            DataTable dt = LoadInitialData("Select * from KHO WHERE Xoa = 0");
             foreach (DataRow dr in dt.Rows)
             {
                 string tensp = dr["TenSanPham"].ToString();
                 float tondu = (float)Convert.ToDouble(dr["TonDu"]);
+                //float MucBaoNhap = (float)Convert.ToDouble(dr["MucBaoNhap"]);
+                string nhom = dr["NhomSanPham"].ToString();
                 string donvi = dr["DonVi"].ToString();
-                string dongia = dr["DonGia"].ToString();
-                NLs.Add(new Kho(tensp, tondu, donvi, dongia));
+                NLs.Add(new Kho(tensp, tondu, donvi, nhom));
             }
         }
         finally

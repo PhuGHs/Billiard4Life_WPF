@@ -44,6 +44,7 @@ namespace Billiard4Life.ViewModel
             {
                 MenuAdmin_ThemMon window = new MenuAdmin_ThemMon();
                 window.DataContext = this;
+                IsFirstTabVisible = true;
                 IsAdding = true;
                 window.ShowDialog();
             });
@@ -55,7 +56,7 @@ namespace Billiard4Life.ViewModel
                 return true;
             }, (p) =>
             {
-                MyMessageBox msb = new MyMessageBox($"Việc xoá món ăn có thể dẫn đến mất mát dữ liệu của các phần khác. Bạn có muốn tiếp tục?", true);
+                MyMessageBox msb = new MyMessageBox($"Bạn có muốn xoá món này?", true);
                 msb.ShowDialog();
                 if (msb.ACCEPT() == true)
                 {
@@ -71,19 +72,10 @@ namespace Billiard4Life.ViewModel
                 return true;
             }, (p) =>
             {
-                try
-                {
-                    MenuDP.Flag.AddDish(AddItem);
-                    MenuItems.Add(new Models.MenuItem(AddItem.ID, AddItem.FoodName, AddItem.Price, AddItem.FoodImage));
-                    MyMessageBox msb = new MyMessageBox("Thêm thành công!");
-                    msb.Show();
-                }
-                catch (SqlException e)
-                {
-                    MyMessageBox msb = new MyMessageBox(e.Message);
-                    msb.Show();
-                    return;
-                }
+                MenuDP.Flag.AddDish(AddItem);
+                MenuItems.Add(new Models.MenuItem(AddItem.ID, AddItem.FoodName, AddItem.Price, AddItem.FoodImage));
+                MyMessageBox msb = new MyMessageBox("Thêm thành công!");
+                msb.Show();
             });
             AddImage_Command = new RelayCommand<object>((p) => true, (p) =>
             {
@@ -145,7 +137,7 @@ namespace Billiard4Life.ViewModel
                 return true;
             }, (p) =>
             {
-                MenuAdmin_ThemNLieu IngreAddView = new MenuAdmin_ThemNLieu();
+                MenuAdmin_ThemMon IngreAddView = new MenuAdmin_ThemMon();
                 IngreAddView.DataContext = this;
                 IngreAddView.ShowDialog();
             });
@@ -274,8 +266,9 @@ namespace Billiard4Life.ViewModel
             EditIngredient_Command = new RelayCommand<object>((p) => true, (p) =>
             {
                 IsAdding = false;
+                IsFirstTabVisible = false;
                 Ingredients_ForDishes = MenuDP.Flag.GetIngredientsForDish(MenuItem.ID);
-                MenuAdmin_ThemNLieu IngreAddView = new MenuAdmin_ThemNLieu();
+                MenuAdmin_ThemMon IngreAddView = new();
                 IngreAddView.DataContext = this;
                 IngreAddView.ShowDialog();
             });
@@ -298,7 +291,19 @@ namespace Billiard4Life.ViewModel
             private Models.Kho _selected_Ingredient;
             private Models.MenuItem addItem;
             private bool IsAdding;
-        private bool _dishHasBeenAdded;
+            private Visibility tabDish, tabIngredient;
+            private bool _dishHasBeenAdded;
+            private TabItem _selectedTab;
+            private bool _isFirstTabVisible = true;
+            public bool IsFirstTabVisible
+            {
+                get { return _isFirstTabVisible; }
+                set
+                {
+                    _isFirstTabVisible = value;
+                    OnPropertyChanged(nameof(IsFirstTabVisible));
+                }
+            }
         #endregion
 
         #region properties
@@ -312,6 +317,9 @@ namespace Billiard4Life.ViewModel
             public bool DishHasBeenAdded { get { return _dishHasBeenAdded; } set { _dishHasBeenAdded = value; OnPropertyChanged(); } }
             public string FilterText { get { return _filterText; } set { _filterText = value; this._menuItemsView.View.Refresh(); OnPropertyChanged(); } }
             public string IngreFilterText { get { return _ingreFilterText; } set { _ingreFilterText = value; this._ingredientsView.View.Refresh(); OnPropertyChanged(); } }
+            public Visibility TabDish { get { return tabDish; } set { tabDish = value; OnPropertyChanged(); } }
+            public Visibility TabIngredient { get { return tabIngredient; } set { tabIngredient = value; OnPropertyChanged(); } }
+            public TabItem SelectedTab { get { return _selectedTab; } set { _selectedTab = value; OnPropertyChanged(); } }
             public ICollectionView MenuItemCollection
             {
                 get

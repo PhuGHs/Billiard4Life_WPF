@@ -75,7 +75,6 @@
         <!--EDIT VIEW-->
         <Grid Grid.Column="2"
               x:Name="EditGrid"
-              Visibility="{Binding EditView}"
               Margin="0 20 20 20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200"/>
@@ -97,7 +96,7 @@
                     BorderThickness="0">
                 <fa:IconImage Icon="Edit" Foreground="#3C6255"/>
             </Button>
-            
+
             <Border Padding="20" Grid.Row="2" Background="#EAEAEA" CornerRadius="8">
                 <StackPanel Orientation="Vertical">
                     <Grid>
@@ -128,7 +127,7 @@
                           FontSize="16"
                           materialDesign:HintAssist.Hint="Giá (VNĐ)"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    
+
                     <Button Margin="20 60 20 0"
                             Content="Sửa, xem nguyên liệu"
                             Foreground="White"
@@ -156,6 +155,5 @@
                 </StackPanel>
             </Border>
         </Grid>
-        <!--ADD VIEW-->
     </Grid>
 </UserControl>

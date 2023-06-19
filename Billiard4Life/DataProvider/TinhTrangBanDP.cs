@@ -163,8 +163,9 @@ namespace Billiard4Life.DataProvider
                 DBClose();
             }
         }
-        public void UpdateBill(int BillID, string makh, Decimal tong, TimeSpan SoGio, string makm)
+        public bool UpdateBill(int BillID, string makh, Decimal tong, TimeSpan SoGio, string makm)
         {
+            bool next = true;
             try
             {
                 DBOpen();
@@ -181,14 +182,22 @@ namespace Billiard4Life.DataProvider
 
                 cmd.ExecuteNonQuery();
             }
+            catch (SqlException ex)
+            {
+                MyMessageBox msb = new MyMessageBox("Không tồn tại mã khách hàng");
+                msb.Show();
+                next = false;
+            }
             finally
             {
                 DBClose();
             }
+            return next;
         }
 
-        public void UpdateBillNonDiscount(int BillID, string makh, Decimal tong, TimeSpan SoGio)
+        public bool UpdateBillNonDiscount(int BillID, string makh, Decimal tong, TimeSpan SoGio)
         {
+            bool next = true;
             try
             {
                 DBOpen();
@@ -203,11 +212,17 @@ namespace Billiard4Life.DataProvider
                 cmd.Parameters.AddWithValue("@trigia", tong);
 
                 cmd.ExecuteNonQuery();
+            } catch(SqlException ex)
+            {
+                MyMessageBox msb = new MyMessageBox("Không tồn tại mã khách hàng");
+                msb.Show();
+                next = false;
             }
             finally
             {
                 DBClose();
             }
+            return next;
         }
         public void UpdateKhachHangAccumulatedPoint(int SoDiem, string MaKH)
         {
