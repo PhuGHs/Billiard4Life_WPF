@@ -53,26 +53,36 @@ namespace Billiard4Life.ViewModel
 
             DeleteKhuyenMai_Command = new RelayCommand<object>((p) => true, (p) =>
             {
-                string mess = String.Empty;
-                try
+                if (IsAnyKhuyenMaiSelected() == false)
                 {
-                    foreach (KhuyenMai item in KhuyenMais.ToList())
-                    {
-                        if (item.IsSelected == true)
-                        {
-                            KhuyenMais.Remove(item);
-                            KhuyenMaiDP.Flag.DeleteKhuyenmai(item.MAKM);
-                        }
-                    }
-                    mess = "Xoá thành công";
-                } catch (Exception ex)
-                {
-                    mess = ex.Message;
-                } finally
-                {
-                    MyMessageBox msb = new MyMessageBox(mess);
-                    msb.Show();
+                    MyMessageBox msb = new MyMessageBox("Hãy tích vào khuyến mãi mà bạn muốn xóa!");
+                    msb.ShowDialog();
                 }
+                else
+                {
+                    string mess = String.Empty;
+                    try
+                    {
+                        foreach (KhuyenMai item in KhuyenMais.ToList())
+                        {
+                            if (item.IsSelected == true)
+                            {
+                                KhuyenMais.Remove(item);
+                                KhuyenMaiDP.Flag.DeleteKhuyenmai(item.MAKM);
+                            }
+                        }
+                        mess = "Xoá thành công";
+                    }
+                    catch (Exception ex)
+                    {
+                        mess = ex.Message;
+                    }
+                    finally
+                    {
+                        MyMessageBox msb = new MyMessageBox(mess);
+                        msb.Show();
+                    }
+                }    
             });
 
             AddKhuyenMaiItem_Command = new RelayCommand<Grid>((p) =>
@@ -245,6 +255,17 @@ namespace Billiard4Life.ViewModel
             {
                 e.Accepted = false;
             }
+        }
+        private bool IsAnyKhuyenMaiSelected()
+        {
+            foreach (KhuyenMai item in KhuyenMais.ToList())
+            {
+                if (item.IsSelected == true)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         #endregion
     }

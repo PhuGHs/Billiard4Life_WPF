@@ -117,7 +117,7 @@ namespace Billiard4Life.ViewModel
                     DateBeginVisible = "Visible";
                     DateEndVisible = "Visible";
                     ListTimeVisible = "Hidden";
-                    DateBegin = "1/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+                    DateBegin = DateTime.Now.Month + "/1/" + DateTime.Now.Year;
                     DateEnd = DateTime.Now.ToShortDateString();
                 }
                 if (TypeSelected == "Theo tháng")

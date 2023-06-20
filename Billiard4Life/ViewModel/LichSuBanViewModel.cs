@@ -73,7 +73,7 @@ namespace Billiard4Life.ViewModel
             OpenConnect();
 
             ListBill = new ObservableCollection<HoaDon>();
-            DateBegin = "1/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+            DateBegin = DateTime.Now.Month + "/1/" + DateTime.Now.Year;
             DateEnd = DateTime.Now.ToShortDateString();
 
             DetailCM = new RelayCommand<object>((p) => 

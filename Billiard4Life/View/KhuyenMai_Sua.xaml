@@ -2,115 +2,161 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Billiard4Life.View"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Sửa thông tin khuyến mãi" Height="500" Width="800">
+        WindowStyle="None"
+        TextElement.Foreground="#3C6255"
+        TextElement.FontFamily="Comfortaa"
+        TextElement.FontSize="16"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="Transparent"
+        FontFamily="Comfortaa"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Title="Sửa thông tin khuyến mãi" Height="500" Width="600">
     <Grid>
-        <Grid.Resources>
-            <Style x:Key="SearchBar" TargetType="Border">
-                <Setter Property="Width" Value="330"/>
-                <Setter Property="Background" Value="#EAEAEA" />
-                <Setter Property="CornerRadius" Value="14"/>
-                <Setter Property="Padding" Value="2"/>
-                <Setter Property="Height" Value="45"/>
-            </Style>
-            <Style x:Key="Txtbox" TargetType="TextBox">
-                <Setter Property="Foreground" Value="#413F42"/>
-                <Setter Property="Margin" Value="10 0"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="Padding" Value="4"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Background" Value="Transparent"/>
-            </Style>
-            <Style x:Key="label" TargetType="Label">
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="Foreground" Value="#73777B"/>
-                <Setter Property="Margin" Value="5 0 0 0"/>
-            </Style>
-            <Style x:Key="combobox" TargetType="ComboBox">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="Foreground" Value="#413F42"/>
-                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="10 0"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Padding" Value="4"/>
-            </Style>
-        </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="400"/>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid Width="730" x:Name="info_field">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical" x:Name="stack1">
-                <StackPanel Margin="0 5 0 20" x:Name="stack2">
-                    <Label Content="Mã khuyến mãi" Style="{StaticResource label}"/>
-                    <Border Style="{StaticResource SearchBar}" x:Name="border">
-                        <TextBox IsReadOnly="True" x:Name="textbox" Style="{StaticResource Txtbox}" Text="{Binding SelectedItem.MAKM, Mode=TwoWay}"/>
-                    </Border>
-                </StackPanel>
-                <StackPanel Margin="0 0 0 20">
-                    <Label Content="Ngày bắt đầu" Style="{StaticResource label}"/>
-                    <Border Style="{StaticResource SearchBar}">
-                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding SelectedItem.NgayBatDau, Mode=TwoWay}" Foreground="#413F42" Margin="10 0"/>
-                    </Border>
-                </StackPanel>
-                <StackPanel Margin="0 0 0 20">
-                    <Label Content="Giá trị giảm (%)" Style="{StaticResource label}"/>
-                    <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding SelectedItem.GiamGia, Mode=TwoWay}"/>
-                    </Border>
-                </StackPanel>
-                <StackPanel Grid.Row="1" Margin="0 0 0 20">
-                    <Label Content="Mô tả" Style="{StaticResource label}"/>
-                    <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}"  Text="{Binding SelectedItem.MoTa, Mode=TwoWay}"/>
-                    </Border>
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Column="2">
-                <StackPanel Margin="0 5 0 20">
-                    <Label Content="Tên khuyến mãi" Style="{StaticResource label}"/>
-                    <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding SelectedItem.TenKM, Mode=TwoWay}"/>
-                    </Border>
-                </StackPanel>
-                <StackPanel Margin="0 0 0 20">
-                    <Label Content="Ngày kết thúc" Style="{StaticResource label}"/>
-                    <Border Style="{StaticResource SearchBar}">
-                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding SelectedItem.NGayKetThuc, Mode=TwoWay}" Foreground="#413F42" Margin="10 0"/>
-                    </Border>
-                </StackPanel>
-                <StackPanel Margin="0 0 0 20">
-                    <Label Content="Mức áp dụng" Style="{StaticResource label}"/>
-                    <Border Style="{StaticResource SearchBar}">
-                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding SelectedItem.MucApDung, Mode=TwoWay}"/>
-                    </Border>
-                </StackPanel>
-                <StackPanel Margin="0 0 0 20">
-                    <Label Content="Trạng thái" Style="{StaticResource label}"/>
-                    <Border Style="{StaticResource SearchBar}">
-                        <ComboBox Style="{StaticResource combobox}" ItemsSource="{Binding TrangThais}" SelectedItem="{Binding SelectedItem.TrangThai}"/>
-                    </Border>
-                </StackPanel>
-            </StackPanel>
+        <Border Background="White"
+                CornerRadius="5"
+                BorderBrush="#61876E"
+                BorderThickness="4"/>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Border Background="#EEEEEE"
+                        CornerRadius="5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="SỬA KHUYẾN MÃI"
+                           Margin="10 0 0 0"
+                           Foreground="#3C6255"
+                           VerticalAlignment="Center"/>
+                    <Button Grid.Column="1"
+                            Name="btnClose"
+                            Height="20"
+                            Width="20"
+                            Cursor="Hand"
+                            CommandParameter="{Binding ElementName=themNV}"
+                            materialDesign:ButtonAssist.CornerRadius="0,10,0,0"
+                            BorderThickness="0"
+                            Background="Transparent" Click="btnClose_Click">
+                        <fa:IconImage Icon="PowerOff"
+                                      Foreground="#3C6255"
+                                      Margin="-27 -4 -15 -4"
+                                      Height="20"
+                                      Width="20"/>
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1"
+                  Margin="0 7 0 0">
+                <Border Background="#EEEEEE"
+                        CornerRadius="5"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox materialDesign:HintAssist.Hint="Mã khuyến mãi"
+                                 Grid.Column="0"
+                                 Text="{Binding SelectedItem.MAKM, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Comfortaa"
+                                 IsEnabled="False"
+                                 Margin="15 22 5 22"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox materialDesign:HintAssist.Hint="Tên khuyến mãi"
+                                 Grid.Column="1"
+                                 Text="{Binding SelectedItem.TenKM, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Comfortaa"
+                                 Margin="5 22 15 22"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <DatePicker Grid.Column="0"
+                                    Name="datepickerstart"
+                                    SelectedDate="{Binding SelectedItem.NgayBatDau, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                    FontFamily="Comfortaa"
+                                    Margin="15 15 5 15"
+                                    materialDesign:HintAssist.Hint="Ngày bắt đầu"
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
+                        <DatePicker Grid.Column="1"
+                                    Name="datepickerend"
+                                    SelectedDate="{Binding SelectedItem.NGayKetThuc, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                    FontFamily="Comfortaa"
+                                    Margin="5 15 15 15"
+                                    materialDesign:HintAssist.Hint="Ngày kết thúc"
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox materialDesign:HintAssist.Hint="Giá trị giảm (%)"
+                                 Grid.Column="0"
+                                 Text="{Binding SelectedItem.GiamGia, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Comfortaa"
+                                 Margin="15 22 5 22"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox materialDesign:HintAssist.Hint="Mức áp dụng"
+                                 Grid.Column="1"
+                                 Text="{Binding SelectedItem.MucApDung, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Comfortaa"
+                                 Margin="5 22 15 22"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox materialDesign:HintAssist.Hint="Mô tả"
+                                 Grid.Column="0"
+                                 Text="{Binding SelectedItem.MoTa, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Comfortaa"
+                                 Margin="15 22 5 20"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <ComboBox materialDesign:HintAssist.Hint="Trạng thái"
+                                  Grid.Column="1"
+                                  Text="{Binding SelectedItem.TrangThai, UpdateSourceTrigger=PropertyChanged}"
+                                  ItemsSource="{Binding TrangThais}"
+                                  SelectedItem="{Binding SelectedItem.TrangThai}"
+                                  FontFamily="Comfortaa"
+                                  Margin="5 15 15 10"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        </ComboBox>
+                    </Grid>
+                    <Button Content="Lưu" 
+                            Margin="15 0"
+                            Foreground="White"
+                            Background="#3C6255" 
+                            Command="{Binding EditKhuyenMaiItem_Command}"
+                            CommandParameter="{Binding ElementName=info_field}"
+                            Grid.Row="4"/>
+                </Grid>
+            </Grid>
         </Grid>
-        <Button Content="Lưu" 
-                Foreground="White"
-                Background="#3C6255" 
-                Grid.Row="1"
-                Command="{Binding EditKhuyenMaiItem_Command}"
-                Width="90" 
-                BorderThickness="0"
-                HorizontalAlignment="Right" 
-                Margin="0 0 40 0"/>
     </Grid>
 </Window>

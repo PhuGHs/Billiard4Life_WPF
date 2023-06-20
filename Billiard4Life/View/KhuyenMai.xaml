@@ -33,15 +33,13 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="450"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="260"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
-                <Button Background="Transparent" Width="50" Margin="10 0 0 0" BorderThickness="0">
-                    <fa:IconImage Icon="Search" Foreground="#3C6255"/>
-                </Button>
                 <TextBox 
                     Margin="20 0 0 0"
-                    Width="370"
                     Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     materialDesign:HintAssist.HintOpacity="0.8"
                     materialDesign:HintAssist.Hint="Tìm kiếm khuyến mãi bằng tên khuyến mãi..." 
@@ -53,11 +51,27 @@
                     VerticalContentAlignment="Center"
                 />
             </StackPanel>
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Command="{Binding AddKhuyenMai_Command}" Foreground="White" Content="Thêm" Background="#3C6255" Margin="10 0" BorderThickness="0"/>
-                <Button Command="{Binding EditKhuyenMai_Command}" Content="Sửa" Foreground="White" Background="#3C6255" Margin="10 0" BorderThickness="0"/>
-                <Button Content="Xoá" Command="{Binding DeleteKhuyenMai_Command}" Foreground="White" Background="#3C6255" Margin="10 0" BorderThickness="0"/>
-            </StackPanel>
+            <Button Command="{Binding AddKhuyenMai_Command}"
+                    Grid.Column="2"
+                    Foreground="White" 
+                    Content="Thêm" 
+                    Background="#3C6255" 
+                    Margin="10 0" 
+                    BorderThickness="0"/>
+            <Button Command="{Binding EditKhuyenMai_Command}"
+                    Grid.Column="3"
+                    Content="Sửa" 
+                    Foreground="White" 
+                    Background="#3C6255" 
+                    Margin="10 0" 
+                    BorderThickness="0"/>
+            <Button Content="Xoá"
+                    Grid.Column="4"
+                    Command="{Binding DeleteKhuyenMai_Command}" 
+                    Foreground="White" 
+                    Background="#3C6255" 
+                    Margin="10 0" 
+                    BorderThickness="0"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -87,7 +101,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Tên khuyến mãi" DisplayMemberBinding="{Binding TenKM}"/>
+                        <GridViewColumn Header="Tên KM" DisplayMemberBinding="{Binding TenKM}"/>
                         <GridViewColumn Width="100" Header="Mã" DisplayMemberBinding="{Binding MAKM}"/>
                         <GridViewColumn Header="Giảm (%)" DisplayMemberBinding="{Binding GiamGia}"/>
                         <GridViewColumn Header="Mức áp dụng" DisplayMemberBinding="{Binding MucApDung}"/>

@@ -57,5 +57,10 @@ namespace Billiard4Life.View
                 datepickerend.SelectedDate = currentDate.Date;
             }
         }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
