@@ -32,7 +32,7 @@ public class MenuDP : DataProvider
         ObservableCollection<MenuItem> menuItems = new ObservableCollection<MenuItem>();
         try
         {
-            DataTable dt = LoadInitialData("Select * from MENU WHERE Deleted = 0");
+            DataTable dt = LoadInitialData("Select * from MENU WHERE DELETED = 0");
             foreach (DataRow row in dt.Rows)
             {
                 string maMon = row["MaMon"].ToString();
@@ -123,7 +123,7 @@ public class MenuDP : DataProvider
         {
             DBOpen();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "INSERT INTO MENU VALUES (@MaMon, @TenMon, @AnhMonAn, @Gia)";
+            cmd.CommandText = "INSERT INTO MENU (MaMon, TenMon, AnhMonAn, Gia) VALUES (@MaMon, @TenMon, @AnhMonAn, @Gia)";
             cmd.Parameters.AddWithValue("@MaMon", x.ID);
             cmd.Parameters.AddWithValue("@TenMon", x.FoodName);
             cmd.Parameters.AddWithValue("@AnhMonAn", Converter.ImageConverter.ConvertImageToBytes(x.FoodImage));

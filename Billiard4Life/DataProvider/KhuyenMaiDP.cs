@@ -31,7 +31,7 @@ namespace Billiard4Life.DataProvider
             ObservableCollection<KhuyenMai> KhuyenMais = new ObservableCollection<KhuyenMai>();
             try
             {
-                DataTable dt = LoadInitialData("Select * from KHUYENMAI");
+                DataTable dt = LoadInitialData("Select * from KHUYENMAI WHERE DELETED = 0");
                 foreach (DataRow dr in dt.Rows)
                 {
                     string? makm = Convert.ToString(dr["MaKM"]);
@@ -71,7 +71,7 @@ namespace Billiard4Life.DataProvider
             {
                 DBOpen();
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "INSERT INTO KHUYENMAI VALUES (@makm, @tenkm, @giam, @mucapdung, @ngaybd, @ngaykt, @mota, @trangthai)";
+                cmd.CommandText = "INSERT INTO KHUYENMAI (MaKM, TenKM, GiamGia, MucApDung, BatDau, KetThuc, MoTa, TrangThai) VALUES (@makm, @tenkm, @giam, @mucapdung, @ngaybd, @ngaykt, @mota, @trangthai)";
                 cmd.Parameters.AddWithValue("@makm", item.MAKM);
                 cmd.Parameters.AddWithValue("@tenkm", item.TenKM);
                 cmd.Parameters.AddWithValue("@giam", item.GiamGia);
@@ -96,7 +96,7 @@ namespace Billiard4Life.DataProvider
             {
                 DBOpen();
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "DELETE FROM KHUYENMAI WHERE MAKM = @makm";
+                cmd.CommandText = "UPDATE KHUYENMAI SET DELETED = 1 WHERE MAKM = @makm";
                 cmd.Parameters.AddWithValue("@makm", makm);
                 cmd.Connection = SqlCon;
 
