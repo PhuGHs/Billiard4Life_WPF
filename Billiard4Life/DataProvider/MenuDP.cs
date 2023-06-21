@@ -223,6 +223,42 @@ public class MenuDP : DataProvider
         }
         return NLs;
     }
+    public string AutoIDMenu()
+    {
+        string ID = "MA001";
+        string temp = "";
+        DBOpen();
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "SELECT TOP 1 MaMon FROM MENU ORDER BY MaMon DESC";
+        cmd.Connection = SqlCon;
+        SqlDataReader reader = cmd.ExecuteReader();
+        if (reader.Read())
+        {
+            temp = reader.GetString(0);
+        }
+        reader.Close();
+        if (!string.IsNullOrEmpty(temp))
+        {
+            int num = ExtractNumber(temp) + 1;
+            temp = num.ToString();
+            while (temp.Length < 3) temp = "0" + temp;
+            ID = "MA" + temp;
+        }
+        DBClose();
+        return ID;
+    }
+    private int ExtractNumber(string input)
+    {
+        string output = string.Empty;
+        foreach (char c in input)
+        {
+            if (char.IsDigit(c))
+            {
+                output += c;
+            }
+        }
+        return int.Parse(output);
+    }
 
     public ObservableCollection<ChiTietMon> getSumIngredients(ObservableCollection<SelectedMenuItem> arr)
     {

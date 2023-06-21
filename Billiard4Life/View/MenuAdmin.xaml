@@ -35,7 +35,7 @@
                          Text="{Binding FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          materialDesign:HintAssist.Hint="Tìm kiếm món ăn" 
                          Width="180" 
-                         Height="35"/>
+                         Height="27"/>
                 <Button Background="#3C6255" 
                         Foreground="White"
                         BorderThickness="0"
@@ -56,17 +56,20 @@
             <ListView x:Name="Dishes_ListView" 
                       SelectedIndex="0" 
                       FontSize="17"
+                      Margin="15 0"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ItemsSource="{Binding MenuItemCollection, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding MenuItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20" Grid.Row="1" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Center" VerticalAlignment="Stretch" d:ItemsSource="{d:SampleData ItemCount=5}">
+                      SelectedItem="{Binding MenuItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" IsSynchronizedWithCurrentItem="True" VerticalAlignment="Stretch" d:ItemsSource="{d:SampleData ItemCount=5}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Số thứ tự" DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                         AncestorType={x:Type ListViewItem}}, 
-                                         Converter={StaticResource IndexConverter}}"/>
-                        <GridViewColumn Header="Mã món" DisplayMemberBinding="{Binding ID}"/>
-                        <GridViewColumn Header="Tên món" DisplayMemberBinding="{Binding FoodName}"/>
-                        <GridViewColumn Header="Giá (VNĐ)" DisplayMemberBinding="{Binding PriceVNDCurrency}"/>
+                        <GridViewColumn Header="Mã món" 
+                                        Width="140"
+                                        DisplayMemberBinding="{Binding ID}"/>
+                        <GridViewColumn Header="Tên món" 
+                                        Width="270"
+                                        DisplayMemberBinding="{Binding FoodName}"/>
+                        <GridViewColumn Header="Giá (VNĐ)" 
+                                        DisplayMemberBinding="{Binding PriceVNDCurrency}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -77,82 +80,68 @@
               x:Name="EditGrid"
               Margin="0 20 20 20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="270"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-
-            <Rectangle MaxWidth="400" MaxHeight="200">
-                <Rectangle.Fill>
-                    <ImageBrush ImageSource="{Binding MenuItem.FoodImage, UpdateSourceTrigger=PropertyChanged}" Stretch="Uniform"/>
-                </Rectangle.Fill>
-            </Rectangle>
-
-            <Button Grid.Row="1" 
-                    Command="{Binding EditFoodImage_Command}"
-                    Background="Transparent" 
-                    Width="50" 
-                    BorderThickness="0">
-                <fa:IconImage Icon="Edit" Foreground="#3C6255"/>
-            </Button>
-
-            <Border Padding="20" Grid.Row="2" Background="#EAEAEA" CornerRadius="8">
-                <StackPanel Orientation="Vertical">
-                    <Grid>
+            <Border Grid.Row="0"
+                    CornerRadius="8"
+                    BorderBrush="#3C6255"
+                    BorderThickness="3">
+                <Rectangle MaxWidth="400" MaxHeight="200">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{Binding MenuItem.FoodImage, UpdateSourceTrigger=PropertyChanged}" Stretch="Uniform"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
+            <Border Grid.Row="2" 
+                    Margin="0 20 0 0"
+                    Background="#EEEEEE" 
+                    CornerRadius="8">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="20" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBox
-                          Text="{Binding MenuItem.ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          Grid.Column="0"
-                          IsReadOnly="True"
-                          FontSize="16"
-                          materialDesign:HintAssist.Hint="Mã món"
-                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <TextBox
-                          Text="{Binding MenuItem.FoodName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          FontSize="16"
-                          Grid.Column="2"
-                          materialDesign:HintAssist.Hint="Tên món"
-                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox Text="{Binding MenuItem.ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Grid.Column="0"
+                                 IsEnabled="False"
+                                 IsReadOnly="True"
+                                 FontSize="18"
+                                 Margin="15 31 5 31"
+                                 materialDesign:HintAssist.Hint="Mã món"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox Text="{Binding MenuItem.Str_Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 FontSize="18"
+                                 IsEnabled="False"
+                                 Margin="5 31 15 31"
+                                 Grid.Column="1"
+                                 materialDesign:HintAssist.Hint="Giá (VNĐ)"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     </Grid>
 
-                    <TextBox
-                        Margin="40 40 40 0"
-                          Text="{Binding MenuItem.Str_Price, Mode=TwoWay}"
-                          Grid.Column="0"
-                          FontSize="16"
-                          materialDesign:HintAssist.Hint="Giá (VNĐ)"
-                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox Text="{Binding MenuItem.FoodName, Mode=TwoWay}"
+                             Grid.Row="1"
+                             IsEnabled="False"
+                             Margin="15 31"
+                             FontSize="18"
+                             materialDesign:HintAssist.Hint="Tên món"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
-                    <Button Margin="20 60 20 0"
-                            Content="Sửa, xem nguyên liệu"
+                    <Button Grid.Row="2"
+                            Margin="15 0"
+                            Content="Sửa chi tiết món ăn"
                             Foreground="White"
                             BorderThickness="0"
                             Command="{Binding EditIngredient_Command}"
                             Background="#3C6255"/>
-                    <Grid Margin="0 30 0 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="20" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Button Background="#3C6255" 
-                                Content="Huỷ bỏ thay đổi"
-                                Foreground="White"
-                                BorderThickness="0"
-                                Command="{Binding DiscardChanges_Command}"/>
-                        <Button Background="#3C6255" 
-                                Grid.Column="2" 
-                                Foreground="White"
-                                Content="Lưu thay đổi" 
-                                BorderThickness="0"
-                                Command="{Binding SaveChanges_Command}"/>
-                    </Grid>
-                </StackPanel>
+                </Grid>
             </Border>
         </Grid>
     </Grid>

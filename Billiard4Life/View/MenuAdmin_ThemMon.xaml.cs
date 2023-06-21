@@ -23,5 +23,10 @@ namespace Billiard4Life.View
         {
             InitializeComponent();
         }
+
+        private void btn_Close(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -56,6 +56,7 @@
             <Grid Grid.Column="3">
                 <Button Content="Xem chi tiết"
                         Margin="10"
+                        Foreground="#EAE7B1"
                         Command="{Binding DetailCM}" 
                         Background="#61876E">
                 </Button>
@@ -63,6 +64,7 @@
             <Grid Grid.Column="4">
                 <Button Content="Xuất file Excel"
                         Margin="10"
+                        Foreground="#EAE7B1"
                         Command="{Binding ExportCM}" 
                         Background="#61876E">
                 </Button>
