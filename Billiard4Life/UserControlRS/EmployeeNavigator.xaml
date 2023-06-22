@@ -115,6 +115,13 @@
                         <TextBlock Text="Tình Trạng Bàn" Style="{StaticResource sideBarRadioButtonText}" />
                     </StackPanel>
                 </RadioButton>
+                <!---Lịch sử-->
+                    <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.LichSuBan}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="History" Style="{StaticResource sidebarRadioButtonIcon}" />
+                        <TextBlock Text="Lịch Sử Ca" Style="{StaticResource sideBarRadioButtonText}" />
+                    </StackPanel>
+                </RadioButton>
                 <!--Khách Hàng-->
                 <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.Bep}">
                     <StackPanel Orientation="Horizontal">

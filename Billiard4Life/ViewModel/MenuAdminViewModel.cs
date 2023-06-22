@@ -43,7 +43,7 @@ namespace Billiard4Life.ViewModel
             AddOneMenuDish = new RelayCommand<Object>((p) => true, (p) =>
             {
                 MenuAdmin_ThemMon window = new MenuAdmin_ThemMon(true);
-                Ingredients = MenuDP.Flag.GetIngredients();
+                RefreshIngredients();
                 window.DataContext = this;
                 IsFirstTabVisible = true;
                 IsAdding = true;
@@ -96,6 +96,7 @@ namespace Billiard4Life.ViewModel
                         {
                             if (ctm.DuocChon == true) MenuDP.Flag.SaveIngredients(new ChiTietMon(ctm.TenSanPham, AddItem.ID, ctm.DinhLuong));
                         }
+                        RefreshIngredients();
                         AddItem.Clear();
                         AddItem.ID = MenuDP.Flag.AutoIDMenu();
                         MyMessageBox msb = new MyMessageBox("Thêm thành công!");
@@ -142,6 +143,7 @@ namespace Billiard4Life.ViewModel
                 IsAdding = false;
                 IsFirstTabVisible = false;
                 AddItem = MenuItem;
+                RefreshIngredients();
                 Ingredients_ForDishes = MenuDP.Flag.GetIngredientsForDish(MenuItem.ID);
                 foreach (ChiTietMon ctm in Ingredients_ForDishes)
                 {
@@ -335,6 +337,14 @@ namespace Billiard4Life.ViewModel
                 }
             }
             return true;
+        }
+        private void RefreshIngredients()
+        {
+            foreach (Kho item in IngredientCollection)
+            {
+                item.DuocChon = false;
+                item.DinhLuong = 0;
+            }
         }
         #endregion
     }

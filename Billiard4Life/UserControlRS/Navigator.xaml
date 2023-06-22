@@ -115,7 +115,7 @@
                 <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.LichSuBan}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="History" Style="{StaticResource sidebarRadioButtonIcon}" />
-                        <TextBlock Text="Lịch Sử Bàn" Style="{StaticResource sideBarRadioButtonText}" />
+                        <TextBlock Text="Lịch Sử" Style="{StaticResource sideBarRadioButtonText}" />
                     </StackPanel>
                 </RadioButton>
                 <!--Khách Hàng-->
@@ -129,7 +129,7 @@
                 <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.KhuyenMai}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Tags" Style="{StaticResource sidebarRadioButtonIcon}" />
-                        <TextBlock Text="Khuyến mãi" Style="{StaticResource sideBarRadioButtonText}" />
+                        <TextBlock Text="Khuyến Mãi" Style="{StaticResource sideBarRadioButtonText}" />
                     </StackPanel>
                 </RadioButton>
                 <!--storage-->
