@@ -79,8 +79,13 @@
                 Margin="10"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ItemsSource="{Binding KhuyenMaiView}"
-                SelectedItem="{Binding SelectedItem}"
-                FontSize="14" d:ItemsSource="{d:SampleData ItemCount=5}" IsSynchronizedWithCurrentItem="True" FlowDirection="LeftToRight" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True">
+                SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
+                FontSize="14" 
+                IsSynchronizedWithCurrentItem="True" 
+                FlowDirection="LeftToRight" 
+                UseLayoutRounding="False" 
+                Grid.IsSharedSizeScope="True" 
+                ScrollViewer.CanContentScroll="True">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="70">

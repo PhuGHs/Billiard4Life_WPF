@@ -45,6 +45,7 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="  THÊM MÓN MỚI"
+                           Name="Title"
                            Foreground="#3C6255"
                            VerticalAlignment="Center"/>
                     <Button Grid.Column="1"

@@ -59,7 +59,10 @@
                       Margin="15 0"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       ItemsSource="{Binding MenuItemCollection, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding MenuItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" IsSynchronizedWithCurrentItem="True" VerticalAlignment="Stretch" d:ItemsSource="{d:SampleData ItemCount=5}">
+                      SelectedItem="{Binding MenuItem, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                      Grid.Row="1" 
+                      IsSynchronizedWithCurrentItem="True" 
+                      VerticalAlignment="Stretch">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Mã món" 

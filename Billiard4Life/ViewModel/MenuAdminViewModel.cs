@@ -39,11 +39,11 @@ namespace Billiard4Life.ViewModel
             addItem = new Models.MenuItem();
             MenuItem = new Models.MenuItem();
             AddItem.FoodImage = converting("pack://application:,,,/images/menu_default_image.jpg");
-
             #region Command executes
             AddOneMenuDish = new RelayCommand<Object>((p) => true, (p) =>
             {
-                MenuAdmin_ThemMon window = new MenuAdmin_ThemMon();
+                MenuAdmin_ThemMon window = new MenuAdmin_ThemMon(true);
+                Ingredients = MenuDP.Flag.GetIngredients();
                 window.DataContext = this;
                 IsFirstTabVisible = true;
                 IsAdding = true;
@@ -52,6 +52,7 @@ namespace Billiard4Life.ViewModel
             });
             RemoveDish_Command = new RelayCommand<object>((p) =>
             {
+                if (MenuItem == null) return false;
                 if (MenuItem.FoodImage == null
                 || MenuItem.FoodName == ""
                 || MenuItem.ID == "") return false;
@@ -87,14 +88,30 @@ namespace Billiard4Life.ViewModel
                 }
                 else
                 {
-                    MenuDP.Flag.AddDish(AddItem);
-                    MenuItems.Add(new Models.MenuItem(AddItem.ID, AddItem.FoodName, AddItem.Price, AddItem.FoodImage));
-                    foreach (Kho ctm in IngredientCollection)
+                    if (IsAdding)
                     {
-                        MenuDP.Flag.SaveIngredients(new ChiTietMon(ctm.TenSanPham, AddItem.ID, ctm.DinhLuong));
+                        MenuDP.Flag.AddDish(AddItem);
+                        MenuItems.Add(new Models.MenuItem(AddItem.ID, AddItem.FoodName, AddItem.Price, AddItem.FoodImage));
+                        foreach (Kho ctm in IngredientCollection)
+                        {
+                            if (ctm.DuocChon == true) MenuDP.Flag.SaveIngredients(new ChiTietMon(ctm.TenSanPham, AddItem.ID, ctm.DinhLuong));
+                        }
+                        AddItem.Clear();
+                        AddItem.ID = MenuDP.Flag.AutoIDMenu();
+                        MyMessageBox msb = new MyMessageBox("Thêm thành công!");
+                        msb.Show();
                     }
-                    MyMessageBox msb = new MyMessageBox("Thêm thành công!");
-                    msb.Show();
+                    else
+                    {
+                        MenuDP.Flag.EditDishInfo(AddItem);
+                        MenuDP.Flag.RemoveIngredients(AddItem.ID);
+                        foreach (Kho ctm in IngredientCollection)
+                        {
+                            if (ctm.DuocChon == true) MenuDP.Flag.SaveIngredients(new ChiTietMon(ctm.TenSanPham, AddItem.ID, ctm.DinhLuong));
+                        }
+                        MyMessageBox msb = new MyMessageBox("Sửa thành công!");
+                        msb.Show();
+                    }    
                 }
             });
             AddImage_Command = new RelayCommand<object>((p) => true, (p) =>
@@ -115,12 +132,29 @@ namespace Billiard4Life.ViewModel
             });
 
             #region Thêm nguyên liệu command execution
-            EditIngredient_Command = new RelayCommand<object>((p) => true, (p) =>
+            EditIngredient_Command = new RelayCommand<object>((p) =>
+            {
+                if (MenuItem == null) return false;
+                return true;
+            }, 
+            (p) =>
             {
                 IsAdding = false;
                 IsFirstTabVisible = false;
+                AddItem = MenuItem;
                 Ingredients_ForDishes = MenuDP.Flag.GetIngredientsForDish(MenuItem.ID);
-                MenuAdmin_ThemMon IngreAddView = new();
+                foreach (ChiTietMon ctm in Ingredients_ForDishes)
+                {
+                    foreach (Kho item in IngredientCollection)
+                    {
+                        if (ctm.TenNL == item.TenSanPham)
+                        {
+                            item.DuocChon = true;
+                            item.DinhLuong = ctm.SoLuong;
+                        }
+                    }
+                }
+                MenuAdmin_ThemMon IngreAddView = new(false);
                 IngreAddView.DataContext = this;
                 IngreAddView.ShowDialog();
             });
@@ -165,7 +199,7 @@ namespace Billiard4Life.ViewModel
             public ObservableCollection<ChiTietMon> Deleted_Ingredients { get { return _deletedIngredients; } set { _deletedIngredients = value; OnPropertyChanged(); } }
             public Models.MenuItem MenuItem { get { return _menuitem; } set { _menuitem = value; OnPropertyChanged(); } }
             public Models.MenuItem AddItem { get { return addItem; } set { addItem = value; OnPropertyChanged(); } }
-            public Models.Kho Selected_Ingredient { get { return _selected_Ingredient; } set { _selected_Ingredient = value; OnPropertyChanged(); } }
+            public Kho Selected_Ingredient { get { return _selected_Ingredient; } set { _selected_Ingredient = value; OnPropertyChanged(); } }
             public bool DishHasBeenAdded { get { return _dishHasBeenAdded; } set { _dishHasBeenAdded = value; OnPropertyChanged(); } }
             public string FilterText { get { return _filterText; } set { _filterText = value; this._menuItemsView.View.Refresh(); OnPropertyChanged(); } }
             public string IngreFilterText { get { return _ingreFilterText; } set { _ingreFilterText = value; this._ingredientsView.View.Refresh(); OnPropertyChanged(); } }

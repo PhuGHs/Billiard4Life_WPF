@@ -19,9 +19,16 @@ namespace Billiard4Life.View
     /// </summary>
     public partial class MenuAdmin_ThemMon : Window
     {
-        public MenuAdmin_ThemMon()
+        private bool adding;
+        public MenuAdmin_ThemMon(bool adding)
         {
             InitializeComponent();
+            this.adding = adding;
+            if (adding == false)
+            {
+                Title.Content = "   SỬA MÓN ĂN";
+                Add_button.Content = "Sửa";
+            }
         }
 
         private void btn_Close(object sender, RoutedEventArgs e)

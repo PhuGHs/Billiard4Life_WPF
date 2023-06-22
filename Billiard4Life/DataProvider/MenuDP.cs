@@ -348,36 +348,14 @@ public class MenuDP : DataProvider
             DBClose();
         }
     }
-    public int UpdateIngredients(ChiTietMon ctm)
-    {
-        int n = 0;
-        try
-        {
-            DBOpen();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Update CHITIETMON SET SoLuong = @soluong where TenNL = @tennl and MaMon = @mamon";
-            cmd.Parameters.AddWithValue("@soluong", ctm.SoLuong);
-            cmd.Parameters.AddWithValue("@tennl", ctm.TenNL);
-            cmd.Parameters.AddWithValue("@mamon", ctm.MaMon);
-            cmd.Connection = SqlCon;
-
-            n = cmd.ExecuteNonQuery();
-        }
-        finally
-        {
-            DBClose();
-        }
-        return n;
-    }
-    public void RemoveIngredients(ChiTietMon ctm)
+    public void RemoveIngredients(string MaMon)
     {
         try
         {
             DBOpen();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Delete from CHITIETMON where MaMon = @mamon and TenNL = @tennl";
-            cmd.Parameters.AddWithValue("@mamon", ctm.MaMon);
-            cmd.Parameters.AddWithValue("@tennl", ctm.TenNL);
+            cmd.CommandText = "Delete from CHITIETMON where MaMon = @mamon";
+            cmd.Parameters.AddWithValue("@mamon", MaMon);
             cmd.Connection = SqlCon;
 
             cmd.ExecuteNonQuery();
