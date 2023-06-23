@@ -49,7 +49,7 @@ public class HoaDonDP : DataProvider
             string trigia = reader.GetSqlMoney(2).ToString();
             string manv = reader.GetString(3);
             string soban = reader.GetInt16(6).ToString();
-            string ngayhd = reader.GetDateTime(7).ToShortDateString();
+            string ngayhd = reader.GetDateTime(7).ToString();
             string httt = reader.GetString(9).ToString();
             string tenkh = "";
             if (!reader.IsDBNull(10))
@@ -95,24 +95,35 @@ public class HoaDonDP : DataProvider
     }
     public ObservableCollection<HoaDon> GetBillsShift(string paymethod)
     {
+        string start = NhanVienDP.Flag.StaffOnline().Item2;
+        return HoaDonDP.Flag.GetBillsFrom(start, DateTime.Now.ToString(), paymethod);
+    }
+    public string TotalBillPerMethod(string paymethod)
+    {
+        string start = NhanVienDP.Flag.StaffOnline().Item2;
+
         DBOpen();
+
+        string query = "SELECT SUM(TriGia) FROM HOADON WHERE NgayHD >= '" + start + "' ";
+        if (paymethod != "Tất cả") query += " AND HinhThucThanhToan = N'" + paymethod + "'";
 
         SqlCommand cmd = new SqlCommand();
         cmd.CommandType = System.Data.CommandType.Text;
-        cmd.CommandText = "SELECT BatDauCa FROM TAIKHOAN WHERE Online = 1";
+        cmd.CommandText = query;
         cmd.Connection = SqlCon;
         SqlDataReader reader = cmd.ExecuteReader();
 
-        DateTime BatDauCa = DateTime.Now;
+        string total = "0";
         if (reader.Read())
         {
-            BatDauCa = reader.GetDateTime(0);
+            total = reader.GetSqlMoney(0).ToString();
         }
         reader.Close();
 
         DBClose();
 
-        return HoaDonDP.Flag.GetBillsFrom(BatDauCa.ToString(), DateTime.Now.ToString(), paymethod);
+        if (total[0] == 'N') return "0";
+        return total;
     }
     #region Support Method
     private string ConvertTime(int h)

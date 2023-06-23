@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -35,7 +36,7 @@
                        HorizontalAlignment="Center"/>
             </Grid>
             <ComboBox materialDesign:HintAssist.Hint="Hình thức thanh toán"
-                      Text="{Binding PayMethodSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding PayMethodSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       FontFamily="Comfortaa"
                       Margin="5"
                       ItemsSource="{Binding PayMethods}"
@@ -86,6 +87,22 @@
                     </ListView.View>
                 </ListView>
             </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Tổng tiền: "
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Foreground="#3C6255"
+                   HorizontalAlignment="Right"/>
+            <Label Content="{Binding TotalBill}"
+                   Grid.Column="1"
+                   VerticalAlignment="Center"
+                   Foreground="#3C6255"
+                   HorizontalAlignment="Center"/>
         </Grid>
     </Grid>
 </UserControl>

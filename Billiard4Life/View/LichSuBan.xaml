@@ -83,16 +83,19 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ListView ItemsSource="{Binding ListBill}"
                           SelectedItem="{Binding Selected}"
-                          FontSize="16"
-                          Margin="20 0 20 20">
+                          FontSize="14"
+                          Margin="10 0 10 20">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding SoHD}"
-                                            Width="120"
+                                            Width="110"
                                             Header="Số HD" />
                             <GridViewColumn DisplayMemberBinding="{Binding TenKH}"
-                                            Width="200"
+                                            Width="190"
                                             Header="Tên khách hàng" />
+                            <GridViewColumn DisplayMemberBinding="{Binding SoBan}"
+                                            Width="95"
+                                            Header="Bàn" />
                             <GridViewColumn DisplayMemberBinding="{Binding SoGio}"
                                             Width="130"
                                             Header="Số giờ" />

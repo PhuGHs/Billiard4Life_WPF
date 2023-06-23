@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 using OfficeOpenXml.Drawing.Chart;
+using Billiard4Life.Models;
 
 namespace Billiard4Life.DataProvider;
 
@@ -118,25 +119,28 @@ public class NhanVienDP : DataProvider
 
         DBClose();
     }
-    public string TimeStartWork()
+    public Tuple<NhanVien, string> StaffOnline()
     {
+        NhanVien nv;
+
         DBOpen();
 
         SqlCommand cmd = new SqlCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "SELECT BatDauCa FROM TAIKHOAN Where Online = 1";
+        cmd.CommandText = "SELECT n.*, BatDauCa FROM NHANVIEN AS n JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV WHERE Online = 1";
         cmd.Connection = SqlCon;
         SqlDataReader reader = cmd.ExecuteReader();
         string start = "";
         if (reader.Read())
         {
-            start = reader.GetDateTime(0).ToString();
+            nv = new NhanVien(reader.GetString(0), reader.GetString(1));
+            start = reader.GetDateTime(9).ToString();
         }
         reader.Close();
 
         DBClose();
 
-        return start;
+        return new Tuple<NhanVien, string>(new NhanVien(nv), start);
     }
     #region Support Method
     public double ConvertTotalSecondToHour(double total)
