@@ -88,20 +88,23 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding SoHD}"
-                                            Width="200"
-                                            Header="Số hóa đơn" />
+                                            Width="120"
+                                            Header="Số HD" />
                             <GridViewColumn DisplayMemberBinding="{Binding TenKH}"
-                                            Width="280"
+                                            Width="200"
                                             Header="Tên khách hàng" />
                             <GridViewColumn DisplayMemberBinding="{Binding SoGio}"
-                                            Width="150"
+                                            Width="130"
                                             Header="Số giờ" />
                             <GridViewColumn DisplayMemberBinding="{Binding TriGia}"
-                                            Width="190"
+                                            Width="160"
                                             Header="Thành tiền" />
                             <GridViewColumn DisplayMemberBinding="{Binding NgayHD}"
                                             Width="190"
                                             Header="Ngày hóa đơn" />
+                            <GridViewColumn DisplayMemberBinding="{Binding HinhThucThanhToan}"
+                                            Width="200"
+                                            Header="Hình thức trả" />
                         </GridView>
                     </ListView.View>
                 </ListView>

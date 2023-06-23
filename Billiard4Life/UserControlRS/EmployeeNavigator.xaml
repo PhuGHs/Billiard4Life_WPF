@@ -116,7 +116,7 @@
                     </StackPanel>
                 </RadioButton>
                 <!---Lịch sử-->
-                    <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.LichSuBan}">
+                    <RadioButton Style="{StaticResource sidebarRadioButton}" Command="{Binding SelectViewModelCommand}" CommandParameter="{x:Static nav:TypeOfView.LichSuCa}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="History" Style="{StaticResource sidebarRadioButtonIcon}" />
                         <TextBlock Text="Lịch Sử Ca" Style="{StaticResource sideBarRadioButtonText}" />

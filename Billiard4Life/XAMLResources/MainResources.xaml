@@ -30,6 +30,9 @@
     <DataTemplate DataType="{x:Type viewmodel:BepViewModel}">
         <view:Bep />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:LichSuCaViewModel}">
+        <view:LichSuCa />
+    </DataTemplate>
     <Style TargetType="Window" x:Key="Font">
         <Setter Property="FontFamily" Value="Roboto"/>
     </Style>

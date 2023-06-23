@@ -48,6 +48,7 @@
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
             </Grid>
             <Button Grid.Row="2"
+                    Foreground="Wheat"
                     Name="btnOK"
                     Content="OK"
                     Margin="30 10 30 10"

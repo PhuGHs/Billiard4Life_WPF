@@ -300,13 +300,8 @@ namespace Billiard4Life.ViewModel
 
                 ChoseDate dt = new ChoseDate();
                 dt.ShowDialog();
-                string dtBegin = "", dtEnd = "";
-                string s = dt.GetDate();
-                int i = 0;
-                while (s[i] != ' ') dtBegin += s[i++];
-                while (s[i] != 'M') i++;
-                i += 2;
-                while (s[i] != ' ') dtEnd += s[i++];
+                string dtBegin = dt.GetDate().Item1;
+                string dtEnd = dt.GetDate().Item2;
 
                 List<NhapKho> ListIn = new List<NhapKho>();
 

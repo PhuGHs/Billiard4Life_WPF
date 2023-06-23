@@ -118,6 +118,26 @@ public class NhanVienDP : DataProvider
 
         DBClose();
     }
+    public string TimeStartWork()
+    {
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "SELECT BatDauCa FROM TAIKHOAN Where Online = 1";
+        cmd.Connection = SqlCon;
+        SqlDataReader reader = cmd.ExecuteReader();
+        string start = "";
+        if (reader.Read())
+        {
+            start = reader.GetDateTime(0).ToString();
+        }
+        reader.Close();
+
+        DBClose();
+
+        return start;
+    }
     #region Support Method
     public double ConvertTotalSecondToHour(double total)
     {

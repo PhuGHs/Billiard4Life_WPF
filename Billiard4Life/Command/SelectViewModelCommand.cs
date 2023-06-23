@@ -82,6 +82,10 @@ namespace Billiard4Life.Command
                         _navigator1.CurrentTitle = "Bếp";
                         _navigator.CurrentViewModel = new BepViewModel();
                         break;
+                    case TypeOfView.LichSuCa:
+                        _navigator1.CurrentTitle = "Lịch sử ca";
+                        _navigator.CurrentViewModel = new LichSuCaViewModel();
+                        break;
                     default:
                         break;
                 }
