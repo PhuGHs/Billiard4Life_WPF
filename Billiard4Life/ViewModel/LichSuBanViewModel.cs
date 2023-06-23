@@ -52,6 +52,8 @@ namespace Billiard4Life.ViewModel
             {
                 _DateBegin = value;
                 OnPropertyChanged();
+                ListViewDisplay();
+                OnPropertyChanged();
             }
         }
         private string _DateEnd;

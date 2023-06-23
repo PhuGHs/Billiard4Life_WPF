@@ -107,7 +107,7 @@ namespace Billiard4Life.ViewModel
             DateStartWork = DateTime.Now.ToShortDateString();
 
             ListStaff = new ObservableCollection<NhanVien>();
-            ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV");
+            ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV WHERE Xoa = 0");
 
             CheckCM = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -121,7 +121,7 @@ namespace Billiard4Life.ViewModel
             {
                 Billiard4Life.View.ThemNhanVien adding = new View.ThemNhanVien();
                 if (adding.ShowDialog() == true) { }
-                ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV");
+                ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV  WHERE Xoa = 0");
                 return;
             });
 
@@ -192,13 +192,7 @@ namespace Billiard4Life.ViewModel
                     SqlCommand cmd = new SqlCommand();
                     cmd.Connection = sqlCon;
                     cmd.CommandType = CommandType.Text;
-                    if (!string.IsNullOrEmpty(Account))
-                    {
-                        cmd.CommandText = "DELETE FROM TAIKHOAN WHERE ID = '" + Account + "'";
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    cmd.CommandText = "DELETE FROM NHANVIEN WHERE MaNV = '" + ID + "'";
+                    cmd.CommandText = "UPDATE NHANVIEN SET Xoa = 1 WHERE MaNV = '" + ID + "'";
                     int result = cmd.ExecuteNonQuery();
                     if (result > 0)
                     {
@@ -212,7 +206,7 @@ namespace Billiard4Life.ViewModel
                         mess.ShowDialog();
                     }
                 }
-                ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV");
+                ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV  WHERE Xoa = 0");
 
                 CloseConnect();
             });
@@ -242,11 +236,11 @@ namespace Billiard4Life.ViewModel
                 string ngsinh = reader.GetDateTime(6).ToShortDateString();
                 string ngvl = reader.GetDateTime(7).ToShortDateString();
                 string tk = "";
-                if (!reader.IsDBNull(8))
-                    tk = reader.GetString(8);
-                string mk = "";
                 if (!reader.IsDBNull(9))
-                    mk = reader.GetString(9);
+                    tk = reader.GetString(9);
+                string mk = "";
+                if (!reader.IsDBNull(10))
+                    mk = reader.GetString(10);
 
                 ListStaff.Add(new NhanVien(id, ten, chucvu, diachi, ftime, sdt, ngvl, ngsinh, tk, mk));
             }

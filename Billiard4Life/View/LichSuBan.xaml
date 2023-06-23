@@ -30,6 +30,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Label Content="Xem hóa đơn: "
@@ -41,7 +42,7 @@
                 <DatePicker Grid.Column="0"
                             SelectedDate="{Binding DateBegin, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                             FontFamily="Comfortaa"
-                            Margin="15 5 5 5"
+                            Margin="5 5 5 5"
                             materialDesign:HintAssist.Hint="Từ ngày"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
             </Grid>
@@ -49,11 +50,19 @@
                 <DatePicker Grid.Column="0"
                             SelectedDate="{Binding DateEnd, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                             FontFamily="Comfortaa"
-                            Margin="15 5 5 5"
+                            Margin="5 5 5 5"
                             materialDesign:HintAssist.Hint="Đến ngày"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
             </Grid>
-            <Grid Grid.Column="3">
+            <ComboBox materialDesign:HintAssist.Hint="Nhân viên"
+                      Text="{Binding Fulltime, UpdateSourceTrigger=PropertyChanged}"
+                      FontFamily="Comfortaa"
+                      Margin="5"
+                      ItemsSource="{Binding ListStaff}"
+                      Grid.Column="3"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+            </ComboBox>
+            <Grid Grid.Column="4">
                 <Button Content="Xem chi tiết"
                         Margin="10"
                         Foreground="#EAE7B1"
@@ -61,7 +70,7 @@
                         Background="#61876E">
                 </Button>
             </Grid>
-            <Grid Grid.Column="4">
+            <Grid Grid.Column="5">
                 <Button Content="Xuất file Excel"
                         Margin="10"
                         Foreground="#EAE7B1"
