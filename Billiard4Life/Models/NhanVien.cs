@@ -104,5 +104,31 @@ namespace Billiard4Life.Models
             TaiKhoan = "";
             MatKhau = "";
         }
+        public NhanVien() 
+        {
+            MaNV = "";
+            HoTen = "";
+            ChucVu = "";
+            DiaChi = "";
+            Fulltime = false;
+            SDT = "";
+            NgayVaoLam = "";
+            NgaySinh = "";
+            TaiKhoan = "";
+            MatKhau = "";
+        }
+        public void Reset()
+        {
+            MaNV = "";
+            HoTen = "";
+            ChucVu = "";
+            DiaChi = "";
+            Fulltime = false;
+            SDT = "";
+            NgayVaoLam = DateTime.Now.ToString();
+            NgaySinh = DateTime.Now.ToString();
+            TaiKhoan = "";
+            MatKhau = "";
+        }
     }
 }

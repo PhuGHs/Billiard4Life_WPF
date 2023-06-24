@@ -55,7 +55,7 @@
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
             </Grid>
             <ComboBox materialDesign:HintAssist.Hint="Nhân viên"
-                      Text="{Binding Fulltime, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding StaffSelected, UpdateSourceTrigger=PropertyChanged}"
                       FontFamily="Comfortaa"
                       Margin="5"
                       ItemsSource="{Binding ListStaff}"

@@ -69,11 +69,14 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding SoHD}"
-                                            Width="200"
-                                            Header="Số hóa đơn" />
+                                            Width="140"
+                                            Header="Số HD" />
                             <GridViewColumn DisplayMemberBinding="{Binding TenKH}"
-                                            Width="280"
+                                            Width="210"
                                             Header="Tên khách hàng" />
+                            <GridViewColumn DisplayMemberBinding="{Binding SoBan}"
+                                            Width="150"
+                                            Header="Bàn" />
                             <GridViewColumn DisplayMemberBinding="{Binding SoGio}"
                                             Width="150"
                                             Header="Số giờ" />

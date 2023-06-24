@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 using OfficeOpenXml.Drawing.Chart;
 using Billiard4Life.Models;
+using System.Collections.ObjectModel;
 
 namespace Billiard4Life.DataProvider;
 
@@ -25,6 +26,142 @@ public class NhanVienDP : DataProvider
         {
             flag = value;
         }
+    }
+    public void AddStaff(NhanVien nv)
+    {
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "INSERT INTO NHANVIEN (MaNV, TenNV, ChucVu, Fulltime, DiaChi, SDT, NgaySinh, NgayVaoLam) " +
+            "VALUES (@manv, @ten, @chucvu, @fulltime, @diachi, @sdt, @ngaysinh, @ngayvaolam)";
+        cmd.Parameters.AddWithValue("@manv", nv.MaNV);
+        cmd.Parameters.AddWithValue("@ten", nv.MaNV);
+        cmd.Parameters.AddWithValue("@chucvu", nv.MaNV);
+        cmd.Parameters.AddWithValue("@fulltime", nv.MaNV);
+        cmd.Parameters.AddWithValue("@diachi", nv.MaNV);
+        cmd.Parameters.AddWithValue("@sdt", nv.MaNV);
+        cmd.Parameters.AddWithValue("@ngaysinh", nv.MaNV);
+        cmd.Parameters.AddWithValue("@ngayvaolam", nv.MaNV);
+        cmd.Connection = SqlCon;
+        cmd.ExecuteNonQuery();
+
+        if (string.IsNullOrEmpty(nv.TaiKhoan))
+        {
+            cmd.CommandText = "INSERT INTO TAIKHOAN (ID, MatKhau, Quyen, MaNV) " +
+                "VALUES(@taikhoan, @matkhau, @quyen, @manv)";
+            cmd.Parameters.AddWithValue("@taikhoan", nv.TaiKhoan);
+            cmd.Parameters.AddWithValue("@matkhau", nv.MatKhau);
+            cmd.Parameters.AddWithValue("@quyen", "nhanvien");
+            cmd.ExecuteNonQuery();
+        }
+        MyMessageBox msb = new MyMessageBox("Thêm thành công!");
+        msb.ShowDialog();
+
+        DBClose();
+    }
+    public void DeleteStaff(string MaNV)
+    {
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "UPDATE NHANVIEN SET Xoa = 1 WHERE MaNV = @manv";
+        cmd.Parameters.AddWithValue("@manv", MaNV);
+        cmd.Connection = SqlCon;
+        cmd.ExecuteNonQuery();
+
+        DBClose();
+    }
+    public string AutoIDStaff()
+    {
+        string ID = "NV001", temp = "";
+
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "SELECT TOP (1) MaNV FROM NHANVIEN ORDER BY MaNV DESC";
+        cmd.Connection = SqlCon;
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            temp = reader.GetString(0);
+        }
+        reader.Close();
+
+        if (!string.IsNullOrEmpty(temp))
+        {
+            int num = ExtractNumber(temp) + 1;
+            temp = num.ToString();
+            while (temp.Length < 3) temp = "0" + temp;
+            ID = "NV" + temp;
+        }
+
+        DBClose();
+
+        return ID;
+    }
+
+    public ObservableCollection<NhanVien> GetAllStaff(string query)
+    {
+        ObservableCollection<NhanVien> ListStaff = new ObservableCollection<NhanVien>();
+
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = query;
+        cmd.Connection = SqlCon;
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            string id = reader.GetString(0);
+            string ten = reader.GetString(1);
+            string chucvu = reader.GetString(2);
+            bool ftime = reader.GetBoolean(3);
+            string diachi = reader.GetString(4);
+            string sdt = reader.GetString(5);
+            string ngsinh = reader.GetDateTime(6).ToShortDateString();
+            string ngvl = reader.GetDateTime(7).ToShortDateString();
+            string tk = "";
+            if (!reader.IsDBNull(9))
+                tk = reader.GetString(9);
+            string mk = "";
+            if (!reader.IsDBNull(10))
+                mk = reader.GetString(10);
+
+            ListStaff.Add(new NhanVien(id, ten, chucvu, diachi, ftime, sdt, ngvl, ngsinh, tk, mk));
+        }
+
+        DBClose();
+
+        return ListStaff;
+    }
+    public void UpdateInfoStaff(NhanVien nv)
+    {
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "UPDATE NhanVien SET TenNV = @ten, ChucVu = @chucvu, FullTime = @fulltime, DiaChi = @diachi, " +
+            "SDT = @sdt, NgaySinh = @ngaysinh, NgayVaoLam = @nvl WHERE MaNV = @manv";
+        cmd.Parameters.AddWithValue("@manv", nv.MaNV);
+        cmd.Parameters.AddWithValue("@ten", nv.HoTen);
+        cmd.Parameters.AddWithValue("@chucvu", nv.ChucVu);
+        cmd.Parameters.AddWithValue("@fulltime", nv.Fulltime);
+        cmd.Parameters.AddWithValue("@diachi", nv.DiaChi);
+        cmd.Parameters.AddWithValue("@sdt", nv.SDT);
+        cmd.Parameters.AddWithValue("@ngaysinh", nv.NgaySinh);
+        cmd.Parameters.AddWithValue("@nvl", nv.NgayVaoLam);
+        cmd.Connection = SqlCon;
+        cmd.ExecuteNonQuery();
+
+        MyMessageBox msb = new MyMessageBox("Sửa thành công!");
+        msb.ShowDialog();
+        DBClose();
     }
     public bool IsStaff(string MaNV)
     {
@@ -121,7 +258,7 @@ public class NhanVienDP : DataProvider
     }
     public Tuple<NhanVien, string> StaffOnline()
     {
-        NhanVien nv;
+        Tuple<NhanVien, string> temp = null;
 
         DBOpen();
 
@@ -133,14 +270,13 @@ public class NhanVienDP : DataProvider
         string start = "";
         if (reader.Read())
         {
-            nv = new NhanVien(reader.GetString(0), reader.GetString(1));
-            start = reader.GetDateTime(9).ToString();
+            temp = new Tuple<NhanVien, string>(new NhanVien(reader.GetString(0), reader.GetString(1)), reader.GetDateTime(9).ToString());
         }
         reader.Close();
 
         DBClose();
 
-        return new Tuple<NhanVien, string>(new NhanVien(nv), start);
+        return temp;
     }
     #region Support Method
     public double ConvertTotalSecondToHour(double total)
@@ -189,6 +325,18 @@ public class NhanVienDP : DataProvider
         DBClose();
 
         return isChecked;
+    }
+    private int ExtractNumber(string input)
+    {
+        string output = string.Empty;
+        foreach (char c in input)
+        {
+            if (char.IsDigit(c))
+            {
+                output += c;
+            }
+        }
+        return int.Parse(output);
     }
     #endregion
 }

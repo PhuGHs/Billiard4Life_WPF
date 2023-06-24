@@ -156,6 +156,7 @@ namespace Billiard4Life.ViewModel
 
                     int row = 2;
                     int col = 1;
+                    int maxRow = 2;
 
                     foreach (string column in columnHeader)
                     {
@@ -178,8 +179,12 @@ namespace Billiard4Life.ViewModel
                         ws.Cells[row, col + 1].Value = HoaDonDP.Flag.TotalBillPerMethod(column);
 
                         col += 3;
+                        if (row > maxRow) { maxRow = row; }
                         row = 2;
                     }
+                    maxRow++;
+                    ws.Cells[maxRow, 1].Value = "Tổng tất cả:";
+                    ws.Cells[maxRow, 2].Value = HoaDonDP.Flag.TotalBillPerMethod("Tất cả");
 
                     Byte[] bin = x.GetAsByteArray();
                     File.WriteAllBytes(filePath, bin);

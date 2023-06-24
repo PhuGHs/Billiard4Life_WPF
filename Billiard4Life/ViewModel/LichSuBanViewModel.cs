@@ -29,6 +29,7 @@ using Billiard4Life.Models;
 using Billiard4Life.CustomMessageBox;
 using iTextSharp.text;
 using Billiard4Life.DataProvider;
+using System.Security;
 
 namespace Billiard4Life.ViewModel
 {
@@ -41,6 +42,18 @@ namespace Billiard4Life.ViewModel
         {
             get => _Selected;
             set { _Selected = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<string> _ListStaff;
+        public ObservableCollection<string> ListStaff
+        {
+            get => _ListStaff;
+            set { _ListStaff = value; OnPropertyChanged(); }
+        }
+        private ObservableCollection<string> _ListStaffID;
+        public ObservableCollection<string> ListStaffID
+        {
+            get => _ListStaffID;
+            set { _ListStaffID = value; OnPropertyChanged(); }
         }
         private string _DateBegin;
         public string DateBegin
@@ -71,6 +84,8 @@ namespace Billiard4Life.ViewModel
         public LichSuBanViewModel()
         {
             ListBill = new ObservableCollection<HoaDon>();
+            ListStaff = new ObservableCollection<string>();
+            ListStaffID = new ObservableCollection<string>();
             DateBegin = DateTime.Now.Month + "/1/" + DateTime.Now.Year;
             DateEnd = DateTime.Now.ToShortDateString();
 
@@ -188,6 +203,10 @@ namespace Billiard4Life.ViewModel
                 MyMessageBox msb = new MyMessageBox("Xuất file thành công!");
                 msb.ShowDialog();
             }
+        }
+        public void GetListStaff()
+        {
+
         }
     }
 }

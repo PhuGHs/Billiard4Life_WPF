@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 using System.Windows.Forms;
+using Billiard4Life.DataProvider;
 
 namespace Billiard4Life.ViewModel
 {
@@ -20,56 +21,46 @@ namespace Billiard4Life.ViewModel
         private ObservableCollection<NhanVien> _ListStaff;
         public ObservableCollection<NhanVien> ListStaff { get => _ListStaff; set { _ListStaff = value; OnPropertyChanged(); } }
 
-        #region // List View Selected Item
-        private NhanVien _Selected;
-        public NhanVien Selected
+        private NhanVien _NhanVienItem;
+        public NhanVien NhanVienItem
         {
-            get => _Selected;
+            get => _NhanVienItem;
             set
             {
-                _Selected = value;
+                _NhanVienItem = value;
                 OnPropertyChanged();
-                if (Selected != null)
+            }
+        }
+        #region //Selected Item
+        private NhanVien _StaffSelected;
+        public NhanVien StaffSelected
+        {
+            get => _StaffSelected;
+            set
+            {
+                _StaffSelected = value;
+                OnPropertyChanged();
+                if (StaffSelected != null)
                 {
-                    ID = Selected.MaNV;
-                    Name = Selected.HoTen;
-                    Position = Selected.ChucVu;
-                    if (Selected.Fulltime) Fulltime = "Full-time";
+                    NhanVienItem = StaffSelected;
+                    if (StaffSelected.Fulltime) Fulltime = "Full-time";
                     else Fulltime = "Part-time";
-                    Address = Selected.DiaChi;
-                    Phone = Selected.SDT;
-                    DateBorn = Selected.NgaySinh;
-                    DateStartWork = Selected.NgayVaoLam;
-                    Account = Selected.TaiKhoan;
-                    Password = Selected.MatKhau;
                 }
                 OnPropertyChanged();
             }
         }
         #endregion
 
-        #region // right card
-        private string _ID;
-        public string ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
-        private string _Name;
-        public string Name { get => _Name; set { _Name = value; OnPropertyChanged(); } }
-        private string _Position;
-        public string Position { get => _Position; set { _Position = value; OnPropertyChanged(); } }
         private string _Fulltime;
-        public string Fulltime { get => _Fulltime; set { _Fulltime = value; OnPropertyChanged(); } }
-        private string _Address;
-        public string Address { get => _Address; set { _Address = value; OnPropertyChanged(); } }
-        private string _Phone;
-        public string Phone { get => _Phone; set { _Phone = value; OnPropertyChanged(); } }
-        private string _DateBorn;
-        public string DateBorn { get => _DateBorn; set { _DateBorn = value; OnPropertyChanged(); } }
-        private string _DateStartWork;
-        public string DateStartWork { get => _DateStartWork; set { _DateStartWork = value; OnPropertyChanged(); } }
-        private string _Account;
-        public string Account { get => _Account; set { _Account = value; OnPropertyChanged(); } }
-        private string _Password;
-        public string Password { get => _Password; set { _Password = value; OnPropertyChanged(); } }
-        #endregion
+        public string Fulltime
+        {
+            get => _Fulltime;
+            set
+            {
+                _Fulltime = value; OnPropertyChanged();
+                if (Fulltime == "Full-time") NhanVienItem.Fulltime = true; else NhanVienItem.Fulltime = false;
+            }
+        }
 
         #region // Search bar
         private string _Search;
@@ -96,17 +87,13 @@ namespace Billiard4Life.ViewModel
         public ICommand EditCM { get; set; }
         public ICommand DeleteCM { get; set; }
         public ICommand CheckCM { get; set; }
-
-        private string strCon = ConfigurationManager.ConnectionStrings["Billiard4Life"].ConnectionString;
-        private SqlConnection sqlCon = null;
         public NhanVienViewModel()
         {
-            OpenConnect();
-
-            DateBorn = DateTime.Now.ToShortDateString();
-            DateStartWork = DateTime.Now.ToShortDateString();
-
             ListStaff = new ObservableCollection<NhanVien>();
+            NhanVienItem = new NhanVien();
+
+            NhanVienItem.NgaySinh = DateTime.Now.ToShortDateString();
+            NhanVienItem.NgayVaoLam = DateTime.Now.ToShortDateString();
             ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV WHERE Xoa = 0");
 
             CheckCM = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -128,152 +115,39 @@ namespace Billiard4Life.ViewModel
             #region //edit command
             EditCM = new RelayCommand<object>((p) =>
             {
-                foreach (NhanVien item in ListStaff)
-                {
-                    if (ID == item.MaNV && Name == item.HoTen && Position == item.ChucVu && Address == item.DiaChi && Phone == item.SDT && Account == item.TaiKhoan && Password == item.MatKhau && DateBorn == item.NgaySinh && DateStartWork == item.NgayVaoLam)
-                    {
-                        if ((Fulltime == "Full-time" && item.Fulltime) || (Fulltime == "Part-time" && !item.Fulltime))
-                            return false;
-                    }
-                }
-                if (String.IsNullOrEmpty(ID) || String.IsNullOrEmpty(Name) || String.IsNullOrEmpty(Position) || String.IsNullOrEmpty(Fulltime) || String.IsNullOrEmpty(DateStartWork))
+                if (String.IsNullOrEmpty(NhanVienItem.HoTen) || String.IsNullOrEmpty(NhanVienItem.ChucVu) 
+                || String.IsNullOrEmpty(Fulltime) || String.IsNullOrEmpty(NhanVienItem.NgayVaoLam))
                     return false;
-                if (!isNumber(Phone)) return false;
-                if ((!String.IsNullOrEmpty(Account) && String.IsNullOrEmpty(Password)) || (String.IsNullOrEmpty(Account) && !String.IsNullOrEmpty(Password))) return false;
+                if (!isNumber(NhanVienItem.SDT)) return false;
+                if ((!String.IsNullOrEmpty(NhanVienItem.TaiKhoan) && String.IsNullOrEmpty(NhanVienItem.MatKhau)) 
+                || (String.IsNullOrEmpty(NhanVienItem.TaiKhoan) && !String.IsNullOrEmpty(NhanVienItem.MatKhau))) return false;
                 return true;
 
             }, (p) =>
             {
-                OpenConnect();
-
-                int ft;
-                if (Fulltime == "Full-time") ft = 1;
-                else ft = 0;
-
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "UPDATE NHANVIEN SET TenNV = N'" + Name + "', ChucVu = N'" + Position + "', DiaChi = N'" + Address + "', Fulltime = " + ft + ", SDT = '" + Phone + "', NgayVaoLam = '" + DateStartWork + "', NgaySinh = '" + DateBorn + "' WHERE MaNV = '" + ID + "'";
-                cmd.Connection = sqlCon;
-
-                int result = cmd.ExecuteNonQuery();
-
-                if (result > 0)
-                {
-                    MyMessageBox mess = new MyMessageBox("Sửa thành công!");
-                    mess.ShowDialog();
-                    Refresh();
-                }
-                else
-                {
-                    MyMessageBox mess = new MyMessageBox("Sửa không thành công!");
-                    mess.ShowDialog();
-                }
-                ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV");
-
-                CloseConnect();
+                NhanVienDP.Flag.UpdateInfoStaff(NhanVienItem);
+                ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV WHERE Xoa = 0");
             });
             #endregion
 
             #region //delete command
             DeleteCM = new RelayCommand<object>((p) =>
             {
-                if (Selected == null) return false;
-                if (Selected.ChucVu == "Quản lý") return false;
+                if (StaffSelected == null) return false;
+                if (StaffSelected.ChucVu == "Quản lý") return false;
                 return true;
             }, (p) =>
             {
-                OpenConnect();
-
-                MyMessageBox yesno = new MyMessageBox("Bạn có chắc chắn xóa?", true);
-                yesno.ShowDialog();
-
-                if (yesno.ACCEPT())
-                {
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.Connection = sqlCon;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "UPDATE NHANVIEN SET Xoa = 1 WHERE MaNV = '" + ID + "'";
-                    int result = cmd.ExecuteNonQuery();
-                    if (result > 0)
-                    {
-                        MyMessageBox mess = new MyMessageBox("Xóa thành công!");
-                        mess.ShowDialog();
-                        Refresh();
-                    }
-                    else
-                    {
-                        MyMessageBox mess = new MyMessageBox("Xóa không thành công!");
-                        mess.ShowDialog();
-                    }
-                }
+                NhanVienDP.Flag.DeleteStaff(NhanVienItem.MaNV);
                 ListViewDisplay("SELECT n.*, t.ID, t.MatKhau FROM NHANVIEN AS n LEFT JOIN TAIKHOAN AS t ON n.MaNV = t.MaNV  WHERE Xoa = 0");
-
-                CloseConnect();
             });
             #endregion
-
-            CloseConnect();
         }
-        public void ListViewDisplay(string strQuery)
+        #region Method
+        public void ListViewDisplay(string query)
         {
-            OpenConnect();
-
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = strQuery;
-            cmd.Connection = sqlCon;
-            SqlDataReader reader = cmd.ExecuteReader();
-
             ListStaff.Clear();
-            while (reader.Read())
-            {
-                string id = reader.GetString(0);
-                string ten = reader.GetString(1);
-                string chucvu = reader.GetString(2);
-                bool ftime = reader.GetBoolean(3);
-                string diachi = reader.GetString(4);
-                string sdt = reader.GetString(5);
-                string ngsinh = reader.GetDateTime(6).ToShortDateString();
-                string ngvl = reader.GetDateTime(7).ToShortDateString();
-                string tk = "";
-                if (!reader.IsDBNull(9))
-                    tk = reader.GetString(9);
-                string mk = "";
-                if (!reader.IsDBNull(10))
-                    mk = reader.GetString(10);
-
-                ListStaff.Add(new NhanVien(id, ten, chucvu, diachi, ftime, sdt, ngvl, ngsinh, tk, mk));
-            }
-
-            CloseConnect();
-        }
-        private void OpenConnect()
-        {
-            sqlCon = new SqlConnection(strCon);
-            if (sqlCon.State == ConnectionState.Closed)
-            {
-                sqlCon.Open();
-            }
-        }
-        private void CloseConnect()
-        {
-            if (sqlCon.State == ConnectionState.Open)
-            {
-                sqlCon.Close();
-            }
-        }
-        private void Refresh()
-        {
-            ID = "";
-            Name = "";
-            Position = "";
-            Fulltime = "";
-            Address = "";
-            Phone = "";
-            DateBorn = "";
-            DateStartWork = "";
-            Account = "";
-            Password = "";
+            ListStaff = NhanVienDP.Flag.GetAllStaff(query);
         }
         private bool isNumber(string s)
         {
@@ -284,5 +158,6 @@ namespace Billiard4Life.ViewModel
             }
             return true;
         }
+        #endregion
     }
 }

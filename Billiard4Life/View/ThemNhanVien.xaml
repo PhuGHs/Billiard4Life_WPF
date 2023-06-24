@@ -90,14 +90,14 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBox materialDesign:HintAssist.Hint="ID"
-                                     Text="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding AddItem.MaNV, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
                                      Grid.Column="0"
                                      IsEnabled="False"
                                      Margin="15 26 5 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                             <TextBox materialDesign:HintAssist.Hint="Họ tên"
-                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding AddItem.HoTen, UpdateSourceTrigger=PropertyChanged}"
                                  FontFamily="Comfortaa"
                                  Grid.Column="1"
                                  Margin="5 26 15 26"
@@ -110,7 +110,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <ComboBox materialDesign:HintAssist.Hint="Chức vụ"
-                                      Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
+                                      Text="{Binding AddItem.ChucVu, UpdateSourceTrigger=PropertyChanged}"
                                       FontFamily="Comfortaa"
                                       Margin="15 20 5 23"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}">
@@ -147,14 +147,14 @@
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <TextBox materialDesign:HintAssist.Hint="Địa chỉ"
-                                     Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding AddItem.DiaChi, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
                                      Margin="15 26 5 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                             </Grid>
                             <Grid Grid.Column="1">
                                 <TextBox materialDesign:HintAssist.Hint="SĐT"
-                                     Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding AddItem.SDT, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
                                      Margin="5 26 15 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -166,13 +166,13 @@
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                             <DatePicker Grid.Column="0"
-                                    SelectedDate="{Binding DateBorn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedDate="{Binding AddItem.NgaySinh, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                                     FontFamily="Comfortaa"
                                     Margin="15 21 5 21"
                                     materialDesign:HintAssist.Hint="Ngày sinh"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
                             <DatePicker Grid.Column="1"
-                                    SelectedDate="{Binding DateStartWork, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedDate="{Binding AddItem.NgayVaoLam, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                                     FontFamily="Comfortaa"
                                     Margin="5 21 15 21"
                                     materialDesign:HintAssist.Hint="Ngày vào làm"
@@ -185,14 +185,14 @@
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <TextBox materialDesign:HintAssist.Hint="Tài khoản"
-                                     Text="{Binding Account, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding AddItem.TaiKhoan, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
                                      Margin="15 26 5 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                             </Grid>
                             <Grid Grid.Column="1">
                                 <TextBox materialDesign:HintAssist.Hint="Mật khẩu"
-                                     Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding AddItem.MatKhau, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
                                      Margin="5 26 15 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
