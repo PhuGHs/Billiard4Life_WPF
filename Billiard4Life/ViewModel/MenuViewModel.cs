@@ -103,11 +103,12 @@ namespace Billiard4Life.ViewModel
                             }
                             MaNV = getMaNV();
                             MenuDP.Flag.PayABill(Convert.ToInt16(SelectedTable.NumOfTable), DecSubtotal, MaNV);
+                            string SoHD = MenuDP.Flag.GetCurrentBillIDForThisTable(Convert.ToInt16(SelectedTable.NumOfTable));
                             foreach (SelectedMenuItem orderdish in SelectedItems)
                             {
-                                MenuDP.Flag.Fill_CTHD(orderdish.ID, orderdish.Quantity);
+                                MenuDP.Flag.Fill_CTHD(SoHD, orderdish.ID, orderdish.Quantity);
                             }
-                            mess = "Đã đặt bàn và báo chế biến thành công!";
+                            mess = "Đặt bàn thành công!";
                             SelectedItems.Clear();
                             DecSubtotal = 0;
                             StrSubtotal = "0 VND";
@@ -118,7 +119,7 @@ namespace Billiard4Life.ViewModel
                         {
                             MaNV = getMaNV();
                             MenuDP.Flag.PayABill(Convert.ToInt16(SelectedTable.NumOfTable), 0, MaNV);
-                            mess = "Đã đặt bàn thành công!";
+                            mess = "Đã bắt đầu tính thời gian!";
                         }
                         Tables = MenuDP.Flag.GetTables();
                     }

@@ -113,7 +113,7 @@ namespace Billiard4Life.DataProvider
                 DBOpen();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "Select NgayHD from HOADON where SoBan = @SoBan and TrangThai = N'Chưa trả'";
+                cmd.CommandText = "Select ThoiDiemTao from HOADON where SoBan = @SoBan and TrangThai = N'Chưa trả'";
                 cmd.Parameters.AddWithValue("@SoBan", ID);
 
                 cmd.Connection = SqlCon;
@@ -173,7 +173,8 @@ namespace Billiard4Life.DataProvider
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = SqlCon;
 
-                cmd.CommandText = "Update HOADON set SoGio = @sogio, MaKH = @makh, MaKM = @makm, TriGia = @trigia,  TrangThai = N'Đã trả' where SoHD = @SoHD";
+                cmd.CommandText = "Update HOADON set SoGio = @sogio, MaKH = @makh, MaKM = @makm, TriGia = @trigia,  " +
+                    "TrangThai = N'Đã thanh toán' where SoHD = @SoHD";
                 cmd.Parameters.AddWithValue("@SoHD", BillID);
                 cmd.Parameters.AddWithValue("@sogio", SoGio); ;
                 cmd.Parameters.AddWithValue("@makh", makh);
@@ -205,7 +206,8 @@ namespace Billiard4Life.DataProvider
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = SqlCon;
 
-                cmd.CommandText = "Update HOADON set SoGio = @sogio, MaKH = @makh, TriGia = @trigia,  TrangThai = N'Đã trả' where SoHD = @SoHD";
+                cmd.CommandText = "Update HOADON set SoGio = @sogio, MaKH = @makh, TriGia = @trigia,  " +
+                    "TrangThai = N'Đã thanh toán' where SoHD = @SoHD";
                 cmd.Parameters.AddWithValue("@SoHD", BillID);
                 cmd.Parameters.AddWithValue("@sogio", SoGio); ;
                 cmd.Parameters.AddWithValue("@makh", makh);
@@ -260,6 +262,9 @@ namespace Billiard4Life.DataProvider
                 cmd.Parameters.AddWithValue("@SoHD", BillID);
 
                 cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "UPDATE BAN SET SoHDHienTai = @SoHD WHERE SoBan = @SoBan";
+                cmd.ExecuteNonQuery();
             }
             finally
             {
@@ -278,7 +283,8 @@ namespace Billiard4Life.DataProvider
                 cmd.Parameters.AddWithValue("@sdt", SDT);
 
                 cmd.ExecuteNonQuery();
-            } catch (Exception ex)
+            } 
+            catch (Exception ex)
             {
                 MyMessageBox msb = new MyMessageBox("co loi");
                 msb.Show();

@@ -57,6 +57,14 @@ namespace Billiard4Life.ViewModel
                     return ((Table)item).KindOfTable == selectedOption;
                 };
             });
+            PrintBillCM = new RelayCommand<Table>((p) =>
+            {
+                if (string.IsNullOrEmpty(TitleOfBill)) return false;
+                return true;
+            }, (p) =>
+            {
+                PrintBill(Convert.ToInt16(MenuDP.Flag.GetCurrentBillIDForThisTable(IDofPaidTable)), IDofPaidTable);
+            });
         }
         #region attributes
         private ObservableCollection<Table> _tables = new ObservableCollection<Table>();
@@ -150,6 +158,7 @@ namespace Billiard4Life.ViewModel
         public ICommand GetPaymentCommand { get; set; }
         public ICommand GetSwitchTableCommand { get; set; }
         public ICommand SortingFeature_Command { get; set; }
+        public ICommand PrintBillCM { get; set; }
         #endregion
         #region methods
         public void LoadOptions()
@@ -440,7 +449,7 @@ namespace Billiard4Life.ViewModel
                         table.Status = 0;
                         TinhTrangBanDP.Flag.UpdateTable(table.ID, true);
 
-                        PrintBill(table.Bill_ID, table.ID);
+                        //PrintBill(table.Bill_ID, table.ID);
                         Dec_sumofbill = 0;
                         D_TotalDiscount = 0;
                         D_OverAllBill = 0;
@@ -473,7 +482,7 @@ namespace Billiard4Life.ViewModel
                     }
                     else
                     {
-                        table.Coloroftable = "Green";
+                        table.Coloroftable = "#05BFDB";
                         table.Status = 0;
                         TinhTrangBanDP.Flag.UpdateTable(table.ID, true);
                         TinhTrangBanDP.Flag.SwitchTable(int.Parse(SelectedTable), table.Bill_ID);
@@ -507,7 +516,7 @@ namespace Billiard4Life.ViewModel
                 }
                 else if (table.ID == int.Parse(SelectedTable))
                 {
-                    table.Coloroftable = "Red";
+                    table.Coloroftable = "#FF6D60";
                     table.Status = 1;
                 }
             }

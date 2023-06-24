@@ -75,20 +75,33 @@ public class MenuDP : DataProvider
 
     public void PayABill(Int16 soban, Decimal sum, string MaNV)
     {
+        string SoHD = Flag.GetCurrentBillIDForThisTable(soban);
+
         try
         {
             DBOpen();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Exec PAY_A_BILL_PD @trigia, @manv, @soban, @ngayHD, @trangthai";
-            cmd.Parameters.AddWithValue("@trigia", sum);
-            cmd.Parameters.AddWithValue("@manv", MaNV);
-            cmd.Parameters.AddWithValue("@soban", soban);
-            cmd.Parameters.AddWithValue("@ngayHD", DateTime.Now);
-            cmd.Parameters.AddWithValue("@trangthai", "Chưa trả");
-            DBOpen();
-            cmd.Connection = SqlCon;
+            if (SoHD != "0")
+            {
+                return;
+            }
+            else
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "INSERT INTO HOADON(MaNV, TriGia, SoBan, ThoiDiemTao, TrangThai) " +
+                    "VALUES(@manv, @trigia, @soban, @thoidiemtao, @trangthai)";
+                cmd.Parameters.AddWithValue("@trigia", sum);
+                cmd.Parameters.AddWithValue("@manv", MaNV);
+                cmd.Parameters.AddWithValue("@soban", soban);
+                cmd.Parameters.AddWithValue("@thoidiemtao", DateTime.Now);
+                cmd.Parameters.AddWithValue("@trangthai", "Chưa trả");
+                DBOpen();
+                cmd.Connection = SqlCon;
 
-            cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "UPDATE BAN SET TrangThai = N'Đang sử dụng', SoHDHienTai = IDENT_CURRENT('HOADON') WHERE SoBan = " + soban;
+                cmd.ExecuteNonQuery();
+            }
         }
         finally
         {
@@ -154,30 +167,6 @@ public class MenuDP : DataProvider
         {
             DBClose();
         }
-    }
-
-    public MenuItem GetDishInfo(string MaMon)
-    {
-        MenuItem X = null;
-        try
-        {
-            DBOpen();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Select * from MENU where MaMon = @mamon";
-            cmd.Parameters.AddWithValue("@mamon", MaMon);
-            cmd.Connection = SqlCon;
-
-            SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                X = new MenuItem(reader.GetString(0), reader.GetString(1), reader.GetDecimal(2), Converter.ImageConverter.ConvertByteToBitmapImage((byte[])reader[3]));
-            }
-        }
-        finally
-        {
-            DBClose();
-        }
-        return X;
     }
 
     public void EditDishInfo(MenuItem item)
@@ -391,14 +380,15 @@ public class MenuDP : DataProvider
             DBClose();
         }
     }
-    public void Fill_CTHD(string MaMon, int SoLuong)
+    public void Fill_CTHD(string SoHD, string MaMon, int SoLuong)
     {
         try
         {
             DBOpen();
             SqlCommand cmd_InsertDetail = new SqlCommand();
-            cmd_InsertDetail.CommandText = "Exec INSERT_DETAIL_PD @mamon, @soluong";
+            cmd_InsertDetail.CommandText = "INSERT INTO CTHD(SoHD, MaMon, SoLuong) VALUES(@sohd, @mamon, @soluong)";
             cmd_InsertDetail.Parameters.AddWithValue("@mamon", MaMon);
+            cmd_InsertDetail.Parameters.AddWithValue("@sohd", SoHD);
             cmd_InsertDetail.Parameters.AddWithValue("@soluong", SoLuong);
             DBOpen();
             cmd_InsertDetail.Connection = SqlCon;
@@ -407,7 +397,7 @@ public class MenuDP : DataProvider
         }
         catch (SqlException ex)
         {
-            UpdateCTHD(MaMon, SoLuong);
+            UpdateCTHD(SoHD, MaMon, SoLuong);
         }
         finally
         {
@@ -415,16 +405,35 @@ public class MenuDP : DataProvider
         }
 
     }
-    public void UpdateCTHD(string MaMon, int SoLuong)
+    public string GetCurrentBillIDForThisTable(int SoBan)
+    {
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "SELECT SoHDHienTai FROM BAN WHERE SoBan = " + SoBan;
+        cmd.Connection = SqlCon;
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        string SoHD = "0";
+        if (reader.Read())
+        {
+            SoHD = reader.GetString(0);
+        }
+
+        DBClose();
+        return SoHD;
+    }
+    public void UpdateCTHD(string SoHD, string MaMon, int SoLuong)
     {
         try
         {
             DBOpen();
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "UPDATE CTHD " +
-                              "SET SOLUONG = @soluong " +
-                              "WHERE SoHD = (SELECT IDENT_CURRENT('HOADON')) AND MaMon = @mamon";
+                              "SET SOLUONG = SOLUONG + @soluong " +
+                              "WHERE SoHD = @sohd AND MaMon = @mamon";
             cmd.Parameters.AddWithValue("@mamon", MaMon);
+            cmd.Parameters.AddWithValue("@sohd", SoHD);
             cmd.Parameters.AddWithValue("@soluong", SoLuong);
 
             cmd.Connection = SqlCon;
