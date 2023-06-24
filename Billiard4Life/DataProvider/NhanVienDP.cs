@@ -163,6 +163,28 @@ public class NhanVienDP : DataProvider
         msb.ShowDialog();
         DBClose();
     }
+    public List<Tuple<string, string>> GetIDAndNameStaff()
+    {
+        List<Tuple<string, string>> temp = new List<Tuple<string, string>>();
+
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "SELECT MaNV, TenNV FROM NHANVIEN WHERE Xoa = 0";
+        cmd.Connection = SqlCon;
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            temp.Add(new Tuple<string, string>(reader.GetString(0), reader.GetString(1)));
+        }
+        reader.Close();
+
+        DBClose();
+
+        return temp;
+    }
     public bool IsStaff(string MaNV)
     {
         DBOpen();

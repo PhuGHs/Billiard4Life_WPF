@@ -55,6 +55,16 @@ namespace Billiard4Life.ViewModel
             get => _ListStaffID;
             set { _ListStaffID = value; OnPropertyChanged(); }
         }
+        private int _StaffIndexSelected;
+        public int StaffIndexSelected
+        {
+            get => _StaffIndexSelected;
+            set { 
+                _StaffIndexSelected = value;
+                OnPropertyChanged();
+                ListViewDisplay(ListStaffID[StaffIndexSelected]);
+            }
+        }
         private string _DateBegin;
         public string DateBegin
         {
@@ -63,7 +73,7 @@ namespace Billiard4Life.ViewModel
             {
                 _DateBegin = value;
                 OnPropertyChanged();
-                ListViewDisplay();
+                ListViewDisplay("Tất cả");
                 OnPropertyChanged();
             }
         }
@@ -75,7 +85,7 @@ namespace Billiard4Life.ViewModel
             {
                 _DateEnd = value;
                 OnPropertyChanged();
-                ListViewDisplay();
+                ListViewDisplay("Tất cả");
                 OnPropertyChanged();
             }
         }
@@ -86,6 +96,9 @@ namespace Billiard4Life.ViewModel
             ListBill = new ObservableCollection<HoaDon>();
             ListStaff = new ObservableCollection<string>();
             ListStaffID = new ObservableCollection<string>();
+
+            GetListStaff();
+            StaffIndexSelected = ListStaffID.Count - 1;
             DateBegin = DateTime.Now.Month + "/1/" + DateTime.Now.Year;
             DateEnd = DateTime.Now.ToShortDateString();
 
@@ -107,11 +120,11 @@ namespace Billiard4Life.ViewModel
                 ExportDetailBill();
             });
         }
-        public void ListViewDisplay()
+        public void ListViewDisplay(string MaNV)
         {
             if (string.IsNullOrEmpty(DateBegin) || string.IsNullOrEmpty(DateEnd)) return;
             ListBill.Clear();
-            ListBill = HoaDonDP.Flag.GetBillsFrom(DateBegin, DateEnd);
+            ListBill = HoaDonDP.Flag.GetBillsFrom(DateBegin, DateEnd, "Tất cả", MaNV);
         }
         public void ExportDetailBill()
         {
@@ -206,7 +219,15 @@ namespace Billiard4Life.ViewModel
         }
         public void GetListStaff()
         {
-
+            List<Tuple<string, string>> staffs = new List<Tuple<string, string>>();
+            staffs = NhanVienDP.Flag.GetIDAndNameStaff();
+            foreach (Tuple<string, string> item in staffs)
+            {
+                ListStaffID.Add(item.Item1);
+                ListStaff.Add(item.Item2);
+            }
+            ListStaff.Add("Tất cả");
+            ListStaffID.Add("Tất cả");
         }
     }
 }

@@ -23,13 +23,14 @@ public class HoaDonDP : DataProvider
             flag = value;
         }
     }
-    public ObservableCollection<HoaDon> GetBillsFrom(string beginDate, string endDate, string paymethod = "Tất cả")
+    public ObservableCollection<HoaDon> GetBillsFrom(string beginDate, string endDate, string paymethod = "Tất cả", string MaNV = "Tất cả")
     {
         ObservableCollection<HoaDon> bills = new ObservableCollection<HoaDon>();
 
         string query = "SELECT h.*, kh.TenKH FROM HOADON AS h LEFT JOIN KHACHHANG AS kh ON h.MaKH =" +
             " kh.MaKH WHERE NgayHD >= @begin AND NgayHD <= @end AND TrangThai = N'Đã thanh toán'";
         if (paymethod != "Tất cả") query += " AND HinhThucThanhToan = N'" + paymethod + "'";
+        if (MaNV != "Tất cả") query += " And MaNV = '" + MaNV + "'";
 
         DBOpen();
 
