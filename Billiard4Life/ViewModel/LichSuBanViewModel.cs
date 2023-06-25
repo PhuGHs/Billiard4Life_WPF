@@ -74,7 +74,6 @@ namespace Billiard4Life.ViewModel
                 _DateBegin = value;
                 OnPropertyChanged();
                 ListViewDisplay("Tất cả");
-                OnPropertyChanged();
             }
         }
         private string _DateEnd;
@@ -86,7 +85,6 @@ namespace Billiard4Life.ViewModel
                 _DateEnd = value;
                 OnPropertyChanged();
                 ListViewDisplay("Tất cả");
-                OnPropertyChanged();
             }
         }
         public ICommand DetailCM { get; set; }
@@ -101,6 +99,7 @@ namespace Billiard4Life.ViewModel
             StaffIndexSelected = ListStaffID.Count - 1;
             DateBegin = DateTime.Now.Month + "/1/" + DateTime.Now.Year;
             DateEnd = DateTime.Now.ToShortDateString();
+            ListViewDisplay("Tất cả");
 
             DetailCM = new RelayCommand<object>((p) => 
             {
@@ -134,7 +133,7 @@ namespace Billiard4Life.ViewModel
             string dtEnd = dt.GetDate().Item2;
 
             ObservableCollection<HoaDon> ListBillEx = new ObservableCollection<HoaDon>();
-            ListBillEx = HoaDonDP.Flag.GetBillsFrom(dtBegin, dtEnd);
+            ListBillEx = HoaDonDP.Flag.GetBillsFrom(dtBegin, dtEnd, "Tất cả", "Tất cả", false);
 
             DateTime dt1 = DateTime.Parse(dtBegin);
             DateTime dt2 = DateTime.Parse(dtEnd);

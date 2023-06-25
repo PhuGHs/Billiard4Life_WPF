@@ -23,12 +23,18 @@ public class HoaDonDP : DataProvider
             flag = value;
         }
     }
-    public ObservableCollection<HoaDon> GetBillsFrom(string beginDate, string endDate, string paymethod = "Tất cả", string MaNV = "Tất cả")
+    public ObservableCollection<HoaDon> GetBillsFrom(string beginDate, string endDate, string paymethod, string MaNV, bool staff = false)
     {
         ObservableCollection<HoaDon> bills = new ObservableCollection<HoaDon>();
 
         string query = "SELECT h.*, kh.TenKH FROM HOADON AS h LEFT JOIN KHACHHANG AS kh ON h.MaKH =" +
-            " kh.MaKH WHERE NgayHD >= @begin AND NgayHD <= @end AND TrangThai = N'Đã thanh toán'";
+            " kh.MaKH WHERE TrangThai = N'Đã thanh toán' ";
+
+        if (staff)
+        {
+            query += " AND NgayHD >= @begin AND NgayHD <= @end";
+        }
+        else query += " AND CONVERT(Date, NgayHD) >= @begin AND CONVERT(Date, NgayHD) <= @end";
         if (paymethod != "Tất cả") query += " AND HinhThucThanhToan = N'" + paymethod + "'";
         if (MaNV != "Tất cả") query += " And MaNV = '" + MaNV + "'";
 
@@ -97,7 +103,7 @@ public class HoaDonDP : DataProvider
     public ObservableCollection<HoaDon> GetBillsShift(string paymethod)
     {
         string start = NhanVienDP.Flag.StaffOnline().Item2;
-        return HoaDonDP.Flag.GetBillsFrom(start, DateTime.Now.ToString(), paymethod);
+        return HoaDonDP.Flag.GetBillsFrom(start, DateTime.Now.ToString(), paymethod, "Tất cả", true);
     }
     public string TotalBillPerMethod(string paymethod)
     {

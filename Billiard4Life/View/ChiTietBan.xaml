@@ -83,7 +83,7 @@
                                       Margin="10 20"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <ComboBoxItem>
-                                    Líp
+                                    Lip
                                 </ComboBoxItem>
                                 <ComboBoxItem>
                                     Lỗ

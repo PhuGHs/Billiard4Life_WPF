@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using Billiard4Life;
 using System.Data.SqlTypes;
+using Billiard4Life.DataProvider;
 
 namespace RestaurantManagement.ViewModel
 {
@@ -28,6 +29,7 @@ namespace RestaurantManagement.ViewModel
         public string Password { get => _Password; set { _Password = value; OnPropertyChanged(); } }
         public static string MaNV { get => _MaNV; set { _MaNV = value; } }
         public string Role { get; set; }
+        private bool Online;
         public ICommand CloseLoginCM { get; set; }
         public ICommand LoginCM { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
@@ -43,6 +45,12 @@ namespace RestaurantManagement.ViewModel
             LoginCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 Login(p);
+                if (NhanVienDP.Flag.IsAnyStaffOnline() && Online == false)
+                {
+                    MyMessageBox msb = new MyMessageBox("Đã có nhân viên trực ca.\nVui lòng đăng nhập sau!");
+                    msb.ShowDialog();
+                }
+                else
                 if (IsLoggedIn)
                 {
                     p.Close();
@@ -70,6 +78,7 @@ namespace RestaurantManagement.ViewModel
                     IsLoggedIn = true;
                     Role = reader.GetString(2);
                     MaNV = reader.GetString(3);
+                    Online = reader.GetBoolean(7);
                 }
                 reader.Close();
 

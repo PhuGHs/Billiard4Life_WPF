@@ -39,7 +39,6 @@ namespace Billiard4Life.ViewModel
         {
             Tables = TinhTrangBanDP.Flag.GetTables();
             ListPhoneCustomer = new ObservableCollection<string>();
-            BillIsPrinted = false;
             GetListPhoneCustomer();
             Update();
             LoadTableStatus();
@@ -54,12 +53,6 @@ namespace Billiard4Life.ViewModel
                 return true;
             }, (p) =>
             {
-                if (BillIsPrinted == false)
-                {
-                    MyMessageBox msb = new MyMessageBox("Vui lòng xuất hóa đơn trước!");
-                    msb.ShowDialog();
-                }
-                else
                 if (PaymentMethodSelected == null)
                 {
                     MyMessageBox msb = new MyMessageBox("Vui lòng chọn phương thức thanh toán!");
@@ -68,7 +61,6 @@ namespace Billiard4Life.ViewModel
                 else
                 {
                     Payment();
-                    BillIsPrinted = false;
                 }
             });
             GetSwitchTableCommand = new RelayCommand<string>((p) => true, (p) => SwitchTable());
@@ -109,7 +101,6 @@ namespace Billiard4Life.ViewModel
             {
                 TimeStopRecord = DateTime.Now;
                 TinhTrangBanDP.Flag.StopRecordTimeSpanPlayer(MenuDP.Flag.GetCurrentBillIDForThisTable(IDofPaidTable));
-                BillIsPrinted = true;
                 PrintBill(Convert.ToInt16(MenuDP.Flag.GetCurrentBillIDForThisTable(IDofPaidTable)), IDofPaidTable);
             });
         }
@@ -138,7 +129,7 @@ namespace Billiard4Life.ViewModel
         bool isNull = false;
         private TimeSpan timeSpanPlayer;
         private DateTime TimeStopRecord;
-        private bool BillIsPrinted;
+        private bool BillIsPaid;
         private Decimal tienBan;
         private string str_tienBan;
         #endregion
@@ -386,7 +377,7 @@ namespace Billiard4Life.ViewModel
                             TimeSpanPlayer = TimeStopRecord - TinhTrangBanDP.Flag.LoadBill_startTime(table.ID);
                         }
                         TienBan = Convert.ToDecimal(TimeSpanPlayer.TotalSeconds) * table.Price / 3600;
-                        S_TienBan = String.Format("{0:0,0 VND}", TienBan);
+                        S_TienBan = String.Format("{0:0,0 VND}", Decimal.Round(TienBan));
                         table.Bill_ID = TinhTrangBanDP.Flag.LoadBill(table.ID);
                         DisplayBill(table.Bill_ID);
                         IDofPaidTable = table.ID;
@@ -527,7 +518,7 @@ namespace Billiard4Life.ViewModel
                     string MaKM, MaKH;
                     if (KM == null) MaKM = ""; else MaKM = KM.MAKM;
                     if (string.IsNullOrEmpty(CustomerPhoneNumber)) MaKH = ""; else MaKH = TinhTrangBanDP.Flag.GetMaKH(CustomerPhoneNumber);
-                    bool success = TinhTrangBanDP.Flag.UpdateBill(table.Bill_ID, D_OverAllBill, TimeSpanPlayer, MaKM, MaKH, PaymentMethodSelected);
+                    bool success = TinhTrangBanDP.Flag.UpdateBill(table.Bill_ID, D_OverAllBill, TimeSpanPlayer, MaKM, MaKH, PaymentMethodSelected, table.ID.ToString());
                     if (success)
                     {
                         if (!string.IsNullOrEmpty(MaKH))

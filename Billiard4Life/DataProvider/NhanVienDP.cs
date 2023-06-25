@@ -36,17 +36,17 @@ public class NhanVienDP : DataProvider
         cmd.CommandText = "INSERT INTO NHANVIEN (MaNV, TenNV, ChucVu, Fulltime, DiaChi, SDT, NgaySinh, NgayVaoLam) " +
             "VALUES (@manv, @ten, @chucvu, @fulltime, @diachi, @sdt, @ngaysinh, @ngayvaolam)";
         cmd.Parameters.AddWithValue("@manv", nv.MaNV);
-        cmd.Parameters.AddWithValue("@ten", nv.MaNV);
-        cmd.Parameters.AddWithValue("@chucvu", nv.MaNV);
-        cmd.Parameters.AddWithValue("@fulltime", nv.MaNV);
-        cmd.Parameters.AddWithValue("@diachi", nv.MaNV);
-        cmd.Parameters.AddWithValue("@sdt", nv.MaNV);
-        cmd.Parameters.AddWithValue("@ngaysinh", nv.MaNV);
-        cmd.Parameters.AddWithValue("@ngayvaolam", nv.MaNV);
+        cmd.Parameters.AddWithValue("@ten", nv.HoTen);
+        cmd.Parameters.AddWithValue("@chucvu", nv.ChucVu);
+        cmd.Parameters.AddWithValue("@fulltime", nv.Fulltime);
+        cmd.Parameters.AddWithValue("@diachi", nv.DiaChi);
+        cmd.Parameters.AddWithValue("@sdt", nv.SDT);
+        cmd.Parameters.AddWithValue("@ngaysinh", nv.NgaySinh);
+        cmd.Parameters.AddWithValue("@ngayvaolam", nv.NgayVaoLam);
         cmd.Connection = SqlCon;
         cmd.ExecuteNonQuery();
 
-        if (string.IsNullOrEmpty(nv.TaiKhoan))
+        if (!string.IsNullOrEmpty(nv.TaiKhoan))
         {
             cmd.CommandText = "INSERT INTO TAIKHOAN (ID, MatKhau, Quyen, MaNV) " +
                 "VALUES(@taikhoan, @matkhau, @quyen, @manv)";
@@ -327,6 +327,22 @@ public class NhanVienDP : DataProvider
         DBClose();
 
         return isOnline;
+    }
+    public bool IsAnyStaffOnline()
+    {
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "SELECT * FROM TAIKHOAN WHERE Online = 1";
+        cmd.Connection = SqlCon;
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        bool temp = false;
+        if (reader.Read()) { temp = true; }
+
+        DBClose();
+
+        return temp;
     }
     public bool IsChecked(string MaNV)
     {

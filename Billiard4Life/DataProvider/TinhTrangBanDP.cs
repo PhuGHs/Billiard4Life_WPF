@@ -166,9 +166,10 @@ namespace Billiard4Life.DataProvider
                 DBClose();
             }
         }
-        public bool UpdateBill(int BillID, Decimal tong, TimeSpan SoGio, string makm, string makh, string method)
+        public bool UpdateBill(int BillID, Decimal tong, TimeSpan SoGio, string makm, string makh, string method, string soban)
         {
-            string query = "UPDATE HOADON SET SoGio = @sogio, TriGia = @trigia, TrangThai = N'Đã thanh toán', HinhThucThanhToan = @httt ";
+            string query = "UPDATE HOADON SET SoGio = @sogio, TriGia = @trigia, NgayHD = @ngayhd," +
+                " TrangThai = N'Đã thanh toán', HinhThucThanhToan = @httt ";
             if (!string.IsNullOrEmpty(makm))
             {
                 query += ", makm = '" + makm + "'";
@@ -191,7 +192,11 @@ namespace Billiard4Life.DataProvider
                 cmd.Parameters.AddWithValue("@sogio", SoGio); 
                 cmd.Parameters.AddWithValue("@trigia", tong);
                 cmd.Parameters.AddWithValue("@httt", method);
+                cmd.Parameters.AddWithValue("@ngayhd", DateTime.Now);
 
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "UPDATE BAN SET SoHDHienTai = 0 WHERE SoBan = " + soban;
                 cmd.ExecuteNonQuery();
             }
             catch (SqlException ex)
@@ -213,8 +218,8 @@ namespace Billiard4Life.DataProvider
             DBOpen();
 
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "INSERT INTO BAN(SoBan, LoaiBan, GiaMotGio, TrangThai) " +
-                "VALUES(@id, @loaiban, @gia, N'Có thể sử dụng')";
+            cmd.CommandText = "INSERT INTO BAN(SoBan, LoaiBan, GiaMotGio, TrangThai, SoHDHienTai) " +
+                "VALUES(@id, @loaiban, @gia, N'Có thể sử dụng', 0)";
             cmd.Parameters.AddWithValue("@id", ID);
             cmd.Parameters.AddWithValue("@loaiban", LoaiBan);
             cmd.Parameters.AddWithValue("@gia", Gia);
