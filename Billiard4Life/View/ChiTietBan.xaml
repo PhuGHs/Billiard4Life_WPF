@@ -20,7 +20,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
-        Height="500" Width="700">
+        Height="350" Width="300">
     <Grid>
         <Border Background="White"
                 CornerRadius="5"
@@ -29,17 +29,17 @@
         <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="8*"/>
+                <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Border Background="#EEEEEE"
                         CornerRadius="5"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="{Binding TableIDSelected}"
+                    <Label Content="   THÊM BÀN MỚI"
                            Foreground="#3C6255"
                            Grid.Column="0"
                            VerticalAlignment="Center"/>
@@ -59,85 +59,47 @@
                     </Button>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1"
-                  Margin="0 5 0 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.Column="0"
-                        Background="#EEEEEE"
+            <Grid Margin="0 5 0 0"
+                  Grid.Row="1">
+                <Border Background="#EEEEEE"
                         CornerRadius="5">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
-                            <RowDefinition Height="8*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0"
-                               Margin="10 0 0 0"
-                               Content="Các món đã gọi:"
-                               VerticalContentAlignment="Center"/>
-                        <ListView Grid.Row="1" 
-                                  Margin="5 0"
-                                  ItemsSource="{Binding SelectedItems}">
-                            <ListView.View>
-                                <GridView>
-                                    <GridView.Columns>
-                                        <GridViewColumn Header="Tên món"
-                                                        Width="140"
-                                                        DisplayMemberBinding="{Binding FoodName}"/>
-                                        <GridViewColumn Header="SL"
-                                                        Width="90"
-                                                        DisplayMemberBinding="{Binding Quantity}"/>
-                                        <GridViewColumn Header="Thành tiền"
-                                                        Width="150"
-                                                        DisplayMemberBinding="{Binding PriceVNDCurrency}"/>
-                                    </GridView.Columns>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </Grid>
-                </Border>
-                <Border Grid.Column="1"
-                        Margin="5 0 0 0"
-                        Background="#EEEEEE"
-                        CornerRadius="5">
-                    <Grid Margin="10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Label Grid.Row="0"
-                               FontSize="16"
-                               VerticalAlignment="Center"
-                               Content="Tổng giờ chơi:"/>
-                        <Label Grid.Row="0"
-                               FontSize="16"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Right"
-                               Content="{Binding TimeSpanPlayer, StringFormat='{}{0:hh\\:mm\\:ss}'}"/>
-                        <Label Grid.Row="1"
-                               FontSize="16"
-                               VerticalAlignment="Center"
-                               Content="Tiền bàn:"/>
-                        <Label Grid.Row="1"
-                               FontSize="16"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Right"
-                               Content="{Binding S_TienBan}"/>
-                        <Label Grid.Row="2"
-                               FontSize="16"
-                               VerticalAlignment="Center"
-                               Content="SĐT Khách hàng:"/>
-                        <TextBox Grid.Row="2"
-                                 FontSize="16"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Right"
-                                 Width="120"/>
+                        <TextBox materialDesign:HintAssist.Hint="ID"
+                                     Text="{Binding AddTableID, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="Comfortaa"
+                                     Grid.Row="0"
+                                     IsEnabled="False"
+                                     Margin="10 25"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <Grid Grid.Row="1">
+                            <ComboBox materialDesign:HintAssist.Hint="Loại bàn"
+                                      Text="{Binding AddTableType, UpdateSourceTrigger=PropertyChanged}"
+                                      FontFamily="Comfortaa"
+                                      Margin="10 20"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBoxItem>
+                                    Líp
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Lỗ
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Carom
+                                </ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+                        <Button Grid.Row="2"
+                                Margin="10 0"
+                                Content="Thêm bàn"
+                                Foreground="Wheat"
+                                Background="#3C6255"
+                                Cursor="Hand"
+                                Command="{Binding AddTableCM}"/>
                     </Grid>
                 </Border>
             </Grid>

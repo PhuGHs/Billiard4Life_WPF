@@ -28,6 +28,7 @@ using System.IO;
 using System.Windows.Data;
 using System.ComponentModel;
 using KhuyenMai = Billiard4Life.Models.KhuyenMai;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 
 namespace Billiard4Life.ViewModel
 {
@@ -37,6 +38,9 @@ namespace Billiard4Life.ViewModel
         public TinhTrangBanViewModel()
         {
             Tables = TinhTrangBanDP.Flag.GetTables();
+            ListPhoneCustomer = new ObservableCollection<string>();
+            BillIsPrinted = false;
+            GetListPhoneCustomer();
             Update();
             LoadTableStatus();
             LoadEmptyTables();
@@ -44,8 +48,48 @@ namespace Billiard4Life.ViewModel
             _tables_view = new CollectionViewSource();
             _tables_view.Source = Tables;
             StatusOfTableCommand = new RelayCommand<Table>((p) => true, (p) => GetStatusOfTable(p.ID));
-            GetPaymentCommand = new RelayCommand<Table>((p) => true, (p) => Payment());
+            GetPaymentCommand = new RelayCommand<Table>((p) =>
+            {
+                if (string.IsNullOrEmpty(TitleOfBill)) return false;
+                return true;
+            }, (p) =>
+            {
+                if (BillIsPrinted == false)
+                {
+                    MyMessageBox msb = new MyMessageBox("Vui lòng xuất hóa đơn trước!");
+                    msb.ShowDialog();
+                }
+                else
+                if (PaymentMethodSelected == null)
+                {
+                    MyMessageBox msb = new MyMessageBox("Vui lòng chọn phương thức thanh toán!");
+                    msb.ShowDialog();
+                }
+                else
+                {
+                    Payment();
+                    BillIsPrinted = false;
+                }
+            });
             GetSwitchTableCommand = new RelayCommand<string>((p) => true, (p) => SwitchTable());
+            AddNewTableCM = new RelayCommand<object>((p) => true, (p) =>
+            {
+                ChiTietBan newTable = new ChiTietBan();
+                newTable.DataContext = this;
+                AddTableID = Convert.ToString(Tables.Count() + 1);
+                newTable.ShowDialog();
+            });
+            AddTableCM = new RelayCommand<object>((p) =>
+            {
+                if (AddTableType == null) return false;
+                return true;
+            }, (p) =>
+            {
+                Tables.Add(TinhTrangBanDP.Flag.AddNewTable(AddTableID, AddTableType));
+                AddTableID = Convert.ToString(Tables.Count() + 1);
+                MyMessageBox msb = new MyMessageBox("Thêm thành công!");
+                msb.ShowDialog();
+            });
             SortingFeature_Command = new RelayCommand<object>((p) => true, (p) =>
             {
                 TableView.Filter = item =>
@@ -63,6 +107,9 @@ namespace Billiard4Life.ViewModel
                 return true;
             }, (p) =>
             {
+                TimeStopRecord = DateTime.Now;
+                TinhTrangBanDP.Flag.StopRecordTimeSpanPlayer(MenuDP.Flag.GetCurrentBillIDForThisTable(IDofPaidTable));
+                BillIsPrinted = true;
                 PrintBill(Convert.ToInt16(MenuDP.Flag.GetCurrentBillIDForThisTable(IDofPaidTable)), IDofPaidTable);
             });
         }
@@ -73,6 +120,7 @@ namespace Billiard4Life.ViewModel
         private ObservableCollection<string> _emptytables = new ObservableCollection<string>();
         private ObservableCollection<string> _combobox_option_kindoftables = new ObservableCollection<string>();
         private CollectionViewSource _tables_view;
+        private ObservableCollection<string> _ListPhoneCustomer;
         private string customerPhoneNumber;
         private string titleofbill = "";
         private string selectedOption = "Tất cả";
@@ -83,9 +131,14 @@ namespace Billiard4Life.ViewModel
         private decimal overallBill = 0;
         private string s_totaldiscount;
         private string s_overallBill;
+        private string _PaymentMethodSelected;
+        private string _AddTableID;
+        private string _AddTableType;
         int IDofPaidTable = 0;
         bool isNull = false;
         private TimeSpan timeSpanPlayer;
+        private DateTime TimeStopRecord;
+        private bool BillIsPrinted;
         private Decimal tienBan;
         private string str_tienBan;
         #endregion
@@ -104,6 +157,20 @@ namespace Billiard4Life.ViewModel
         {
             get { return titleofbill; }
             set { titleofbill = value; OnPropertyChanged(); }
+        }
+        public string PaymentMethodSelected
+        {
+            get => _PaymentMethodSelected;
+            set { _PaymentMethodSelected = value; OnPropertyChanged(); }
+        }
+        public ObservableCollection<string> ListPhoneCustomer
+        {
+            get =>  _ListPhoneCustomer;
+            set
+            {
+                _ListPhoneCustomer = value;
+                OnPropertyChanged();
+            }
         }
         public Decimal D_TotalDiscount { get { return totalDiscount; } set { totalDiscount = value; OnPropertyChanged();} }
         public Decimal D_OverAllBill { get { return overallBill; } set { overallBill = value; OnPropertyChanged(); } }
@@ -152,6 +219,16 @@ namespace Billiard4Life.ViewModel
                 OnPropertyChanged();
             }
         }
+        public string AddTableID
+        {
+            get => _AddTableID;
+            set { _AddTableID = value; OnPropertyChanged(); }
+        }
+        public string AddTableType
+        {
+            get => _AddTableType;
+            set { _AddTableType = value; OnPropertyChanged(); }
+        }
         #endregion
         #region commands
         public ICommand StatusOfTableCommand { get; set; }
@@ -159,6 +236,8 @@ namespace Billiard4Life.ViewModel
         public ICommand GetSwitchTableCommand { get; set; }
         public ICommand SortingFeature_Command { get; set; }
         public ICommand PrintBillCM { get; set; }
+        public ICommand AddNewTableCM { get; set; }
+        public ICommand AddTableCM { get; set; }
         #endregion
         #region methods
         public void LoadOptions()
@@ -279,6 +358,10 @@ namespace Billiard4Life.ViewModel
             TotalDiscount = "-" + String.Format("{0:0,0 VND}", D_TotalDiscount);
             OverallBill = String.Format("{0:0,0 VND}", D_OverAllBill);
         }
+        public void GetListPhoneCustomer()
+        {
+            ListPhoneCustomer = TinhTrangBanDP.Flag.ListPhoneCustomer();
+        }
         public void GetStatusOfTable(int ID)
         {
             foreach (Table table in _tables)
@@ -294,7 +377,14 @@ namespace Billiard4Life.ViewModel
                     else
                     {
                         TitleOfBill = table.NumOfTable;
-                        TimeSpanPlayer = DateTime.Now - TinhTrangBanDP.Flag.LoadBill_startTime(table.ID);
+                        if (TimeStopRecord <= DateTime.MinValue)
+                        {
+                            TimeSpanPlayer = DateTime.Now - TinhTrangBanDP.Flag.LoadBill_startTime(table.ID);
+                        }
+                        else
+                        {
+                            TimeSpanPlayer = TimeStopRecord - TinhTrangBanDP.Flag.LoadBill_startTime(table.ID);
+                        }
                         TienBan = Convert.ToDecimal(TimeSpanPlayer.TotalSeconds) * table.Price / 3600;
                         S_TienBan = String.Format("{0:0,0 VND}", TienBan);
                         table.Bill_ID = TinhTrangBanDP.Flag.LoadBill(table.ID);
@@ -430,26 +520,24 @@ namespace Billiard4Life.ViewModel
 
         public void Payment()
         {
-            bool next = true;
             foreach (Table table in _tables)
             {
                 if (table.ID == IDofPaidTable)
                 {
-                    if(KM == null)
+                    string MaKM, MaKH;
+                    if (KM == null) MaKM = ""; else MaKM = KM.MAKM;
+                    if (string.IsNullOrEmpty(CustomerPhoneNumber)) MaKH = ""; else MaKH = TinhTrangBanDP.Flag.GetMaKH(CustomerPhoneNumber);
+                    bool success = TinhTrangBanDP.Flag.UpdateBill(table.Bill_ID, D_OverAllBill, TimeSpanPlayer, MaKM, MaKH, PaymentMethodSelected);
+                    if (success)
                     {
-                        next = TinhTrangBanDP.Flag.UpdateBillNonDiscount(table.Bill_ID, CustomerPhoneNumber, D_OverAllBill, TimeSpanPlayer);
-                    } else
-                    {
-                        next = TinhTrangBanDP.Flag.UpdateBill(table.Bill_ID, CustomerPhoneNumber, D_OverAllBill, TimeSpanPlayer, KM.MAKM);
-                    }
-                    if (next)
-                    {
-                        TinhTrangBanDP.Flag.UpdateKhachHangAccumulatedPoint(((int)D_OverAllBill / 50000) * 20, CustomerPhoneNumber);
+                        if (!string.IsNullOrEmpty(MaKH))
+                        {
+                            TinhTrangBanDP.Flag.UpdateKhachHangAccumulatedPoint(((int)D_OverAllBill / 50000) * 20, MaKH);
+                        }
                         table.Coloroftable = "#05BFDB";
                         table.Status = 0;
                         TinhTrangBanDP.Flag.UpdateTable(table.ID, true);
 
-                        //PrintBill(table.Bill_ID, table.ID);
                         Dec_sumofbill = 0;
                         D_TotalDiscount = 0;
                         D_OverAllBill = 0;
@@ -459,11 +547,13 @@ namespace Billiard4Life.ViewModel
 
                         SelectedItems.Clear();
                         TitleOfBill = "";
+                        PaymentMethodSelected = "";
+                        CustomerPhoneNumber = "";
                         MyMessageBox msb = new MyMessageBox("Đã thanh toán thành công!");
                         msb.Show();
                         break;
                     }
-                    
+
                 }
             }
         }

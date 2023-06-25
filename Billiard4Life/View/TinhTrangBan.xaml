@@ -91,7 +91,7 @@
                         Background="#3C6255"
                         Foreground="#EAE7B1"
                         FontFamily="Comfortaa"
-                        Command="{Binding AddNewTable}"
+                        Command="{Binding AddNewTableCM}"
                         BorderThickness="0"
                         Cursor="Hand"/>
                     <Button Grid.Column="1"
@@ -261,10 +261,11 @@
                 </Grid>
                 <ComboBox materialDesign:HintAssist.Hint="Phương thức thanh toán"
                           Grid.Row="7"
+                          Text="{Binding PaymentMethodSelected}"
                           Margin="20 0"
                           FontSize="18"
                           Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                    <ComboBoxItem IsSelected="True">
+                    <ComboBoxItem>
                         Tiền mặt
                     </ComboBoxItem>
                     <ComboBoxItem>

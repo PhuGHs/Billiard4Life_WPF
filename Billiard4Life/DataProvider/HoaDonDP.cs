@@ -45,7 +45,7 @@ public class HoaDonDP : DataProvider
         while (reader.Read())
         {
             string ma = reader.GetInt16(0).ToString();
-            string sogio = reader.GetTimeSpan(1).TotalMinutes.ToString();
+            string sogio = Math.Round(reader.GetTimeSpan(1).TotalMinutes).ToString();
             sogio = ConvertTime(int.Parse(sogio));
             string trigia = reader.GetSqlMoney(2).ToString();
             string manv = reader.GetString(3);
@@ -53,8 +53,8 @@ public class HoaDonDP : DataProvider
             string ngayhd = reader.GetDateTime(7).ToString();
             string httt = reader.GetString(9).ToString();
             string tenkh = "";
-            if (!reader.IsDBNull(10))
-                tenkh = reader.GetString(10);
+            if (!reader.IsDBNull(11))
+                tenkh = reader.GetString(11);
             else tenkh = "Khách vãng lai";
             string makm = "";
             if (!reader.IsDBNull(5))
