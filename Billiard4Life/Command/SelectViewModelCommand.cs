@@ -79,7 +79,7 @@ namespace Billiard4Life.Command
                         _navigator.CurrentViewModel = new TinhTrangBanViewModel();
                         break;
                     case TypeOfView.Bep:
-                        _navigator1.CurrentTitle = "Bếp";
+                        _navigator1.CurrentTitle = "Khách Hàng";
                         _navigator.CurrentViewModel = new BepViewModel();
                         break;
                     default:
