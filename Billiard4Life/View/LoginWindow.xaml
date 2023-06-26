@@ -59,10 +59,10 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            FontSize="20">
-                    QUẢN LÝ NHÀ HÀNG
+                    BILLIARD 4 LIFE
                 </TextBlock>
                 <Image Grid.Row="1"
-                       Source="/images/logo.png"
+                       Source="/images/Logo2.png"
                        Margin="60 0 60 60"/>
             </Grid>
 
