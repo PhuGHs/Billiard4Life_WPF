@@ -21,7 +21,8 @@ namespace Billiard4Life.State.Navigator
         CaiDat,
         DangXuat,
         ThongKe,
-        Bep
+        Bep,
+        LichSuCa
     }
     public interface INavigator
     {

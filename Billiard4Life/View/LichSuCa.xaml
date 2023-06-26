@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="Billiard4Life.View.LichSuCa"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Billiard4Life.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             FontSize="16"
+             FontFamily="comfortaa"
+             d:DesignHeight="660" d:DesignWidth="1060">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Label Content="Thời gian vào ca: "
+                       VerticalAlignment="Center"
+                       Foreground="#3C6255"
+                       HorizontalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Label Content="{Binding TimeStart}"
+                       VerticalAlignment="Center"
+                       Foreground="#3C6255"
+                       HorizontalAlignment="Center"/>
+            </Grid>
+            <ComboBox materialDesign:HintAssist.Hint="Hình thức thanh toán"
+                      SelectedItem="{Binding PayMethodSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      FontFamily="Comfortaa"
+                      Margin="5"
+                      ItemsSource="{Binding PayMethods}"
+                      Grid.Column="2"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+            </ComboBox>
+            <Grid Grid.Column="3">
+                <Button Content="Xem chi tiết"
+                        Margin="10"
+                        Foreground="#EAE7B1"
+                        Command="{Binding DetailCM}" 
+                        Background="#61876E">
+                </Button>
+            </Grid>
+            <Grid Grid.Column="4">
+                <Button Content="Tổng kết ca"
+                        Margin="10"
+                        Foreground="#EAE7B1"
+                        Command="{Binding ExportCM}" 
+                        Background="#61876E">
+                </Button>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListView ItemsSource="{Binding ListBill}"
+                          SelectedItem="{Binding BillSelected}"
+                          FontSize="16"
+                          Margin="20 0 20 20">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding SoHD}"
+                                            Width="140"
+                                            Header="Số HD" />
+                            <GridViewColumn DisplayMemberBinding="{Binding TenKH}"
+                                            Width="210"
+                                            Header="Tên khách hàng" />
+                            <GridViewColumn DisplayMemberBinding="{Binding SoBan}"
+                                            Width="150"
+                                            Header="Bàn" />
+                            <GridViewColumn DisplayMemberBinding="{Binding SoGio}"
+                                            Width="150"
+                                            Header="Số giờ" />
+                            <GridViewColumn DisplayMemberBinding="{Binding TriGia}"
+                                            Width="190"
+                                            Header="Thành tiền" />
+                            <GridViewColumn DisplayMemberBinding="{Binding NgayHD}"
+                                            Width="190"
+                                            Header="Ngày hóa đơn" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Tổng tiền: "
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Foreground="#3C6255"
+                   HorizontalAlignment="Right"/>
+            <Label Content="{Binding TotalBill}"
+                   Grid.Column="1"
+                   VerticalAlignment="Center"
+                   Foreground="#3C6255"
+                   HorizontalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</UserControl>

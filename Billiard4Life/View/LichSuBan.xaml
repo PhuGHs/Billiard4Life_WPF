@@ -30,6 +30,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Label Content="Xem hóa đơn: "
@@ -41,7 +42,7 @@
                 <DatePicker Grid.Column="0"
                             SelectedDate="{Binding DateBegin, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                             FontFamily="Comfortaa"
-                            Margin="15 5 5 5"
+                            Margin="5 5 5 5"
                             materialDesign:HintAssist.Hint="Từ ngày"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
             </Grid>
@@ -49,20 +50,30 @@
                 <DatePicker Grid.Column="0"
                             SelectedDate="{Binding DateEnd, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                             FontFamily="Comfortaa"
-                            Margin="15 5 5 5"
+                            Margin="5 5 5 5"
                             materialDesign:HintAssist.Hint="Đến ngày"
                             Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
             </Grid>
-            <Grid Grid.Column="3">
+            <ComboBox materialDesign:HintAssist.Hint="Nhân viên"
+                      SelectedIndex="{Binding StaffIndexSelected}"
+                      FontFamily="Comfortaa"
+                      Margin="5"
+                      ItemsSource="{Binding ListStaff}"
+                      Grid.Column="3"
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+            </ComboBox>
+            <Grid Grid.Column="4">
                 <Button Content="Xem chi tiết"
                         Margin="10"
+                        Foreground="#EAE7B1"
                         Command="{Binding DetailCM}" 
                         Background="#61876E">
                 </Button>
             </Grid>
-            <Grid Grid.Column="4">
+            <Grid Grid.Column="5">
                 <Button Content="Xuất file Excel"
                         Margin="10"
+                        Foreground="#EAE7B1"
                         Command="{Binding ExportCM}" 
                         Background="#61876E">
                 </Button>
@@ -72,25 +83,31 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ListView ItemsSource="{Binding ListBill}"
                           SelectedItem="{Binding Selected}"
-                          FontSize="16"
-                          Margin="20 0 20 20">
+                          FontSize="14"
+                          Margin="10 0 10 20">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding SoHD}"
-                                            Width="200"
-                                            Header="Số hóa đơn" />
+                                            Width="110"
+                                            Header="Số HD" />
                             <GridViewColumn DisplayMemberBinding="{Binding TenKH}"
-                                            Width="280"
+                                            Width="190"
                                             Header="Tên khách hàng" />
+                            <GridViewColumn DisplayMemberBinding="{Binding SoBan}"
+                                            Width="95"
+                                            Header="Bàn" />
                             <GridViewColumn DisplayMemberBinding="{Binding SoGio}"
-                                            Width="150"
+                                            Width="130"
                                             Header="Số giờ" />
                             <GridViewColumn DisplayMemberBinding="{Binding TriGia}"
-                                            Width="190"
+                                            Width="160"
                                             Header="Thành tiền" />
                             <GridViewColumn DisplayMemberBinding="{Binding NgayHD}"
                                             Width="190"
                                             Header="Ngày hóa đơn" />
+                            <GridViewColumn DisplayMemberBinding="{Binding HinhThucThanhToan}"
+                                            Width="200"
+                                            Header="Hình thức trả" />
                         </GridView>
                     </ListView.View>
                 </ListView>

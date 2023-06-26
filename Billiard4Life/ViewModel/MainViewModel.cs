@@ -40,6 +40,15 @@ namespace Billiard4Life.ViewModel
                 if (loginVM.IsLoggedIn)
                 {
                     Navigator = new Navigator(loginVM.Role);
+                    if (loginVM.Role != "admin")
+                    {
+                        ExitTitle = "Kết thúc ca";
+                        if (NhanVienDP.Flag.IsOnline(LoginWindowVM.MaNV) == false)
+                        {
+                            NhanVienDP.Flag.SetAccountOnline(LoginWindowVM.MaNV);
+                            NhanVienDP.Flag.StartTimeKeeping(LoginWindowVM.MaNV);
+                        }
+                    }
                     CaiDatViewModel = new CaiDatViewModel(LoginWindowVM.MaNV, loginVM.UserName, loginVM.Password, loginVM.Role);
                     p.Show();
                 }
@@ -54,6 +63,16 @@ namespace Billiard4Life.ViewModel
                 if (p == null)
                 {
                     return;
+                }
+                if (NhanVienDP.Flag.IsStaff(LoginWindowVM.MaNV))
+                {
+                    MyMessageBox msb = new MyMessageBox("Kết thúc ca làm?", true);
+                    msb.ShowDialog();
+                    if (msb.ACCEPT())
+                    {
+                        NhanVienDP.Flag.SetAccountOffline(LoginWindowVM.MaNV);
+                        NhanVienDP.Flag.StopTimeKeepingAndRecord(LoginWindowVM.MaNV);
+                    }
                 }
                 System.Windows.Forms.Application.Restart();
                 p.Close();
@@ -73,6 +92,7 @@ namespace Billiard4Life.ViewModel
         BepViewModel bep;
         string _NumberOfDishesNeedServing;
         public string MaNV;
+        private string _ExitTitle = "Đăng xuất";
         //public string NumberOfDishesNeedServing
         //{
         //    get {
@@ -106,6 +126,11 @@ namespace Billiard4Life.ViewModel
         {
             get { return navigator; }
             set { navigator = value; OnPropertyChanged(); }
+        }
+        public string ExitTitle
+        {
+            get => _ExitTitle;
+            set { _ExitTitle = value; OnPropertyChanged();}
         }
     }
 }

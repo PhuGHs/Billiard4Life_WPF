@@ -24,7 +24,9 @@ namespace Billiard4Life.Models
         public string SoBan { get => _SoBan; set => _SoBan = value; }
         private string _NgayHD;
         public string NgayHD { get => _NgayHD; set => _NgayHD = value; }
-        public HoaDon(string sohd, string sogio, string trigia, string manv, string ban, string ngay, string tenkh = "", string makm = "")
+        private string _HinhThucThanhToan;
+        public string HinhThucThanhToan { get => _HinhThucThanhToan; set => _HinhThucThanhToan = value; }
+        public HoaDon(string sohd, string sogio, string trigia, string manv, string ban, string ngay, string httt, string tenkh = "", string makm = "")
         {
             SoHD = sohd;
             SoGio = sogio;
@@ -34,6 +36,7 @@ namespace Billiard4Life.Models
             MaKM = makm;
             SoBan = ban;
             NgayHD = ngay;
+            HinhThucThanhToan = httt;
         }
     }
 }

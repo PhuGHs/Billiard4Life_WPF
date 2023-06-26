@@ -80,6 +80,7 @@
                                  Grid.Column="0"
                                  Text="{Binding AddKhuyenMaiItem.MAKM, UpdateSourceTrigger=PropertyChanged}"
                                  FontFamily="Comfortaa"
+                                 IsEnabled="False"
                                  Margin="15 22 5 22"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         <TextBox materialDesign:HintAssist.Hint="Tên khuyến mãi"

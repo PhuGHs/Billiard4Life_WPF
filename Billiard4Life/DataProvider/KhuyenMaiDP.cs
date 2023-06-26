@@ -224,5 +224,41 @@ namespace Billiard4Life.DataProvider
             }
             finally { DBClose(); }
         }
+        public string AutoIDKhuyenMai()
+        {
+            string ID = "KM001";
+            string temp = "";
+            DBOpen();
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT TOP 1 MaKM FROM KHUYENMAI ORDER BY MaKM DESC";
+            cmd.Connection = SqlCon;
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                temp = reader.GetString(0);
+            }
+            reader.Close();
+            if (!string.IsNullOrEmpty(temp))
+            {
+                int num = ExtractNumber(temp) + 1;
+                temp = num.ToString();
+                while (temp.Length < 3) temp = "0" + temp;
+                ID = "KM" + temp;
+            }
+            DBClose();
+            return ID;
+        }
+        private int ExtractNumber(string input)
+        {
+            string output = string.Empty;
+            foreach (char c in input)
+            {
+                if (char.IsDigit(c))
+                {
+                    output += c;
+                }
+            }
+            return int.Parse(output);
+        }
     }
 }

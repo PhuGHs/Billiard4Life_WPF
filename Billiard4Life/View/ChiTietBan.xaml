@@ -1,0 +1,108 @@
+﻿<Window x:Class="Billiard4Life.View.ChiTietBan"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Billiard4Life.View"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="ChiTietBan"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="15"
+        TextElement.Foreground="#3C6255"
+        TextElement.FontFamily="Comfortaa"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="Transparent"
+        FontFamily="Comfortaa"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        Height="350" Width="300">
+    <Grid>
+        <Border Background="White"
+                CornerRadius="5"
+                BorderBrush="#61876E"
+                BorderThickness="4"/>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Border Background="#EEEEEE"
+                        CornerRadius="5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="   THÊM BÀN MỚI"
+                           Foreground="#3C6255"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"/>
+                    <Button Grid.Column="2"
+                            Name="btnClose"
+                            Height="20"
+                            Width="20"
+                            Cursor="Hand"
+                            materialDesign:ButtonAssist.CornerRadius="0,10,0,0"
+                            BorderThickness="0"
+                            Background="Transparent" Click="btn_Close">
+                        <fa:IconImage Icon="PowerOff"
+                                      Foreground="#3C6255"
+                                      Margin="-27 -4 -15 -4"
+                                      Height="20"
+                                      Width="20"/>
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid Margin="0 5 0 0"
+                  Grid.Row="1">
+                <Border Background="#EEEEEE"
+                        CornerRadius="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <TextBox materialDesign:HintAssist.Hint="ID"
+                                     Text="{Binding AddTableID, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="Comfortaa"
+                                     Grid.Row="0"
+                                     IsEnabled="False"
+                                     Margin="10 25"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <Grid Grid.Row="1">
+                            <ComboBox materialDesign:HintAssist.Hint="Loại bàn"
+                                      Text="{Binding AddTableType, UpdateSourceTrigger=PropertyChanged}"
+                                      FontFamily="Comfortaa"
+                                      Margin="10 20"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBoxItem>
+                                    Lip
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Lỗ
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Carom
+                                </ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+                        <Button Grid.Row="2"
+                                Margin="10 0"
+                                Content="Thêm bàn"
+                                Foreground="Wheat"
+                                Background="#3C6255"
+                                Cursor="Hand"
+                                Command="{Binding AddTableCM}"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

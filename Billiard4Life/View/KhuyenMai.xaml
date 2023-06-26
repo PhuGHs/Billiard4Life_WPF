@@ -79,15 +79,20 @@
                 Margin="10"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ItemsSource="{Binding KhuyenMaiView}"
-                SelectedItem="{Binding SelectedItem}"
-                FontSize="14" d:ItemsSource="{d:SampleData ItemCount=5}" IsSynchronizedWithCurrentItem="True" FlowDirection="LeftToRight" UseLayoutRounding="False" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True">
+                SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
+                FontSize="14" 
+                IsSynchronizedWithCurrentItem="True" 
+                FlowDirection="LeftToRight" 
+                UseLayoutRounding="False" 
+                Grid.IsSharedSizeScope="True" 
+                ScrollViewer.CanContentScroll="True">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="70">
                             <GridViewColumnHeader Padding="7,10,10,10" Grid.IsSharedSizeScope="True">
                                 <CheckBox IsChecked="{Binding IsAllSelected, Mode=TwoWay}" Background="#3C6255" HorizontalContentAlignment="Left">
                                     <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
                                     </CheckBox.LayoutTransform>
                                 </CheckBox>
                             </GridViewColumnHeader>
@@ -95,7 +100,7 @@
                                 <DataTemplate>
                                     <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Background="#3C6255">
                                         <CheckBox.LayoutTransform>
-                                            <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                            <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                 </DataTemplate>

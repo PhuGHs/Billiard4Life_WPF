@@ -78,5 +78,57 @@ namespace Billiard4Life.Models
             TaiKhoan = taikhoan;
             MatKhau = matkhau;
         }
+        public NhanVien(string id, string ten)
+        {
+            MaNV = id;
+            HoTen = ten;
+            ChucVu = "";
+            DiaChi = "";
+            Fulltime = false;
+            SDT = "";
+            NgayVaoLam = "";
+            NgaySinh = "";
+            TaiKhoan = "";
+            MatKhau = "";
+        }
+        public NhanVien(NhanVien nv)
+        {
+            MaNV = nv.MaNV;
+            HoTen = nv.HoTen;
+            ChucVu = nv.ChucVu;
+            DiaChi = nv.DiaChi;
+            Fulltime = nv.Fulltime;
+            SDT = nv.SDT;
+            NgayVaoLam = nv.NgayVaoLam;
+            NgaySinh = nv.NgaySinh;
+            TaiKhoan = "";
+            MatKhau = "";
+        }
+        public NhanVien() 
+        {
+            MaNV = "";
+            HoTen = "";
+            ChucVu = "";
+            DiaChi = "";
+            Fulltime = false;
+            SDT = "";
+            NgayVaoLam = "";
+            NgaySinh = "";
+            TaiKhoan = "";
+            MatKhau = "";
+        }
+        public void Reset()
+        {
+            MaNV = "";
+            HoTen = "";
+            ChucVu = "";
+            DiaChi = "";
+            Fulltime = false;
+            SDT = "";
+            NgayVaoLam = DateTime.Now.ToString();
+            NgaySinh = DateTime.Now.ToString();
+            TaiKhoan = "";
+            MatKhau = "";
+        }
     }
 }

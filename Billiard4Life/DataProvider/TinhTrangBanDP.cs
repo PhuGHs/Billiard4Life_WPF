@@ -6,8 +6,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using Billiard4Life.Models;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 using TinhTrangBan.Models;
+using Table = TinhTrangBan.Models.Table;
 
 namespace Billiard4Life.DataProvider
 {
@@ -26,9 +29,9 @@ namespace Billiard4Life.DataProvider
                 flag = value;
             }
         }
-        public ObservableCollection<Table> GetTables()
+        public ObservableCollection<TinhTrangBan.Models.Table> GetTables()
         {
-            ObservableCollection<Table> tables = new ObservableCollection<Table>();
+            ObservableCollection<TinhTrangBan.Models.Table> tables = new ObservableCollection<TinhTrangBan.Models.Table>();
             try
             {
                 DataTable dt = LoadInitialData("Select * from BAN");
@@ -113,7 +116,7 @@ namespace Billiard4Life.DataProvider
                 DBOpen();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "Select NgayHD from HOADON where SoBan = @SoBan and TrangThai = N'Chưa trả'";
+                cmd.CommandText = "Select ThoiDiemTao from HOADON where SoBan = @SoBan and TrangThai = N'Chưa trả'";
                 cmd.Parameters.AddWithValue("@SoBan", ID);
 
                 cmd.Connection = SqlCon;
@@ -163,8 +166,19 @@ namespace Billiard4Life.DataProvider
                 DBClose();
             }
         }
-        public bool UpdateBill(int BillID, string makh, Decimal tong, TimeSpan SoGio, string makm)
+        public bool UpdateBill(int BillID, Decimal tong, TimeSpan SoGio, string makm, string makh, string method, string soban)
         {
+            string query = "UPDATE HOADON SET SoGio = @sogio, TriGia = @trigia, NgayHD = @ngayhd," +
+                " TrangThai = N'Đã thanh toán', HinhThucThanhToan = @httt ";
+            if (!string.IsNullOrEmpty(makm))
+            {
+                query += ", makm = '" + makm + "'";
+            }
+            if (!string.IsNullOrEmpty(makh))
+            {
+                query += ", makh = '" + makh + "'";
+            }
+
             bool next = true;
             try
             {
@@ -173,19 +187,20 @@ namespace Billiard4Life.DataProvider
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = SqlCon;
 
-                cmd.CommandText = "Update HOADON set SoGio = @sogio, MaKH = @makh, MaKM = @makm, TriGia = @trigia,  TrangThai = N'Đã trả' where SoHD = @SoHD";
+                cmd.CommandText = query + " where SoHD = @SoHD";
                 cmd.Parameters.AddWithValue("@SoHD", BillID);
-                cmd.Parameters.AddWithValue("@sogio", SoGio); ;
-                cmd.Parameters.AddWithValue("@makh", makh);
+                cmd.Parameters.AddWithValue("@sogio", SoGio); 
                 cmd.Parameters.AddWithValue("@trigia", tong);
-                cmd.Parameters.AddWithValue("@makm", makm);
+                cmd.Parameters.AddWithValue("@httt", method);
+                cmd.Parameters.AddWithValue("@ngayhd", DateTime.Now);
 
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "UPDATE BAN SET SoHDHienTai = 0 WHERE SoBan = " + soban;
                 cmd.ExecuteNonQuery();
             }
             catch (SqlException ex)
             {
-                MyMessageBox msb = new MyMessageBox("Không tồn tại mã khách hàng");
-                msb.Show();
                 next = false;
             }
             finally
@@ -194,35 +209,46 @@ namespace Billiard4Life.DataProvider
             }
             return next;
         }
-
-        public bool UpdateBillNonDiscount(int BillID, string makh, Decimal tong, TimeSpan SoGio)
+        public TinhTrangBan.Models.Table AddNewTable(string ID, string LoaiBan)
         {
-            bool next = true;
-            try
-            {
-                DBOpen();
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = SqlCon;
+            string Gia;
+            if (LoaiBan == "Líp") Gia = "60000";
+            else Gia = "70000";
 
-                cmd.CommandText = "Update HOADON set SoGio = @sogio, MaKH = @makh, TriGia = @trigia,  TrangThai = N'Đã trả' where SoHD = @SoHD";
-                cmd.Parameters.AddWithValue("@SoHD", BillID);
-                cmd.Parameters.AddWithValue("@sogio", SoGio); ;
-                cmd.Parameters.AddWithValue("@makh", makh);
-                cmd.Parameters.AddWithValue("@trigia", tong);
+            DBOpen();
 
-                cmd.ExecuteNonQuery();
-            } catch(SqlException ex)
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "INSERT INTO BAN(SoBan, LoaiBan, GiaMotGio, TrangThai, SoHDHienTai) " +
+                "VALUES(@id, @loaiban, @gia, N'Có thể sử dụng', 0)";
+            cmd.Parameters.AddWithValue("@id", ID);
+            cmd.Parameters.AddWithValue("@loaiban", LoaiBan);
+            cmd.Parameters.AddWithValue("@gia", Gia);
+            cmd.Connection = SqlCon;
+            cmd.ExecuteNonQuery();
+            DBClose();
+
+            return new TinhTrangBan.Models.Table { ID = Convert.ToInt16(ID), NumOfTable = "Bàn " + ID, KindOfTable = LoaiBan, Price = Convert.ToDecimal(Gia) };
+        }
+        public int GetCustomerPoint(string MaKH)
+        {
+            int point = 0;
+
+            DBOpen();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT SoDiem FROM KHACHHANG WHERE MaKH = @makh";
+            cmd.Parameters.AddWithValue("@makh", MaKH);
+            cmd.Connection = SqlCon;
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
             {
-                MyMessageBox msb = new MyMessageBox("Không tồn tại mã khách hàng");
-                msb.Show();
-                next = false;
+                point = reader.GetInt16(0);
             }
-            finally
-            {
-                DBClose();
-            }
-            return next;
+
+            DBClose();
+
+            return point;
         }
         public void UpdateKhachHangAccumulatedPoint(int SoDiem, string MaKH)
         {
@@ -260,32 +286,76 @@ namespace Billiard4Life.DataProvider
                 cmd.Parameters.AddWithValue("@SoHD", BillID);
 
                 cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "UPDATE BAN SET SoHDHienTai = @SoHD WHERE SoBan = @SoBan";
+                cmd.ExecuteNonQuery();
             }
             finally
             {
                 DBClose();
             }
         }
-        public void UpdateKhachHang(string SDT, int SoDiem)
+        public void MinusCustomerPoint(string MaKH, int SoDiem)
         {
             try
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = "UPDATE KHACHHANG" +
-                    "SET SoDiem = SoDiem + @sodiem" +
-                    "WHERE SDT = @sdt";
+                    "SET SoDiem = SoDiem - @sodiem" +
+                    "WHERE MaKH = @makh";
                 cmd.Parameters.AddWithValue("@sodiem", SoDiem);
-                cmd.Parameters.AddWithValue("@sdt", SDT);
-
+                cmd.Parameters.AddWithValue("@makh", MaKH);
+                cmd.Connection = SqlCon;
                 cmd.ExecuteNonQuery();
-            } catch (Exception ex)
+            } 
+            catch (Exception ex)
             {
                 MyMessageBox msb = new MyMessageBox("co loi");
-                msb.Show();
+                msb.ShowDialog();
             } finally
             {
                 DBClose();
             }
+        }
+        public ObservableCollection<string> ListPhoneCustomer()
+        {
+            ObservableCollection<string> list = new ObservableCollection<string>();
+
+            DBOpen();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT SDT, TenKH, MaKH FROM KHACHHANG";
+            cmd.Connection = SqlCon;
+            SqlDataReader reader = cmd.ExecuteReader();
+            
+            while (reader.Read())
+            {
+                string SDT = reader.GetString(0);
+                list.Add(SDT.Substring(SDT.Length - 4) + "-" + reader.GetString(1) + "-" + reader.GetString(2));
+            }
+            reader.Close();
+
+            DBClose();
+
+            return list;
+        }
+        public void StopRecordTimeSpanPlayer(string sohd)
+        {
+            DBOpen();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "UPDATE HOADON SET NgayHD = @ngayhd WHERE SoHD = @sohd";
+            cmd.Parameters.AddWithValue("@ngayhd", DateTime.Now);
+            cmd.Parameters.AddWithValue("@sohd", sohd);
+            cmd.Connection = SqlCon;
+            cmd.ExecuteNonQuery();
+
+            DBClose();
+        }
+        public string GetMaKH(string sdt)
+        {
+            return sdt.Substring(sdt.Length - 6);
         }
     }
 }

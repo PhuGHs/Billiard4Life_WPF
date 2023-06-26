@@ -23,9 +23,9 @@ namespace Billiard4Life.CustomMessageBox
         {
             InitializeComponent();
         }
-        public string GetDate()
+        public Tuple<string, string> GetDate()
         {
-            return dtBegin.SelectedDate.ToString() + " " + dtEnd.SelectedDate.ToString();
+            return new Tuple<string, string>(dtBegin.SelectedDate.ToString(), dtEnd.SelectedDate.ToString());
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

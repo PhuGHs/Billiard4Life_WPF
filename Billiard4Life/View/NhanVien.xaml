@@ -84,7 +84,7 @@
             <Grid Grid.Row="1">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ListView ItemsSource="{Binding ListStaff}"
-                              SelectedItem="{Binding Selected, Mode=OneWayToSource}"
+                              SelectedItem="{Binding StaffSelected, Mode=OneWayToSource}"
                               Margin="20 0 20 20"
                               FontFamily="Comfortaa"
                               FontSize="16">
@@ -134,14 +134,14 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBox materialDesign:HintAssist.Hint="ID"
-                                 Text="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding NhanVienItem.MaNV, UpdateSourceTrigger=PropertyChanged}"
                                  FontFamily="Comfortaa"
                                  Grid.Column="0"
                                  IsEnabled="False"
                                  Margin="15 26 5 26"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         <TextBox materialDesign:HintAssist.Hint="Họ tên"
-                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding NhanVienItem.HoTen, UpdateSourceTrigger=PropertyChanged}"
                                  FontFamily="Comfortaa"
                                  Grid.Column="1"
                                  Margin="5 26 15 26"
@@ -154,7 +154,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <ComboBox materialDesign:HintAssist.Hint="Chức vụ"
-                                      Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"
+                                      Text="{Binding NhanVienItem.ChucVu, UpdateSourceTrigger=PropertyChanged}"
                                       FontFamily="Comfortaa"
                                       Margin="15 20 5 23"
                                       Style="{StaticResource MaterialDesignFloatingHintComboBox}">
@@ -191,14 +191,14 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <TextBox materialDesign:HintAssist.Hint="Địa chỉ"
-                                     Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding NhanVienItem.DiaChi, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
                                      Margin="15 26 5 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBox materialDesign:HintAssist.Hint="SĐT"
-                                     Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding NhanVienItem.SDT, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
                                      Margin="5 26 15 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -210,13 +210,13 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <DatePicker Grid.Column="0"
-                                    SelectedDate="{Binding DateBorn, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedDate="{Binding NhanVienItem.NgaySinh, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                                     FontFamily="Comfortaa"
                                     Margin="15 21 5 21"
                                     materialDesign:HintAssist.Hint="Ngày sinh"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" SelectedDateFormat="Short" />
                         <DatePicker Grid.Column="1"
-                                    SelectedDate="{Binding DateStartWork, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedDate="{Binding NhanVienItem.NgayVaoLam, Mode=TwoWay, ValidatesOnDataErrors=False, UpdateSourceTrigger=PropertyChanged}"
                                     FontFamily="Comfortaa"
                                     Margin="5 21 15 21"
                                     materialDesign:HintAssist.Hint="Ngày vào làm"
@@ -229,14 +229,14 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <TextBox materialDesign:HintAssist.Hint="Tài khoản"
-                                     Text="{Binding Account, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding NhanVienItem.TaiKhoan, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
                                      Margin="15 26 5 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         </Grid>
                         <Grid Grid.Column="1">
                             <TextBox materialDesign:HintAssist.Hint="Mật khẩu"
-                                     Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding NhanVienItem.MatKhau, UpdateSourceTrigger=PropertyChanged}"
                                      FontFamily="Comfortaa"
                                      Margin="5 26 15 26"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -248,7 +248,7 @@
                     <Button Name="btnEditStaff"
                             Command="{Binding EditCM}"
                             Background="#3C6255"
-                            Margin="5 5 5 10"
+                            Margin="15 5 15 10"
                             Foreground="#EAE7B1"
                             FontFamily="Comfortaa"
                             BorderThickness="0"

@@ -49,46 +49,64 @@ public class MenuDP : DataProvider
         }
         return menuItems;
     }
-
-    public void InformChef(string maMon, int soban, int soluong)
+    public void UpdateKho(string MaMon, int SoLuong)
     {
-        try
+        List<Tuple<string, float>> ctm = new List<Tuple<string, float>>();
+
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "SELECT TenNL, SoLuong FROM CHITIETMON WHERE MaMon = @mamon";
+        cmd.Parameters.AddWithValue("@mamon", MaMon);
+        cmd.Connection = SqlCon;
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Exec Inform_Chef_PD @mamon, @soban, @soluong, @ngaycb, @trangthai, @trangthaiban";
-            cmd.Parameters.AddWithValue("@mamon", maMon);
-            cmd.Parameters.AddWithValue("@soban", soban);
-            cmd.Parameters.AddWithValue("@soluong", soluong);
-            cmd.Parameters.AddWithValue("@ngaycb", DateTime.Now);
-            cmd.Parameters.AddWithValue("@trangthai", "Đang chế biến");
-            cmd.Parameters.AddWithValue("@trangthaiban", "Đang được sử dụng");
-            DBOpen();
-            cmd.Connection = SqlCon;
+            ctm.Add(new Tuple<string, float>(reader.GetString(0), (float)reader.GetDouble(1)));
+        }
+        reader.Close();
+
+        for (int i = 0; i < ctm.Count; i++)
+        {
+            cmd.CommandText = "UPDATE KHO SET TonDu = TonDu - @soluong WHERE TenSanPham = @ten";
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@soluong", ctm[i].Item2);
+            cmd.Parameters.AddWithValue("@ten", ctm[i].Item1);
             cmd.ExecuteNonQuery();
         }
-        finally
-        {
-            DBClose();
-        }
+
+        DBClose();
     }
-
-
     public void PayABill(Int16 soban, Decimal sum, string MaNV)
     {
+        string SoHD = Flag.GetCurrentBillIDForThisTable(soban);
+
         try
         {
             DBOpen();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Exec PAY_A_BILL_PD @trigia, @manv, @soban, @ngayHD, @trangthai";
-            cmd.Parameters.AddWithValue("@trigia", sum);
-            cmd.Parameters.AddWithValue("@manv", MaNV);
-            cmd.Parameters.AddWithValue("@soban", soban);
-            cmd.Parameters.AddWithValue("@ngayHD", DateTime.Now);
-            cmd.Parameters.AddWithValue("@trangthai", "Chưa trả");
-            DBOpen();
-            cmd.Connection = SqlCon;
+            if (SoHD != "0")
+            {
+                return;
+            }
+            else
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "INSERT INTO HOADON(MaNV, TriGia, SoBan, ThoiDiemTao, TrangThai) " +
+                    "VALUES(@manv, @trigia, @soban, @thoidiemtao, @trangthai)";
+                cmd.Parameters.AddWithValue("@trigia", sum);
+                cmd.Parameters.AddWithValue("@manv", MaNV);
+                cmd.Parameters.AddWithValue("@soban", soban);
+                cmd.Parameters.AddWithValue("@thoidiemtao", DateTime.Now);
+                cmd.Parameters.AddWithValue("@trangthai", "Chưa trả");
+                DBOpen();
+                cmd.Connection = SqlCon;
 
-            cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "UPDATE BAN SET TrangThai = N'Đang sử dụng', SoHDHienTai = IDENT_CURRENT('HOADON') WHERE SoBan = " + soban;
+                cmd.ExecuteNonQuery();
+            }
         }
         finally
         {
@@ -156,30 +174,6 @@ public class MenuDP : DataProvider
         }
     }
 
-    public MenuItem GetDishInfo(string MaMon)
-    {
-        MenuItem X = null;
-        try
-        {
-            DBOpen();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Select * from MENU where MaMon = @mamon";
-            cmd.Parameters.AddWithValue("@mamon", MaMon);
-            cmd.Connection = SqlCon;
-
-            SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                X = new MenuItem(reader.GetString(0), reader.GetString(1), reader.GetDecimal(2), Converter.ImageConverter.ConvertByteToBitmapImage((byte[])reader[3]));
-            }
-        }
-        finally
-        {
-            DBClose();
-        }
-        return X;
-    }
-
     public void EditDishInfo(MenuItem item)
     {
         try
@@ -222,6 +216,42 @@ public class MenuDP : DataProvider
             DBClose();
         }
         return NLs;
+    }
+    public string AutoIDMenu()
+    {
+        string ID = "MA001";
+        string temp = "";
+        DBOpen();
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "SELECT TOP 1 MaMon FROM MENU ORDER BY MaMon DESC";
+        cmd.Connection = SqlCon;
+        SqlDataReader reader = cmd.ExecuteReader();
+        if (reader.Read())
+        {
+            temp = reader.GetString(0);
+        }
+        reader.Close();
+        if (!string.IsNullOrEmpty(temp))
+        {
+            int num = ExtractNumber(temp) + 1;
+            temp = num.ToString();
+            while (temp.Length < 3) temp = "0" + temp;
+            ID = "MA" + temp;
+        }
+        DBClose();
+        return ID;
+    }
+    private int ExtractNumber(string input)
+    {
+        string output = string.Empty;
+        foreach (char c in input)
+        {
+            if (char.IsDigit(c))
+            {
+                output += c;
+            }
+        }
+        return int.Parse(output);
     }
 
     public ObservableCollection<ChiTietMon> getSumIngredients(ObservableCollection<SelectedMenuItem> arr)
@@ -312,36 +342,14 @@ public class MenuDP : DataProvider
             DBClose();
         }
     }
-    public int UpdateIngredients(ChiTietMon ctm)
-    {
-        int n = 0;
-        try
-        {
-            DBOpen();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Update CHITIETMON SET SoLuong = @soluong where TenNL = @tennl and MaMon = @mamon";
-            cmd.Parameters.AddWithValue("@soluong", ctm.SoLuong);
-            cmd.Parameters.AddWithValue("@tennl", ctm.TenNL);
-            cmd.Parameters.AddWithValue("@mamon", ctm.MaMon);
-            cmd.Connection = SqlCon;
-
-            n = cmd.ExecuteNonQuery();
-        }
-        finally
-        {
-            DBClose();
-        }
-        return n;
-    }
-    public void RemoveIngredients(ChiTietMon ctm)
+    public void RemoveIngredients(string MaMon)
     {
         try
         {
             DBOpen();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Delete from CHITIETMON where MaMon = @mamon and TenNL = @tennl";
-            cmd.Parameters.AddWithValue("@mamon", ctm.MaMon);
-            cmd.Parameters.AddWithValue("@tennl", ctm.TenNL);
+            cmd.CommandText = "Delete from CHITIETMON where MaMon = @mamon";
+            cmd.Parameters.AddWithValue("@mamon", MaMon);
             cmd.Connection = SqlCon;
 
             cmd.ExecuteNonQuery();
@@ -377,14 +385,15 @@ public class MenuDP : DataProvider
             DBClose();
         }
     }
-    public void Fill_CTHD(string MaMon, int SoLuong)
+    public void Fill_CTHD(string SoHD, string MaMon, int SoLuong)
     {
         try
         {
             DBOpen();
             SqlCommand cmd_InsertDetail = new SqlCommand();
-            cmd_InsertDetail.CommandText = "Exec INSERT_DETAIL_PD @mamon, @soluong";
+            cmd_InsertDetail.CommandText = "INSERT INTO CTHD(SoHD, MaMon, SoLuong) VALUES(@sohd, @mamon, @soluong)";
             cmd_InsertDetail.Parameters.AddWithValue("@mamon", MaMon);
+            cmd_InsertDetail.Parameters.AddWithValue("@sohd", SoHD);
             cmd_InsertDetail.Parameters.AddWithValue("@soluong", SoLuong);
             DBOpen();
             cmd_InsertDetail.Connection = SqlCon;
@@ -393,7 +402,7 @@ public class MenuDP : DataProvider
         }
         catch (SqlException ex)
         {
-            UpdateCTHD(MaMon, SoLuong);
+            UpdateCTHD(SoHD, MaMon, SoLuong);
         }
         finally
         {
@@ -401,16 +410,35 @@ public class MenuDP : DataProvider
         }
 
     }
-    public void UpdateCTHD(string MaMon, int SoLuong)
+    public string GetCurrentBillIDForThisTable(int SoBan)
+    {
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "SELECT SoHDHienTai FROM BAN WHERE SoBan = " + SoBan;
+        cmd.Connection = SqlCon;
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        string SoHD = "0";
+        if (reader.Read())
+        {
+            SoHD = reader.GetString(0);
+        }
+
+        DBClose();
+        return SoHD;
+    }
+    public void UpdateCTHD(string SoHD, string MaMon, int SoLuong)
     {
         try
         {
             DBOpen();
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "UPDATE CTHD " +
-                              "SET SOLUONG = @soluong " +
-                              "WHERE SoHD = (SELECT IDENT_CURRENT('HOADON')) AND MaMon = @mamon";
+                              "SET SOLUONG = SOLUONG + @soluong " +
+                              "WHERE SoHD = @sohd AND MaMon = @mamon";
             cmd.Parameters.AddWithValue("@mamon", MaMon);
+            cmd.Parameters.AddWithValue("@sohd", SoHD);
             cmd.Parameters.AddWithValue("@soluong", SoLuong);
 
             cmd.Connection = SqlCon;

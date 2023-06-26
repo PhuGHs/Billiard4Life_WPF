@@ -9,58 +9,71 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         x:Name="Window"
-        TextElement.FontFamily="Comfortaa Light"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="15"
+        TextElement.Foreground="#3C6255"
+        TextElement.FontFamily="Comfortaa"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="Transparent"
+        FontFamily="Comfortaa"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
         DataContext="{StaticResource MainVM}"
         Title="Thông tin cá nhân tài khoản" Height="700" Width="800" WindowStyle="None" WindowStartupLocation="CenterScreen">
-    <Grid Margin="5" Background="White">
-        <Grid.Resources>
-            <Style x:Key="SearchBar" TargetType="Border">
-                <Setter Property="Width" Value="330"/>
-                <Setter Property="Background" Value="#EAEAEA" />
-                <Setter Property="CornerRadius" Value="14"/>
-                <Setter Property="Padding" Value="2"/>
-                <Setter Property="Height" Value="45"/>
-            </Style>
-            <Style x:Key="Txtbox" TargetType="TextBox">
-                <Setter Property="Foreground" Value="#413F42"/>
-                <Setter Property="Margin" Value="10 0"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="Padding" Value="4"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Background" Value="Transparent"/>
-            </Style>
-            <Style x:Key="label" TargetType="Label">
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="Foreground" Value="#73777B"/>
-                <Setter Property="Margin" Value="5 0 0 0"/>
-            </Style>
-            <Style x:Key="combobox" TargetType="ComboBox">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="Foreground" Value="#413F42"/>
-                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="10 0"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Padding" Value="4"/>
-            </Style>
-        </Grid.Resources>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="160"/>
-            <RowDefinition Height="20" />
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Border Background="White"
+            CornerRadius="5"
+            BorderBrush="#61876E"
+            BorderThickness="4">
+        <Grid Margin="5" Background="White">
+            <Grid.Resources>
+                <Style x:Key="SearchBar" TargetType="Border">
+                    <Setter Property="Width" Value="330"/>
+                    <Setter Property="Background" Value="#EAEAEA" />
+                    <Setter Property="CornerRadius" Value="14"/>
+                    <Setter Property="Padding" Value="2"/>
+                    <Setter Property="Height" Value="45"/>
+                </Style>
+                <Style x:Key="Txtbox" TargetType="TextBox">
+                    <Setter Property="Foreground" Value="#413F42"/>
+                    <Setter Property="Margin" Value="10 0"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="Padding" Value="4"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+                <Style x:Key="label" TargetType="Label">
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="Foreground" Value="#73777B"/>
+                    <Setter Property="Margin" Value="5 0 0 0"/>
+                </Style>
+                <Style x:Key="combobox" TargetType="ComboBox">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="Foreground" Value="#413F42"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="10 0"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="4"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="160"/>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="240" />
-                <ColumnDefinition Width="170" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="240" />
+                    <ColumnDefinition Width="170" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <StackPanel>
-                <Border 
+                <StackPanel>
+                    <Border 
                 VerticalAlignment="Center"
                 Width="130"
                 Height="130"
@@ -69,22 +82,22 @@
                 Grid.Column="0" 
                 BorderThickness="2"
                 BorderBrush="#3C6255">
-                    <Ellipse Height="120" Width="120">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="{Binding CaiDatViewModel.NhanVien.AnhDaiDien}" Stretch="UniformToFill"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                </Border>
-                <Button Background="Transparent" 
+                        <Ellipse Height="120" Width="120">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{Binding CaiDatViewModel.NhanVien.AnhDaiDien}" Stretch="UniformToFill"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </Border>
+                    <Button Background="Transparent" 
                         Width="60" 
                         Command="{Binding CaiDatViewModel.ChangeProfileImage}"
                         BorderThickness="0" 
                         ToolTip="Đổi ảnh đại diện">
-                    <fa:IconImage Icon="Edit" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#3C6255"/>
-                </Button>
-            </StackPanel>
-            <StackPanel Grid.Column="1">
-                <TextBlock 
+                        <fa:IconImage Icon="Edit" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#3C6255"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock 
                     Height="60"
                     Text="{Binding CaiDatViewModel.NhanVien.HoTen}"
                     FontSize="30"
@@ -92,148 +105,149 @@
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Left" 
                     Margin="0,20,0,0"/>
-                <TextBlock 
+                    <TextBlock 
                     Height="60"
                     Text="{Binding CaiDatViewModel.Role}"
                     FontSize="22"
                     FontStyle="Italic"
                     />
-            </StackPanel>
-            <Canvas Grid.Column="3">
-                <Button Background="Transparent" 
+                </StackPanel>
+                <Canvas Grid.Column="3">
+                    <Button Background="Transparent" 
                         Command="{Binding CaiDatViewModel.CloseWindowCommand}"
                         CommandParameter="{Binding ElementName=Window}"
                         BorderThickness="0" Canvas.Left="165" HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <fa:IconImage Icon="PowerOff" />
-                </Button>
-            </Canvas>
-            <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,10">
-                <Button 
+                        <fa:IconImage Icon="PowerOff"
+                                  Foreground="#3C6255"/>
+                    </Button>
+                </Canvas>
+                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,10">
+                    <Button 
                     Content="Huỷ" 
                     Width="90" 
                     BorderBrush="#3C6255"
                     Background="Transparent"
                     Foreground="Black"
                     Command="{Binding CaiDatViewModel.CancelCommand}"/>
-                <Button 
+                    <Button 
                     Content="Lưu" 
                     Width="90" 
                     Foreground="White"
                     Background="#3C6255"
                     Margin="20,0,0,0"
                     Command="{Binding CaiDatViewModel.UpdateInfoCommand}"/>
-            </StackPanel>
-        </Grid>
-        <Separator 
+                </StackPanel>
+            </Grid>
+            <Separator 
             Grid.Row="1" 
             Margin="20,0,20,0" 
             Background="#3C6255"/>
-        <TabControl 
+            <TabControl 
                     Grid.Row="2"
                     Style="{StaticResource MaterialDesignTabControl}"
                     materialDesign:ShadowAssist.ShadowDepth="Depth0" 
                     Margin="20,0,20,20">
-            <TabItem 
+                <TabItem 
                 Header="Thông tin cá nhân" 
                 Cursor="Hand">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="400"/>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid Width="730">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="40" />
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Margin="0 5 0 20">
-                                <Label Content="Họ tên" Style="{StaticResource label}"/>
-                                <Border Style="{StaticResource SearchBar}">
-                                    <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.HoTen}"/>
-                                </Border>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="400"/>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Width="730">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Margin="0 5 0 20">
+                                    <Label Content="Họ tên" Style="{StaticResource label}"/>
+                                    <Border Style="{StaticResource SearchBar}">
+                                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.HoTen}"/>
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel Margin="0 0 0 20">
+                                    <Label Content="Ngày sinh" Style="{StaticResource label}"/>
+                                    <Border Style="{StaticResource SearchBar}">
+                                        <DatePicker Height="45" FontSize="20" SelectedDate="{Binding CaiDatViewModel.NhanVien.NgaySinh}" Foreground="#413F42" Margin="10 0"/>
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel Margin="0 0 0 20">
+                                    <Label Content="Ngày vào làm" Style="{StaticResource label}"/>
+                                    <Border Style="{StaticResource SearchBar}">
+                                        <TextBox FontSize="20" Foreground="#413F42" Margin="10 0" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Style="{x:Null}" Text="{Binding CaiDatViewModel.NhanVien.NgayVaoLam, StringFormat='{}{0:dd/MM/yyyy}'}" IsReadOnly="True"/>
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Margin="0 0 0 20">
+                                    <Label Content="Địa chỉ" Style="{StaticResource label}"/>
+                                    <Border Style="{StaticResource SearchBar}">
+                                        <TextBox Style="{StaticResource Txtbox}"  Text="{Binding CaiDatViewModel.NhanVien.DiaChi}"/>
+                                    </Border>
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel Margin="0 0 0 20">
-                                <Label Content="Ngày sinh" Style="{StaticResource label}"/>
-                                <Border Style="{StaticResource SearchBar}">
-                                    <DatePicker Height="45" FontSize="20" SelectedDate="{Binding CaiDatViewModel.NhanVien.NgaySinh}" Foreground="#413F42" Margin="10 0"/>
-                                </Border>
+                            <StackPanel Orientation="Vertical" Grid.Column="2">
+                                <StackPanel Margin="0 5 0 20">
+                                    <Label Content="Mã nhân viên" Style="{StaticResource label}"/>
+                                    <Border Style="{StaticResource SearchBar}">
+                                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.MaNV}" IsReadOnly="True"/>
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel Margin="0 0 0 20">
+                                    <Label Content="Chức vụ" Style="{StaticResource label}"/>
+                                    <Border Style="{StaticResource SearchBar}">
+                                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.ChucVu}" IsReadOnly="True"/>
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel Margin="0 0 0 20">
+                                    <Label Content="Số điện thoại" Style="{StaticResource label}"/>
+                                    <Border Style="{StaticResource SearchBar}">
+                                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.SDT}"/>
+                                    </Border>
+                                </StackPanel>
+                                <StackPanel Margin="0 0 0 20">
+                                    <Label Content="Loại nhân viên" Style="{StaticResource label}"/>
+                                    <Border Style="{StaticResource SearchBar}">
+                                        <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.LoaiNhanVien_Str}" IsReadOnly="True"/>
+                                    </Border>
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel Margin="0 0 0 20">
-                                <Label Content="Ngày vào làm" Style="{StaticResource label}"/>
-                                <Border Style="{StaticResource SearchBar}">
-                                    <TextBox FontSize="20" Foreground="#413F42" Margin="10 0" VerticalAlignment="Center" BorderThickness="0" Background="Transparent" Style="{x:Null}" Text="{Binding CaiDatViewModel.NhanVien.NgayVaoLam, StringFormat='{}{0:dd/MM/yyyy}'}" IsReadOnly="True"/>
-                                </Border>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1" Margin="0 0 0 20">
-                                <Label Content="Địa chỉ" Style="{StaticResource label}"/>
-                                <Border Style="{StaticResource SearchBar}">
-                                    <TextBox Style="{StaticResource Txtbox}"  Text="{Binding CaiDatViewModel.NhanVien.DiaChi}"/>
-                                </Border>
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Orientation="Vertical" Grid.Column="2">
-                            <StackPanel Margin="0 5 0 20">
-                                <Label Content="Mã nhân viên" Style="{StaticResource label}"/>
-                                <Border Style="{StaticResource SearchBar}">
-                                    <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.MaNV}" IsReadOnly="True"/>
-                                </Border>
-                            </StackPanel>
-                            <StackPanel Margin="0 0 0 20">
-                                <Label Content="Chức vụ" Style="{StaticResource label}"/>
-                                <Border Style="{StaticResource SearchBar}">
-                                    <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.ChucVu}" IsReadOnly="True"/>
-                                </Border>
-                            </StackPanel>
-                            <StackPanel Margin="0 0 0 20">
-                                <Label Content="Số điện thoại" Style="{StaticResource label}"/>
-                                <Border Style="{StaticResource SearchBar}">
-                                    <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.NhanVien.SDT}"/>
-                                </Border>
-                            </StackPanel>
-                            <StackPanel Margin="0 0 0 20">
-                                <Label Content="Loại nhân viên" Style="{StaticResource label}"/>
-                                <Border Style="{StaticResource SearchBar}">
-                                    <TextBox Style="{StaticResource Txtbox}" Text="{Binding CaiDatViewModel.LoaiNhanVien_Str}" IsReadOnly="True"/>
-                                </Border>
-                            </StackPanel>
-                        </StackPanel>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </TabItem>
-            <TabItem      
+                </TabItem>
+                <TabItem      
                 Header="Đổi mật khẩu" 
                 Cursor="Hand"
                 Foreground="#3C6255">
-                <Grid x:Name="Container">
-                    <StackPanel 
+                    <Grid x:Name="Container">
+                        <StackPanel 
                         Orientation="Vertical" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <Grid>
-                                <PasswordBox
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <PasswordBox
                                   x:Name="currentPassword"
                                   Width="220"
                                   FontSize="20"
                                   materialDesign:HintAssist.Hint="Mật khẩu hiện tại"
                                   Foreground="#3C6255"
                                   Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="PasswordChanged" >
-                                            <i:InvokeCommandAction Command="{Binding CaiDatViewModel.CurrentPasswordChangedCommand }"  CommandParameter="{Binding ElementName=currentPassword,  Mode=OneWay}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </PasswordBox>
-                                <TextBox x:Name="currentpasswordTxtBox"
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="PasswordChanged" >
+                                                <i:InvokeCommandAction Command="{Binding CaiDatViewModel.CurrentPasswordChangedCommand }"  CommandParameter="{Binding ElementName=currentPassword,  Mode=OneWay}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </PasswordBox>
+                                    <TextBox x:Name="currentpasswordTxtBox"
                                          Width="220"
                                          materialDesign:HintAssist.Hint="Mật khẩu hiện tại"
                                          FontSize="20"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          Visibility="Collapsed" />
-                            </Grid>
-                            <CheckBox 
+                                </Grid>
+                                <CheckBox 
                                 Content="Show password"
                                 Margin="10" 
                                 Name="showCurrentPassword" 
@@ -241,34 +255,34 @@
                                 Checked="ShowCurrentPassword_Checked" 
                                 HorizontalAlignment="Center" 
                                 VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="23*"/>
-                                    <ColumnDefinition Width="21*"/>
-                                </Grid.ColumnDefinitions>
-                                <PasswordBox
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="23*"/>
+                                        <ColumnDefinition Width="21*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <PasswordBox
                                   Name="newPassword"
                                   Width="220"
                                   FontSize="20"
                                   materialDesign:HintAssist.Hint="Mật khẩu mới"
                                   Foreground="#3C6255"
                                   Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.ColumnSpan="2">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="PasswordChanged" >
-                                            <i:InvokeCommandAction Command="{Binding CaiDatViewModel.NewPasswordChangedCommand }"  CommandParameter="{Binding ElementName=newPassword,  Mode=OneWay}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </PasswordBox>
-                                <TextBox x:Name="newpasswordTxtBox"
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="PasswordChanged" >
+                                                <i:InvokeCommandAction Command="{Binding CaiDatViewModel.NewPasswordChangedCommand }"  CommandParameter="{Binding ElementName=newPassword,  Mode=OneWay}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </PasswordBox>
+                                    <TextBox x:Name="newpasswordTxtBox"
                                          Width="220"
                                          FontSize="20"
                                          materialDesign:HintAssist.Hint="Mật khẩu mới"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          Visibility="Collapsed" Grid.ColumnSpan="2" />
-                            </Grid>
-                            <CheckBox 
+                                </Grid>
+                                <CheckBox 
                                 Margin="10" 
                                 Content="Show password"
                                 Name="showNewPassword" 
@@ -276,34 +290,34 @@
                                 Checked="ShowNewPassword_Checked" 
                                 HorizontalAlignment="Center" 
                                 VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="9*"/>
-                                    <ColumnDefinition Width="11*"/>
-                                </Grid.ColumnDefinitions>
-                                <PasswordBox
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="9*"/>
+                                        <ColumnDefinition Width="11*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <PasswordBox
                                   Name="confirmPassword"
                                   Width="220"
                                   FontSize="20"
                                   materialDesign:HintAssist.Hint="Xác nhận mật khẩu"
                                   Foreground="#3C6255"
                                   Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Grid.ColumnSpan="2">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="PasswordChanged" >
-                                            <i:InvokeCommandAction Command="{Binding CaiDatViewModel.ConfirmPasswordChangedCommand }"  CommandParameter="{Binding ElementName=confirmPassword,  Mode=OneWay}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </PasswordBox>
-                                <TextBox Name="confirmpasswordTxtBox"
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="PasswordChanged" >
+                                                <i:InvokeCommandAction Command="{Binding CaiDatViewModel.ConfirmPasswordChangedCommand }"  CommandParameter="{Binding ElementName=confirmPassword,  Mode=OneWay}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </PasswordBox>
+                                    <TextBox Name="confirmpasswordTxtBox"
                                          Width="220"
                                          FontSize="20"
                                          materialDesign:HintAssist.Hint="Xác nhận mật khẩu"
                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                          Visibility="Collapsed" Grid.ColumnSpan="2" />
-                            </Grid>
-                            <CheckBox 
+                                </Grid>
+                                <CheckBox 
                                 Margin="10"
                                 Content="Show password"
                                 Name="showConfirmPassword" 
@@ -311,16 +325,18 @@
                                 Checked="ShowConfirmPassword_Checked" 
                                 HorizontalAlignment="Center" 
                                 VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <Button
+                            </StackPanel>
+                            <Button
                             Click="doimatkhau_click"
                             Command="{Binding CaiDatViewModel.ChangePassword}"
                             Margin="0 30 0 0" 
                             Content="Đổi mật khẩu"
+                            Foreground="Wheat"
                             Background="#3C6255"  />
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-        </TabControl>
-    </Grid>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Border>
 </Window>

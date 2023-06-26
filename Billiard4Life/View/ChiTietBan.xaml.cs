@@ -15,20 +15,13 @@ using System.Windows.Shapes;
 namespace Billiard4Life.View
 {
     /// <summary>
-    /// Interaction logic for MenuAdmin_ThemMon.xaml
+    /// Interaction logic for ChiTietBan.xaml
     /// </summary>
-    public partial class MenuAdmin_ThemMon : Window
+    public partial class ChiTietBan : Window
     {
-        private bool adding;
-        public MenuAdmin_ThemMon(bool adding)
+        public ChiTietBan()
         {
             InitializeComponent();
-            this.adding = adding;
-            if (adding == false)
-            {
-                Title.Content = "   SỬA MÓN ĂN";
-                Add_button.Content = "Sửa";
-            }
         }
 
         private void btn_Close(object sender, RoutedEventArgs e)
