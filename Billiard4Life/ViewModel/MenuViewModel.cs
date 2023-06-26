@@ -107,6 +107,7 @@ namespace Billiard4Life.ViewModel
                             foreach (SelectedMenuItem orderdish in SelectedItems)
                             {
                                 MenuDP.Flag.Fill_CTHD(SoHD, orderdish.ID, orderdish.Quantity);
+                                MenuDP.Flag.UpdateKho(orderdish.ID, orderdish.Quantity);
                             }
                             mess = "Đặt bàn thành công!";
                             SelectedItems.Clear();

@@ -45,7 +45,7 @@ namespace RestaurantManagement.ViewModel
             LoginCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 Login(p);
-                if (NhanVienDP.Flag.IsAnyStaffOnline() && Online == false)
+                if (NhanVienDP.Flag.IsAnyStaffOnline() && Online == false && NhanVienDP.Flag.IsStaff(MaNV))
                 {
                     MyMessageBox msb = new MyMessageBox("Đã có nhân viên trực ca.\nVui lòng đăng nhập sau!");
                     msb.ShowDialog();

@@ -229,6 +229,27 @@ namespace Billiard4Life.DataProvider
 
             return new TinhTrangBan.Models.Table { ID = Convert.ToInt16(ID), NumOfTable = "Bàn " + ID, KindOfTable = LoaiBan, Price = Convert.ToDecimal(Gia) };
         }
+        public int GetCustomerPoint(string MaKH)
+        {
+            int point = 0;
+
+            DBOpen();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "SELECT SoDiem FROM KHACHHANG WHERE MaKH = @makh";
+            cmd.Parameters.AddWithValue("@makh", MaKH);
+            cmd.Connection = SqlCon;
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                point = reader.GetInt16(0);
+            }
+
+            DBClose();
+
+            return point;
+        }
         public void UpdateKhachHangAccumulatedPoint(int SoDiem, string MaKH)
         {
             try
@@ -274,16 +295,16 @@ namespace Billiard4Life.DataProvider
                 DBClose();
             }
         }
-        public void UpdateKhachHang(string SDT, int SoDiem)
+        public void MinusCustomerPoint(int SoDiem, string MaKH)
         {
             try
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = "UPDATE KHACHHANG" +
                     "SET SoDiem = SoDiem + @sodiem" +
-                    "WHERE SDT = @sdt";
+                    "WHERE MaKH = @makh";
                 cmd.Parameters.AddWithValue("@sodiem", SoDiem);
-                cmd.Parameters.AddWithValue("@sdt", SDT);
+                cmd.Parameters.AddWithValue("@sdt", MaKH);
 
                 cmd.ExecuteNonQuery();
             } 

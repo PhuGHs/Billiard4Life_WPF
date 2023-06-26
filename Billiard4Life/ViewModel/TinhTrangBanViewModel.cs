@@ -122,6 +122,8 @@ namespace Billiard4Life.ViewModel
         private decimal overallBill = 0;
         private string s_totaldiscount;
         private string s_overallBill;
+        private decimal s_memberdiscount = 0;
+        private string _MemberDiscount;
         private string _PaymentMethodSelected;
         private string _AddTableID;
         private string _AddTableType;
@@ -136,7 +138,22 @@ namespace Billiard4Life.ViewModel
         #region properties
         public ObservableCollection<Table> Tables { get { return _tables; } set { _tables = value; OnPropertyChanged(); } }
         public KhuyenMai KM { get { return km; } set { km = value; OnPropertyChanged(); } }
-        public string CustomerPhoneNumber { get { return customerPhoneNumber; } set { customerPhoneNumber = value; OnPropertyChanged(); } }
+        public string CustomerPhoneNumber 
+        { 
+            get { return customerPhoneNumber; } 
+            set 
+            { 
+                customerPhoneNumber = value;
+                if (TinhTrangBanDP.Flag.GetCustomerPoint(TinhTrangBanDP.Flag.GetMaKH(CustomerPhoneNumber)) >= 100)
+                {
+                    D_MemberDiscount = (Dec_sumofbill + TienBan) * 5 / 100;
+                    MemberDiscount = String.Format("{0:0,0 VND}", D_MemberDiscount);
+                    D_OverAllBill -= D_MemberDiscount;
+                    OverallBill = String.Format("{0:0,0 VND}", D_OverAllBill);
+                }
+                OnPropertyChanged(); 
+            } 
+        }
         public ObservableCollection<SelectedMenuItems> SelectedItems { get { return _selectedItems; } set { _selectedItems = value; } }
         public ObservableCollection<string> EmptyTables { get { return _emptytables; } set { _emptytables = value; } }
         public ObservableCollection<string> Combobox_Option_KindOfTables { get { return _combobox_option_kindoftables; } set { _emptytables = value; } }
@@ -165,6 +182,7 @@ namespace Billiard4Life.ViewModel
         }
         public Decimal D_TotalDiscount { get { return totalDiscount; } set { totalDiscount = value; OnPropertyChanged();} }
         public Decimal D_OverAllBill { get { return overallBill; } set { overallBill = value; OnPropertyChanged(); } }
+        public Decimal D_MemberDiscount { get => s_memberdiscount; set { s_memberdiscount = value; OnPropertyChanged(); } }
         public decimal Dec_sumofbill
         {
             get { return dec_sumofbill; }
@@ -207,6 +225,15 @@ namespace Billiard4Life.ViewModel
              set
             {
                 s_overallBill = value;
+                OnPropertyChanged();
+            }
+        }
+        public string MemberDiscount
+        {
+            get => _MemberDiscount;
+            set
+            {
+                _MemberDiscount = value;
                 OnPropertyChanged();
             }
         }
@@ -532,9 +559,11 @@ namespace Billiard4Life.ViewModel
                         Dec_sumofbill = 0;
                         D_TotalDiscount = 0;
                         D_OverAllBill = 0;
+                        D_MemberDiscount = 0;
                         SumofBill = String.Format("{0:0,0 VND}", Dec_sumofbill);
                         TotalDiscount = String.Format("{0:0,0 VND}", D_TotalDiscount);
                         OverallBill = String.Format("{0:0,0 VND}", D_OverAllBill);
+                        MemberDiscount = String.Format("{0:0,0 VND}", D_MemberDiscount);
 
                         SelectedItems.Clear();
                         TitleOfBill = "";

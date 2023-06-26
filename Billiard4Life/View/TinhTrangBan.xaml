@@ -151,6 +151,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
@@ -230,6 +231,23 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    <Label Content="Thành viên: "
+                           FontSize="18"
+                           Margin="20 0"
+                           VerticalAlignment="Center"/>
+                    <Label Content="{Binding DiscountMember}" 
+                           Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Right" 
+                           Foreground="#3C6255"
+                           FontWeight="SemiBold"
+                           FontSize="18"/>
+                </Grid>
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
                     <Label Content="Khuyến mãi: "
                            FontSize="18"
                            Margin="20 0"
@@ -242,7 +260,7 @@
                            FontWeight="SemiBold"
                            FontSize="18"/>
                 </Grid>
-                <Grid Grid.Row="6">
+                <Grid Grid.Row="7">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -260,7 +278,7 @@
                            FontSize="18"/>
                 </Grid>
                 <ComboBox materialDesign:HintAssist.Hint="Phương thức thanh toán"
-                          Grid.Row="7"
+                          Grid.Row="8"
                           Text="{Binding PaymentMethodSelected}"
                           Margin="20 0"
                           FontSize="18"
@@ -278,7 +296,7 @@
                         Chuyển MOMO
                     </ComboBoxItem>
                 </ComboBox>
-                <Grid Grid.Row="8">
+                <Grid Grid.Row="9">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>

@@ -49,30 +49,35 @@ public class MenuDP : DataProvider
         }
         return menuItems;
     }
-
-    public void InformChef(string maMon, int soban, int soluong)
+    public void UpdateKho(string MaMon, int SoLuong)
     {
-        try
+        List<Tuple<string, float>> ctm = new List<Tuple<string, float>>();
+
+        DBOpen();
+
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "SELECT TenNL, SoLuong FROM CHITIETMON WHERE MaMon = @mamon";
+        cmd.Parameters.AddWithValue("@mamon", MaMon);
+        cmd.Connection = SqlCon;
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        while (reader.Read())
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Exec Inform_Chef_PD @mamon, @soban, @soluong, @ngaycb, @trangthai, @trangthaiban";
-            cmd.Parameters.AddWithValue("@mamon", maMon);
-            cmd.Parameters.AddWithValue("@soban", soban);
-            cmd.Parameters.AddWithValue("@soluong", soluong);
-            cmd.Parameters.AddWithValue("@ngaycb", DateTime.Now);
-            cmd.Parameters.AddWithValue("@trangthai", "Đang chế biến");
-            cmd.Parameters.AddWithValue("@trangthaiban", "Đang được sử dụng");
-            DBOpen();
-            cmd.Connection = SqlCon;
+            ctm.Add(new Tuple<string, float>(reader.GetString(0), reader.GetFloat(1)));
+        }
+        reader.Close();
+
+        for (int i = 0; i < ctm.Count; i++)
+        {
+            cmd.CommandText = "UPDATE KHO SET TonDu = TonDu - @soluong WHERE TenSanPham = @ten";
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@soluong", ctm[i].Item1);
+            cmd.Parameters.AddWithValue("@ten", ctm[i].Item2);
             cmd.ExecuteNonQuery();
         }
-        finally
-        {
-            DBClose();
-        }
+
+        DBClose();
     }
-
-
     public void PayABill(Int16 soban, Decimal sum, string MaNV)
     {
         string SoHD = Flag.GetCurrentBillIDForThisTable(soban);
