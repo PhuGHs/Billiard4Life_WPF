@@ -152,6 +152,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
@@ -217,39 +218,56 @@
                       Grid.Row="3"
                       Margin="30 0"/>
                 <Grid Grid.Row="4">
-                    <ComboBox materialDesign:HintAssist.Hint="Số điện thoại khách hàng"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Tổng cộng: "
+                           FontSize="16"
+                           Margin="20 0"
+                           VerticalAlignment="Center"/>
+                    <Label Content="{Binding SumofBill}" 
+                           Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Right" 
+                           Foreground="#3C6255"
+                           FontWeight="SemiBold"
+                           FontSize="17"/>
+                </Grid>
+                <Grid Grid.Row="5">
+                    <ComboBox materialDesign:HintAssist.Hint="Thông tin khách hàng"
                               IsEditable="True"
-                              FontSize="18"
+                              FontSize="16"
                               Margin="20 0"
                               Text="{Binding CustomerPhoneNumber}"
                               ItemsSource="{Binding ListPhoneCustomer}"
                               materialDesign:HintAssist.HintOpacity=".26">
                     </ComboBox>
                 </Grid>
-                <Grid Grid.Row="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label Content="Thành viên: "
-                           FontSize="18"
-                           Margin="20 0"
-                           VerticalAlignment="Center"/>
-                    <Label Content="{Binding DiscountMember}" 
-                           Grid.Column="1" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Right" 
-                           Foreground="#3C6255"
-                           FontWeight="SemiBold"
-                           FontSize="18"/>
-                </Grid>
                 <Grid Grid.Row="6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    <Label Content="Thành viên: "
+                           FontSize="16"
+                           Margin="20 0"
+                           VerticalAlignment="Center"/>
+                    <Label Content="{Binding MemberDiscount}" 
+                           Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Right" 
+                           Foreground="#3C6255"
+                           FontWeight="SemiBold"
+                           FontSize="17"/>
+                </Grid>
+                <Grid Grid.Row="7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
                     <Label Content="Khuyến mãi: "
-                           FontSize="18"
+                           FontSize="16"
                            Margin="20 0"
                            VerticalAlignment="Center"/>
                     <Label Content="{Binding TotalDiscount}" 
@@ -258,15 +276,15 @@
                            HorizontalAlignment="Right" 
                            Foreground="#3C6255"
                            FontWeight="SemiBold"
-                           FontSize="18"/>
+                           FontSize="17"/>
                 </Grid>
-                <Grid Grid.Row="7">
+                <Grid Grid.Row="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label Content="Thành tiền: "
-                           FontSize="18"
+                           FontSize="16"
                            Margin="20 0"
                            VerticalAlignment="Center"/>
                     <Label Content="{Binding OverallBill}" 
@@ -275,13 +293,13 @@
                            HorizontalAlignment="Right" 
                            Foreground="#3C6255"
                            FontWeight="SemiBold"
-                           FontSize="18"/>
+                           FontSize="17"/>
                 </Grid>
                 <ComboBox materialDesign:HintAssist.Hint="Phương thức thanh toán"
-                          Grid.Row="8"
+                          Grid.Row="9"
                           Text="{Binding PaymentMethodSelected}"
                           Margin="20 0"
-                          FontSize="18"
+                          FontSize="16"
                           Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                     <ComboBoxItem>
                         Tiền mặt
@@ -296,7 +314,7 @@
                         Chuyển MOMO
                     </ComboBoxItem>
                 </ComboBox>
-                <Grid Grid.Row="9">
+                <Grid Grid.Row="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>

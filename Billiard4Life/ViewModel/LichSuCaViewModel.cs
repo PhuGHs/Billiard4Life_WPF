@@ -117,7 +117,7 @@ namespace Billiard4Life.ViewModel
 
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "Excel (*.xlsx)|*.xlsx";
-            dialog.FileName = "Chi tiết ca từ " + NhanVienDP.Flag.StaffOnline().Item2 + " đến " + DateTime.Now.ToString()
+            dialog.FileName = "Chi tiết ca " + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year
                 + " của " + NhanVienDP.Flag.StaffOnline().Item1.MaNV + "-" + NhanVienDP.Flag.StaffOnline().Item1.HoTen;
 
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -148,31 +148,31 @@ namespace Billiard4Life.ViewModel
                     string[] columnHeader = { "Tiền mặt", "Thẻ ngân hàng", "Chuyển khoản ngân hàng", "Chuyển khoản MOMO"};
 
                     int countColumn = columnHeader.Count();
-                    ws.Cells[1, 1].Value = "Tổng kết ca";
-                    ws.Cells[1, 1, 1, countColumn].Merge = true;
-                    ws.Cells[1, 1, 1, countColumn].Style.Font.Bold = true;
-                    ws.Cells[1, 1, 1, countColumn].Style.Font.Size = 16;
-                    ws.Cells[1, 1, 1, countColumn].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[1, 1].Value = "Tổng kết ca ngày " + DateTime.Now.Day + "-" + DateTime.Now.Month + "-" + DateTime.Now.Year + " của "
+                        + NhanVienDP.Flag.StaffOnline().Item1.MaNV + "-" + NhanVienDP.Flag.StaffOnline().Item1.HoTen;
+                    ws.Cells[1, 1, 1, (countColumn * 3)].Merge = true;
+                    ws.Cells[1, 1, 1, (countColumn * 3)].Style.Font.Bold = true;
+                    ws.Cells[1, 1, 1, (countColumn * 3)].Style.Font.Size = 16;
+                    ws.Cells[1, 1, 1, (countColumn * 3)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-                    int row = 2;
+                    int row = 3;
                     int col = 1;
                     int maxRow = 2;
 
                     foreach (string column in columnHeader)
                     {
-                        var cell = ws.Cells[row, row, col, col + 2];
-                        cell.Merge = true;
-                        cell.Value = column;
-                        cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        ws.Cells[row, col].Value = column;
+                        ws.Cells[row, col, row, col + 2].Merge = true;
+                        row++;
 
+                        ws.Column(col + 1).Width = 12;
                         ObservableCollection<HoaDon> Bills = new ObservableCollection<HoaDon>();
                         Bills = HoaDonDP.Flag.GetBillsShift(column);
 
                         foreach (HoaDon hd in Bills)
                         {
                             ws.Cells[row, col].Value = "Bàn " + hd.SoBan;
-                            ws.Cells[row, col + 1].Value = hd.NgayHD;
-                            ws.Cells[row, col + 2].Value = hd.TriGia;
+                            ws.Cells[row, col + 1].Value = hd.TriGia;
                             row++;
                         }
                         ws.Cells[row, col].Value = "Tổng";
@@ -180,9 +180,10 @@ namespace Billiard4Life.ViewModel
 
                         col += 3;
                         if (row > maxRow) { maxRow = row; }
-                        row = 2;
+                        row = 3;
                     }
                     maxRow++;
+                    ws.Column(1).Width = 14;
                     ws.Cells[maxRow, 1].Value = "Tổng tất cả:";
                     ws.Cells[maxRow, 2].Value = HoaDonDP.Flag.TotalBillPerMethod("Tất cả");
 

@@ -295,23 +295,23 @@ namespace Billiard4Life.DataProvider
                 DBClose();
             }
         }
-        public void MinusCustomerPoint(int SoDiem, string MaKH)
+        public void MinusCustomerPoint(string MaKH, int SoDiem)
         {
             try
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = "UPDATE KHACHHANG" +
-                    "SET SoDiem = SoDiem + @sodiem" +
+                    "SET SoDiem = SoDiem - @sodiem" +
                     "WHERE MaKH = @makh";
                 cmd.Parameters.AddWithValue("@sodiem", SoDiem);
-                cmd.Parameters.AddWithValue("@sdt", MaKH);
-
+                cmd.Parameters.AddWithValue("@makh", MaKH);
+                cmd.Connection = SqlCon;
                 cmd.ExecuteNonQuery();
             } 
             catch (Exception ex)
             {
                 MyMessageBox msb = new MyMessageBox("co loi");
-                msb.Show();
+                msb.ShowDialog();
             } finally
             {
                 DBClose();

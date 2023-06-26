@@ -63,7 +63,7 @@ public class MenuDP : DataProvider
 
         while (reader.Read())
         {
-            ctm.Add(new Tuple<string, float>(reader.GetString(0), reader.GetFloat(1)));
+            ctm.Add(new Tuple<string, float>(reader.GetString(0), (float)reader.GetDouble(1)));
         }
         reader.Close();
 
@@ -71,8 +71,8 @@ public class MenuDP : DataProvider
         {
             cmd.CommandText = "UPDATE KHO SET TonDu = TonDu - @soluong WHERE TenSanPham = @ten";
             cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@soluong", ctm[i].Item1);
-            cmd.Parameters.AddWithValue("@ten", ctm[i].Item2);
+            cmd.Parameters.AddWithValue("@soluong", ctm[i].Item2);
+            cmd.Parameters.AddWithValue("@ten", ctm[i].Item1);
             cmd.ExecuteNonQuery();
         }
 

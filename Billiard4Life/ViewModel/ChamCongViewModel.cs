@@ -114,6 +114,10 @@ namespace Billiard4Life.ViewModel
 
 
                         string[] columnHeader = { "Họ tên", "Ngày", "Số giờ", "Ghi chú" };
+                        ws.Column(1).Width = 15;
+                        ws.Column(2).Width = 13;
+                        ws.Column(3).Width = 10;
+                        ws.Column(4).Width = 15;
 
                         int countColumn = columnHeader.Count();
                         ws.Cells[1, 1].Value = "Bảng chấm công tháng " + GetMonth(MonthSelected) + "/" + DateTime.Now.Year;
@@ -147,7 +151,7 @@ namespace Billiard4Life.ViewModel
                             if (ten != ws.Cells[row - 1, 1].Value.ToString()) row++;
                             ws.Cells[row, col++].Value = ten;
                             ws.Cells[row, col++].Value = reader.GetDateTime(1).ToShortDateString();
-                            ws.Cells[row, col++].Value = reader.GetDouble(2).ToString();
+                            ws.Cells[row, col++].Value = Math.Round(reader.GetDouble(2), 2).ToString();
                             ws.Cells[row, col++].Value = reader.GetString(3);
                         }
                         reader.Close();
@@ -160,7 +164,7 @@ namespace Billiard4Life.ViewModel
                             row++;
                             col = 1;
                             ws.Cells[row, col++].Value = nv.HoTen;
-                            ws.Cells[row, col++].Value = nv.TongSoGio;
+                            ws.Cells[row, col++].Value = Math.Round(nv.TongSoGio, 2);
                         }
 
                         Byte[] bin = x.GetAsByteArray();
@@ -199,25 +203,15 @@ namespace Billiard4Life.ViewModel
                 bool result = true;
                 reader.Close();
 
-                if (update)
+                cmd.CommandText = "DELETE FROM CHITIETCHAMCONG WHERE NgayCC = '" + DaySelected + "'";
+                cmd.ExecuteNonQuery();
+
+                foreach (ChamCong nv in ListCheck)
                 {
-                    foreach (ChamCong nv in ListCheck)
-                    {
-                        cmd.CommandText = "UPDATE CHITIETCHAMCONG SET SoGioCong = " + nv.SoGioCong + " WHERE NgayCC = '" + DaySelected + "' AND MaNV = '" + nv.MaNV + "'";
-                        cmd.Connection = sqlCon;
-                        int kq = cmd.ExecuteNonQuery();
-                        if (kq == 0) result = false;
-                    }
-                }
-                else
-                {
-                    foreach (ChamCong nv in ListCheck)
-                    {
-                        cmd.CommandText = "INSERT INTO CHITIETCHAMCONG VALUES('" + nv.MaNV + "', '" + DaySelected + "', " + nv.SoGioCong + ", N'" + nv.GhiChu + "')";
-                        cmd.Connection = sqlCon;
-                        int kq = cmd.ExecuteNonQuery();
-                        if (kq == 0) result = false;
-                    }
+                    cmd.CommandText = "INSERT INTO CHITIETCHAMCONG VALUES('" + nv.MaNV + "', '" +
+                    DaySelected + "', " + nv.SoGioCong + ", N'" + nv.GhiChu + "')";
+                    int kq = cmd.ExecuteNonQuery();
+                    if (kq == 0) result = false;
                 }
                 if (result)
                 {

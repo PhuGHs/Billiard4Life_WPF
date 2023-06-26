@@ -139,10 +139,11 @@ namespace Billiard4Life.ViewModel
             DateTime dt2 = DateTime.Parse(dtEnd);
 
             string filePath = "";
+            string title = "Chi tiết hóa đơn từ " + dt1.Month + "-" + dt1.Day + "-" + dt1.Year + " đến " + dt2.Month + "-" + dt2.Day + "-" + dt2.Year;
 
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "Excel (*.xlsx)|*.xlsx";
-            dialog.FileName = "Chi tiết hóa đơn từ " + dt1.Month + "-" + dt1.Day + "-" + dt1.Year + " đến " + dt2.Month + "-" + dt2.Day + "-" + dt2.Year;
+            dialog.FileName = title;
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -159,7 +160,7 @@ namespace Billiard4Life.ViewModel
 
                 using (ExcelPackage x = new ExcelPackage())
                 {
-                    x.Workbook.Properties.Title = "Chi tiết hóa đơn từ " + dtBegin + " đến " + dtEnd;
+                    x.Workbook.Properties.Title = title;
 
                     x.Workbook.Worksheets.Add("Sheet");
 
@@ -168,10 +169,20 @@ namespace Billiard4Life.ViewModel
                     ws.Cells.Style.Font.Name = "Times New Roman";
 
 
-                    string[] columnHeader = { "Số hóa đơn", "Tên khách hàng", "Số giờ", "Ngày hóa đơn", "Tên món", "Số lượng", "Đơn giá(VNĐ)", "Thành tiền(VNĐ)", "Tổng tiền(VNĐ)" };
+                    string[] columnHeader = { "Số hóa đơn", "Tên khách hàng", "Số giờ", "Ngày hóa đơn", "Tên món", 
+                        "Số lượng", "Đơn giá(VNĐ)", "Thành tiền(VNĐ)", "Tổng tiền(VNĐ)" };
+                    ws.Column(1).Width = 12;
+                    ws.Column(2).Width = 17;
+                    ws.Column(3).Width = 12;
+                    ws.Column(4).Width = 14;
+                    ws.Column(5).Width = 17;
+                    ws.Column(6).Width = 10;
+                    ws.Column(7).Width = 15;
+                    ws.Column(8).Width = 16;
+                    ws.Column(9).Width = 16;
 
                     int countColumn = columnHeader.Count();
-                    ws.Cells[1, 1].Value = "Chi tiết hóa đơn từ " + dtBegin + " đến " + dtEnd;
+                    ws.Cells[1, 1].Value = title;
                     ws.Cells[1, 1, 1, countColumn].Merge = true;
                     ws.Cells[1, 1, 1, countColumn].Style.Font.Bold = true;
                     ws.Cells[1, 1, 1, countColumn].Style.Font.Size = 16;
@@ -202,10 +213,10 @@ namespace Billiard4Life.ViewModel
                         foreach (ChiTietHoaDon cthd in detailBills)
                         {
                             row++;
-                            ws.Cells[row, col++].Value = cthd.TenSP;
-                            ws.Cells[row, col++].Value = cthd.SoLuong;
-                            ws.Cells[row, col++].Value = cthd.DonGia;
-                            ws.Cells[row, col++].Value = cthd.ThanhTien;
+                            ws.Cells[row, col].Value = cthd.TenSP;
+                            ws.Cells[row, col + 1].Value = cthd.SoLuong;
+                            ws.Cells[row, col + 2].Value = cthd.DonGia;
+                            ws.Cells[row, col + 3].Value = cthd.ThanhTien;
                         }
                     }
 

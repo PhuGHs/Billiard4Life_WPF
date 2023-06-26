@@ -53,7 +53,7 @@ public class HoaDonDP : DataProvider
             string ma = reader.GetInt16(0).ToString();
             string sogio = Math.Round(reader.GetTimeSpan(1).TotalMinutes).ToString();
             sogio = ConvertTime(int.Parse(sogio));
-            string trigia = reader.GetSqlMoney(2).ToString();
+            string trigia = Math.Round((decimal)reader.GetSqlMoney(2)).ToString();
             string manv = reader.GetString(3);
             string soban = reader.GetInt16(6).ToString();
             string ngayhd = reader.GetDateTime(7).ToString();
@@ -87,8 +87,8 @@ public class HoaDonDP : DataProvider
 
         while (reader.Read())
         {
-            string ten = reader.GetString(4);
-            string soluong = reader.GetInt16(3).ToString();
+            string ten = reader.GetString(3);
+            string soluong = reader.GetInt16(2).ToString();
             string gia = reader.GetSqlMoney(4).ToString();
             float tien = float.Parse(soluong) * float.Parse(gia);
 
@@ -123,13 +123,12 @@ public class HoaDonDP : DataProvider
         string total = "0";
         if (reader.Read())
         {
-            total = reader.GetSqlMoney(0).ToString();
+            if (!reader.IsDBNull(0)) total = Math.Round((decimal)reader.GetSqlMoney(0)).ToString();
         }
         reader.Close();
 
         DBClose();
 
-        if (total[0] == 'N') return "0";
         return total;
     }
     #region Support Method

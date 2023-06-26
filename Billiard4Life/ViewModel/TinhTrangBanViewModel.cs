@@ -46,7 +46,11 @@ namespace Billiard4Life.ViewModel
             LoadOptions();
             _tables_view = new CollectionViewSource();
             _tables_view.Source = Tables;
-            StatusOfTableCommand = new RelayCommand<Table>((p) => true, (p) => GetStatusOfTable(p.ID));
+            StatusOfTableCommand = new RelayCommand<Table>((p) => true, (p) =>
+            {
+                CustomerPhoneNumber = "";
+                GetStatusOfTable(p.ID);
+            });
             GetPaymentCommand = new RelayCommand<Table>((p) =>
             {
                 if (string.IsNullOrEmpty(TitleOfBill)) return false;
@@ -144,12 +148,16 @@ namespace Billiard4Life.ViewModel
             set 
             { 
                 customerPhoneNumber = value;
-                if (TinhTrangBanDP.Flag.GetCustomerPoint(TinhTrangBanDP.Flag.GetMaKH(CustomerPhoneNumber)) >= 100)
+                if (!string.IsNullOrEmpty(CustomerPhoneNumber))
                 {
-                    D_MemberDiscount = (Dec_sumofbill + TienBan) * 5 / 100;
-                    MemberDiscount = String.Format("{0:0,0 VND}", D_MemberDiscount);
-                    D_OverAllBill -= D_MemberDiscount;
-                    OverallBill = String.Format("{0:0,0 VND}", D_OverAllBill);
+                    string MaKH = TinhTrangBanDP.Flag.GetMaKH(CustomerPhoneNumber);
+                    if (TinhTrangBanDP.Flag.GetCustomerPoint(MaKH) >= 100)
+                    {
+                        D_MemberDiscount = (Dec_sumofbill + TienBan) * 10 / 100;
+                        MemberDiscount = "-" + String.Format("{0:0,0 VND}", D_MemberDiscount);
+                        D_OverAllBill -= D_MemberDiscount;
+                        OverallBill = String.Format("{0:0,0 VND}", D_OverAllBill);
+                    }
                 }
                 OnPropertyChanged(); 
             } 
@@ -372,7 +380,7 @@ namespace Billiard4Life.ViewModel
                 D_TotalDiscount = (Dec_sumofbill + TienBan) * KM.GiamGia / 100;
             }
             D_OverAllBill = Dec_sumofbill - D_TotalDiscount + TienBan;
-            SumofBill = String.Format("{0:0,0 VND}", Dec_sumofbill);
+            SumofBill = String.Format("{0:0,0 VND}", Dec_sumofbill + TienBan);
             TotalDiscount = "-" + String.Format("{0:0,0 VND}", D_TotalDiscount);
             OverallBill = String.Format("{0:0,0 VND}", D_OverAllBill);
         }
@@ -548,6 +556,10 @@ namespace Billiard4Life.ViewModel
                     bool success = TinhTrangBanDP.Flag.UpdateBill(table.Bill_ID, D_OverAllBill, TimeSpanPlayer, MaKM, MaKH, PaymentMethodSelected, table.ID.ToString());
                     if (success)
                     {
+                        if (!string.IsNullOrEmpty(MemberDiscount))
+                        {
+                            TinhTrangBanDP.Flag.MinusCustomerPoint(MaKH, 100);
+                        }
                         if (!string.IsNullOrEmpty(MaKH))
                         {
                             TinhTrangBanDP.Flag.UpdateKhachHangAccumulatedPoint(((int)D_OverAllBill / 50000) * 20, MaKH);
