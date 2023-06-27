@@ -48,8 +48,8 @@ namespace Billiard4Life.ViewModel
             CTHD.Clear();
             while (reader.Read())
             {
-                string ten = reader.GetString(4);
-                string soluong = reader.GetInt16(3).ToString();
+                string ten = reader.GetString(3);
+                string soluong = reader.GetInt16(2).ToString();
                 string gia = reader.GetSqlMoney(4).ToString();
                 float tien = float.Parse(soluong) * float.Parse(gia);
 
