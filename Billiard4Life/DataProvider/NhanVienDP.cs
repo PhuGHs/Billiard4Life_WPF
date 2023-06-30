@@ -188,7 +188,6 @@ public class NhanVienDP : DataProvider
     public bool IsStaff(string MaNV)
     {
         DBOpen();
-
         SqlCommand cmd = new SqlCommand();
         cmd.CommandType = CommandType.Text;
         cmd.CommandText = "SELECT Quyen FROM TAIKHOAN WHERE MaNV = @manv";
