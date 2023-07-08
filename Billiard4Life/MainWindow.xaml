@@ -67,7 +67,7 @@
                     <!--logo-->
                     <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" >
                         <Image Source="pack://application:,,,/images/Logo2.png" Width="150" Height="150" />
-                        <TextBlock Foreground="#EAE7B1" TextAlignment="Center"  FontSize="20">Ninres RM</TextBlock>
+                        <TextBlock Foreground="#EAE7B1" TextAlignment="Center"  FontSize="20">Billiard 4 Life</TextBlock>
                     </StackPanel>
                     <uc:EmployeeNavigator Grid.Row="1" DataContext="{Binding Navigator}" Visibility="{Binding EmployeeView}"/>
                     <uc:Navigator Grid.Row="1" DataContext="{Binding Navigator}" Visibility="{Binding AdminView}"/>

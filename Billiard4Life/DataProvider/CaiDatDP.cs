@@ -92,7 +92,8 @@ namespace Billiard4Life.DataProvider
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    nv.AnhDaiDien = Converter.ImageConverter.ConvertByteToBitmapImage((byte[])reader[0]);
+                    if (!reader.IsDBNull(0))
+                        nv.AnhDaiDien = Converter.ImageConverter.ConvertByteToBitmapImage((byte[])reader[0]);
                 }
             }
             finally
