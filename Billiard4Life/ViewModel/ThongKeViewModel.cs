@@ -402,7 +402,7 @@ namespace Billiard4Life.ViewModel
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = "SELECT DAY(NgayHD), SUM(TriGia) FROM HOADON WHERE TrangThai = N'Đã thanh toán' " +
-                    "AND MONTH(NgayHD) = " + month + " AND YEAR(NgayHD) = " + DateTime.Now.Year + " GROUP BY NgayHD";
+                    "AND MONTH(NgayHD) = " + month + " AND YEAR(NgayHD) = " + DateTime.Now.Year + " GROUP BY DAY(NgayHD)";
                 cmd.Connection = sqlCon;
                 SqlDataReader reader = cmd.ExecuteReader();
 

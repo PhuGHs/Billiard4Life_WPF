@@ -299,6 +299,7 @@ namespace Billiard4Life.DataProvider
         {
             try
             {
+                DBOpen();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = "UPDATE KHACHHANG" +
                     "SET SoDiem = SoDiem - @sodiem" +

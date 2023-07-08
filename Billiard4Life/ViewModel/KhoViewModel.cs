@@ -307,7 +307,7 @@ namespace Billiard4Life.ViewModel
 
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT * FROM CHITIETNHAP WHERE NgayNhap >= '" + dtBegin + "' AND NgayNhap <= '" + dtEnd + "' ORDER BY TenSanPham DESC";
+                cmd.CommandText = "SELECT * FROM CHITIETNHAP WHERE NgayNhap >= '" + dtBegin + "' AND NgayNhap <= '" + dtEnd + "' ORDER BY NgayNhap ASC";
                 cmd.Connection = sqlCon;
 
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -366,6 +366,15 @@ namespace Billiard4Life.ViewModel
 
 
                         string[] columnHeader = { "Mã nhập", "Tên sản phẩm", "Đơn vị", "Đơn giá(VNĐ)", "Nhóm sản phẩm", "Số lượng", "Ngày nhập", "Nguồn nhập", "Liên lạc" };
+                        ws.Column(1).Width = 10;
+                        ws.Column(2).Width = 16;
+                        ws.Column(3).Width = 10;
+                        ws.Column(4).Width = 14;
+                        ws.Column(5).Width = 15;
+                        ws.Column(6).Width = 12;
+                        ws.Column(7).Width = 14;
+                        ws.Column(8).Width = 14;
+                        ws.Column(9).Width = 12;
 
                         int countColumn = columnHeader.Count();
                         ws.Cells[1, 1].Value = "Thông tin nhập kho từ " + dtBegin + " đến " + dtEnd;

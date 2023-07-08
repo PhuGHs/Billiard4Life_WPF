@@ -101,6 +101,8 @@ namespace Billiard4Life.ViewModel
                     }
 
                     ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandType = CommandType.Text;
 
                     using (ExcelPackage x = new ExcelPackage())
                     {
@@ -137,8 +139,6 @@ namespace Billiard4Life.ViewModel
                             col++;
                         }
 
-                        SqlCommand cmd = new SqlCommand();
-                        cmd.CommandType = CommandType.Text;
                         cmd.CommandText = "SELECT c.*, n.TenNV FROM CHITIETCHAMCONG AS c JOIN NHANVIEN AS n ON c.MaNV = n.MaNV WHERE MONTH(NgayCC) = " + GetMonth(MonthSelected) + " AND YEAR(NgayCC) = " + DateTime.Now.Year + " ORDER BY MaNV, NgayCC ASC";
                         cmd.Connection = sqlCon;
                         SqlDataReader reader = cmd.ExecuteReader();
