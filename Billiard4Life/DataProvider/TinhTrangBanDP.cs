@@ -148,7 +148,7 @@ namespace Billiard4Life.DataProvider
                 cmd.Connection = SqlCon;
                 if (isEmpty)
                 {
-                    cmd.CommandText = "Update BAN set TrangThai = N'Có thể sử dụng' where SoBan = @SoBan";
+                    cmd.CommandText = "Update BAN set TrangThai = N'Có thể sử dụng', SoHDHienTai = 0 where SoBan = @SoBan";
                     cmd.Parameters.AddWithValue("@SoBan", ID);
 
                     cmd.ExecuteNonQuery();

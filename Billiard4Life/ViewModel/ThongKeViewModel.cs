@@ -35,6 +35,8 @@ namespace Billiard4Life.ViewModel
             set
             {
                 _DateBegin = value;
+                if (DateBegin == null || DateEnd == null) return;
+                GetRevenue("Ngày");
                 OnPropertyChanged();
             }
         }
@@ -45,7 +47,7 @@ namespace Billiard4Life.ViewModel
             set
             {
                 _DateEnd = value;
-                OnPropertyChanged();
+                if (DateBegin == null || DateEnd == null) return;
                 GetRevenue("Ngày");
                 OnPropertyChanged();
             }
