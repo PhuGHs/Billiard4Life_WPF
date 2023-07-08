@@ -53,7 +53,7 @@ public class HoaDonDP : DataProvider
             string ma = reader.GetInt16(0).ToString();
             string sogio = Math.Round(reader.GetTimeSpan(1).TotalMinutes).ToString();
             sogio = ConvertTime(int.Parse(sogio));
-            string trigia = Math.Round((decimal)reader.GetSqlMoney(2)).ToString();
+            string trigia = String.Format("{0:0,0 VND}", Math.Round((decimal)reader.GetSqlMoney(2)));
             string manv = reader.GetString(3);
             string soban = reader.GetInt16(6).ToString();
             string ngayhd = reader.GetDateTime(7).ToString();
@@ -120,10 +120,10 @@ public class HoaDonDP : DataProvider
         cmd.Connection = SqlCon;
         SqlDataReader reader = cmd.ExecuteReader();
 
-        string total = "0";
+        string total = "0 VNĐ";
         if (reader.Read())
         {
-            if (!reader.IsDBNull(0)) total = Math.Round((decimal)reader.GetSqlMoney(0)).ToString();
+            if (!reader.IsDBNull(0)) total = String.Format("{0:0,0 VND}", Math.Round((decimal)reader.GetSqlMoney(0)));
         }
         reader.Close();
 

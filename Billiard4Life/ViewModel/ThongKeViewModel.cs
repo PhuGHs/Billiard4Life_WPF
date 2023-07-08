@@ -75,6 +75,7 @@ namespace Billiard4Life.ViewModel
             set { _SeriesCollectionStaff = value; }
         }
         public Func<double, string> Formatter { get; set; }
+        public Func<double, string> CrowdFormatter { get; set; }
         private string _CrowdMonth;
         public string CrowdMonth { get => _CrowdMonth; 
             set { 
@@ -174,7 +175,9 @@ namespace Billiard4Life.ViewModel
             SeriesCollectionCrowd = new SeriesCollection();
             SeriesCollectionStaff = new SeriesCollection();
             SeriesCollectionTypeTable = new SeriesCollection();
-            Formatter = value => value.ToString("G");
+
+            Formatter = value => String.Format("{0:0,0 VND}", Math.Round(value));
+            CrowdFormatter = value => Math.Round(value).ToString("G");
 
             Types.Add("Theo ngày");
             Types.Add("Theo tháng");
@@ -329,13 +332,13 @@ namespace Billiard4Life.ViewModel
             double sumPaid = 0, sumProfit = 0, percent = 0;
             if (type == "Ngày")
             {
-                List<string> index = new List<string>();
+                List<int> index = new List<int>();
 
                 DateTime dt1 = DateTime.Parse(DateBegin);
                 DateTime dt2 = DateTime.Parse(DateEnd);
                 for (DateTime dt = dt1; dt <= dt2; dt = dt.AddDays(1))
                 {
-                    index.Add(dt.ToShortDateString());
+                    index.Add(dt.Day);
                     LabelsRevenue.Add(dt.Day.ToString());
                     paid.Add(0);
                     profit.Add(0);
@@ -344,27 +347,27 @@ namespace Billiard4Life.ViewModel
                 // profit
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT NgayHD, SUM(TriGia) FROM HOADON WHERE TrangThai = N'Đã thanh toán' " +
-                    "AND NgayHD >= '" + DateBegin + "' AND NgayHD <= '" + DateEnd + "' GROUP BY NgayHD";
+                cmd.CommandText = "SELECT DAY(NgayHD), SUM(TriGia) FROM HOADON WHERE TrangThai = N'Đã thanh toán' " +
+                    "AND Convert(Date, NgayHD) >= '" + DateBegin + "' AND Convert(Date, NgayHD) <= '" + DateEnd + "' GROUP BY DAY(NgayHD)";
                 cmd.Connection = sqlCon;
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    string dt = reader.GetDateTime(0).ToShortDateString();
+                    int dt = reader.GetInt32(0);
                     profit[index.IndexOf(dt)] = reader.GetSqlMoney(1).ToDouble();
                     sumProfit += profit[index.IndexOf(dt)];
                 }
                 reader.Close();
 
                 // paid
-                cmd.CommandText = "SELECT NgayNhap, SUM(DonGia * SoLuong) FROM CHITIETNHAP " +
-                    "WHERE NgayNhap >= '" + DateBegin + "' AND NgayNhap <= '" + DateEnd + "' GROUP BY NgayNhap";
+                cmd.CommandText = "SELECT DAY(NgayNhap), SUM(DonGia * SoLuong) FROM CHITIETNHAP " +
+                    "WHERE NgayNhap >= '" + DateBegin + "' AND NgayNhap <= '" + DateEnd + "' GROUP BY DAY(NgayNhap)";
                 reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    string dt = reader.GetDateTime(0).ToShortDateString();
+                    int dt = reader.GetInt32(0);
                     paid[index.IndexOf(dt)] = reader.GetDouble(1);
                     sumPaid += paid[index.IndexOf(dt)];
                 }
@@ -430,7 +433,7 @@ namespace Billiard4Life.ViewModel
                 while (reader.Read())
                 {
                     if (!reader.IsDBNull(0))
-                        percent = reader.GetDouble(0);
+                        percent = (double) Math.Round(reader.GetDecimal(0));
                 }
                 reader.Close();
             }
@@ -493,8 +496,8 @@ namespace Billiard4Life.ViewModel
                 Title = "Chi",
                 Values = new ChartValues<double>(paid)
             });
-            SumOfPaid = Math.Round(sumPaid).ToString() + "VNĐ";
-            SumOfProfit = Math.Round(sumProfit).ToString() + "VNĐ";
+            SumOfPaid = String.Format("{0:0,0 VND}", Math.Round(sumPaid));
+            SumOfProfit = String.Format("{0:0,0 VND}", Math.Round(sumProfit));
             PercentProOnRevenue = "  Sản phẩm\n/Doanh thu\n         " + Math.Round(percent * 100 / sumProfit, 2) + "%";
 
             CloseConnect();

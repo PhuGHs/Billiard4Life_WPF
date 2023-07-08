@@ -239,7 +239,7 @@
                                               FontFamily="Comfortaa"
                                               Foreground="#3C6255"
                                               FontSize="13"
-                                              LabelFormatter="{Binding Formatter}"/>
+                                              LabelFormatter="{Binding CrowdFormatter}"/>
                                 </lvc:CartesianChart.AxisY>
                             </lvc:CartesianChart>
                         </Grid>

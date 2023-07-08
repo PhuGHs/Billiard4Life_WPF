@@ -159,6 +159,7 @@ namespace Billiard4Life.ViewModel
                         OverallBill = String.Format("{0:0,0 VND}", D_OverAllBill);
                     }
                 }
+                else MemberDiscount = "-00 VNĐ";
                 OnPropertyChanged(); 
             } 
         }
