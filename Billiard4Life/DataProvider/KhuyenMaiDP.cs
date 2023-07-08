@@ -1,4 +1,5 @@
 ﻿using Billiard4Life.Models;
+using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -162,35 +163,26 @@ namespace Billiard4Life.DataProvider
                 DBOpen();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = "SELECT TOP 1 * FROM KHUYENMAI " +
-                                  "WHERE @total >= MucApDung AND TrangThai = @trangthai " +
+                                  "WHERE @total >= MucApDung AND TrangThai = @trangthai AND Deleted = 0" +
                                   "ORDER BY GiamGia DESC";
                 cmd.Parameters.AddWithValue("@total", total);
                 cmd.Parameters.AddWithValue("@trangthai", "Đang diễn ra");
                 cmd.Connection = SqlCon;
 
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(dt);
-                foreach (DataRow dr in dt.Rows)
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    string? makm = Convert.ToString(dr["MaKM"]);
-                    string? tenkm = Convert.ToString(dr["TenKM"]);
-                    int giamgia = Convert.ToInt32(dr["GiamGia"]);
-                    Decimal mucapdung = Convert.ToDecimal(dr["MucApDung"]);
-                    string trangthai = Convert.ToString(dr["TrangThai"]);
-                    string ngaybd = Convert.ToDateTime(dr["BatDau"]).ToShortDateString();
-                    string ngaykt = Convert.ToDateTime(dr["KetThuc"]).ToShortDateString();
-                    string? mota = Convert.ToString(dr["MoTa"]);
-
-                    if (makm == null
-                        || tenkm == null
-                        || mota == null
-                        || ngaybd == null
-                        || ngaykt == null)
-                    {
-                        throw new ArgumentNullException("Thieu property khong the lay len tu database");
-                    }
+                    string makm = reader.GetString(0);
+                    string tenkm = reader.GetString(1);
+                    decimal mucapdung = reader.GetDecimal(3);
+                    int giamgia = reader.GetInt16(2);
+                    string ngaybd = reader.GetDateTime(4).ToShortDateString();
+                    string ngaykt = reader.GetDateTime(5).ToShortDateString();
+                    string mota = reader.GetString(6);
+                    string trangthai = reader.GetString(7);
                     km = new KhuyenMai(makm, tenkm, mucapdung, trangthai, ngaybd, ngaykt, mota, giamgia);
                 }
+                reader.Close();
 
             } catch (Exception ex)
             {

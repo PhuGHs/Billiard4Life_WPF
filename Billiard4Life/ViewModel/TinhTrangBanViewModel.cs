@@ -425,7 +425,7 @@ namespace Billiard4Life.ViewModel
 
         public void Update()
         {
-            KM = KhuyenMaiDP.Flag.GetKhuyenMaisBasedOnMucApDung(Dec_sumofbill);
+            KM = KhuyenMaiDP.Flag.GetKhuyenMaisBasedOnMucApDung(Dec_sumofbill + TienBan);
         }
         public void PrintBill(int BillID, int TableID)
         {
