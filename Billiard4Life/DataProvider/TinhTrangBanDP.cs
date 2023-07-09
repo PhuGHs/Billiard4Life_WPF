@@ -302,7 +302,7 @@ namespace Billiard4Life.DataProvider
                 DBOpen();
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = "UPDATE KHACHHANG " +
-                    "SET SoDiem = SoDiem - @sodiem" +
+                    "SET SoDiem = SoDiem - @sodiem " +
                     "WHERE MaKH = @makh";
                 cmd.Parameters.AddWithValue("@sodiem", SoDiem);
                 cmd.Parameters.AddWithValue("@makh", MaKH);
