@@ -1,0 +1,57 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.gallery-display-area {
+    overflow: hidden;
+    height: 660px;
+    width: 100%;
+}
+
+.gallery-wrap {
+    width: 500%;
+    animation: slideShow 30s infinite
+}
+
+.image {
+    float: left;
+    height: 660px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text {
+    position: absolute;
+    color: white;
+    text-align: center;
+}
+
+@keyframes slideShow{
+    0% {
+        transform: translateX(0);
+    }
+
+    33% {
+        transform: translateX(-100%);
+    }
+
+    66% {
+        transform: translateX(-200%);
+    }
+
+    100% {
+        transform: translateX(-300%);
+    }
+}
