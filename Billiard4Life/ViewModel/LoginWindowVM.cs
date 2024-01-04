@@ -45,68 +45,70 @@ namespace RestaurantManagement.ViewModel
             LoginCM = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 Login(p);
-
-
-                if (MaNV == null)
-                {
-                    MyMessageBox x = new MyMessageBox("Không tồn tại tài khoản");
-                    x.Show();
-                    return;
-                }
-                if (NhanVienDP.Flag.IsAnyStaffOnline() && Online == false && NhanVienDP.Flag.IsStaff(MaNV))
-                {
-                    MyMessageBox msb = new MyMessageBox("Đã có nhân viên trực ca.\nVui lòng đăng nhập sau!");
-                    msb.ShowDialog();
-                }
-                else
-                if (IsLoggedIn)
-                {
-                    p.Close();
-                    return;
-                }
-                else
-                {
-                    MyMessageBox msb = new MyMessageBox("Sai tên đăng nhập hoặc mật khẩu!");
-                    msb.ShowDialog();
-                }
             });
-            void Login(Window p)
+            
+        }
+
+        public void Login(Window p)
+        {
+            OpenConnect();
+
+            if (p == null) return;
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT * FROM TAIKHOAN WHERE ID = '" + UserName + "' AND MatKhau = '" + Password + "'";
+            cmd.Connection = sqlCon;
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                OpenConnect();
-
-                if (p == null) return;
-
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT * FROM TAIKHOAN WHERE ID = '" + UserName + "' AND MatKhau = '" + Password + "'";
-                cmd.Connection = sqlCon;
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    IsLoggedIn = true;
-                    Role = reader.GetString(2);
-                    MaNV = reader.GetString(3);
-                    Online = reader.GetBoolean(7);
-                }
-                reader.Close();
-
-                CloseConnect();
+                IsLoggedIn = true;
+                Role = reader.GetString(2);
+                MaNV = reader.GetString(3);
+                Online = reader.GetBoolean(7);
             }
-            void OpenConnect()
-            {
-                sqlCon = new SqlConnection(strCon);
-                if (sqlCon.State == ConnectionState.Closed)
-                {
-                    sqlCon.Open();
-                }
-            }
+            reader.Close();
 
-            void CloseConnect()
+            CloseConnect();
+
+            if (MaNV == null)
             {
-                if (sqlCon.State == ConnectionState.Open)
-                {
-                    sqlCon.Close();
-                }
+                MyMessageBox x = new MyMessageBox("Không tồn tại tài khoản");
+                x.Show();
+                return;
+            }
+            if (NhanVienDP.Flag.IsAnyStaffOnline() && Online == false && NhanVienDP.Flag.IsStaff(MaNV))
+            {
+                MyMessageBox msb = new MyMessageBox("Đã có nhân viên trực ca.\nVui lòng đăng nhập sau!");
+                msb.ShowDialog();
+            }
+            else
+            if (IsLoggedIn)
+            {
+                p.Close();
+                return;
+            }
+            else
+            {
+                MyMessageBox msb = new MyMessageBox("Sai tên đăng nhập hoặc mật khẩu!");
+                msb.ShowDialog();
+            }
+        }
+
+        void OpenConnect()
+        {
+            sqlCon = new SqlConnection(strCon);
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+        }
+
+        void CloseConnect()
+        {
+            if (sqlCon.State == ConnectionState.Open)
+            {
+                sqlCon.Close();
             }
         }
     }

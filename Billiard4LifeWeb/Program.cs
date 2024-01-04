@@ -1,3 +1,5 @@
+using Billiard4LifeWeb.Hubs;
+
 namespace Billiard4LifeWeb
 {
     public class Program
@@ -8,6 +10,7 @@ namespace Billiard4LifeWeb
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddSignalR();
 
             var app = builder.Build();
 
@@ -25,6 +28,8 @@ namespace Billiard4LifeWeb
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.MapHub<ReservationHub>("/reservationhub");
 
             app.MapControllerRoute(
                 name: "default",

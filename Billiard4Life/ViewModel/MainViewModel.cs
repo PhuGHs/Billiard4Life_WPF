@@ -1,28 +1,33 @@
 ﻿using Billiard4Life.DataProvider;
-using Billiard4Life.Models;
 using Billiard4Life.State.Navigator;
-using RestaurantManagement.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Forms;
-using System.Windows.Input;
 using RestaurantManagement.View;
-using System.Windows.Media.Imaging;
-using Project;
-using System.Threading;
+using RestaurantManagement.ViewModel;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Billiard4Life.ViewModel
 {
 
     public class MainViewModel : BaseViewModel
     {
+        private int _ReservationCount;
+        public int ReservationCount
+        {
+            get => _ReservationCount;
+            set
+            {
+                _ReservationCount = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MainViewModel()
         {
+            ReservationCount = GetReservationCount();
+
             LoadWindowCommand = new RelayCommand<Window>((p) => true, (p) =>
             {
                 if (p == null)
@@ -80,34 +85,40 @@ namespace Billiard4Life.ViewModel
             Navigator = new Navigator("admin");
             HeaderViewModel = new HeaderViewModel();
             bep = new BepViewModel();
-            //NumberOfDishesNeedServing = bep.NumberOfDishesNeedServing;
-            //Mediator.Instance.Subscribe("PropertyBChanged", (obj) =>
-            //{
-            //    NumberOfDishesNeedServing = (string)obj;
-            //});
         }
+
+        private int GetReservationCount()
+        {
+            OpenConnect();
+
+            var cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT COUNT(*) FROM DATBAN WHERE DAY(NgayGio) >= Day(GETDATE()) " +
+                "AND MONTH(NgayGio) >= MONTH(GETDATE()) AND YEAR(NgayGio) >= YEAR(GETDATE())";
+            cmd.Connection = sqlCon;
+            var reader = cmd.ExecuteReader();
+
+            int num = 0;
+
+            while (reader.Read())
+            {
+                num = reader.GetInt32(0);
+            }
+
+            CloseConnect();
+            return num;
+        }
+
         CaiDatViewModel caiDatViewModel;
         HeaderViewModel headerViewModel;
         Navigator navigator;
         BepViewModel bep;
-        string _NumberOfDishesNeedServing;
         public string MaNV;
         private string _ExitTitle = "Đăng xuất";
-        //public string NumberOfDishesNeedServing
-        //{
-        //    get {
-        //        if (Convert.ToInt32(_NumberOfDishesNeedServing) > 9)
-        //        {
-        //            return "9+";
-        //        }
-        //        return _NumberOfDishesNeedServing;
-        //    }
-        //    set
-        //    {
-        //        _NumberOfDishesNeedServing = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
+
+        private string strCon = ConfigurationManager.ConnectionStrings["Billiard4Life"].ConnectionString;
+        private SqlConnection sqlCon = null;
+
         public ICommand LoadWindowCommand { get; set; }
         public ICommand LogOutCommand { get; set; }
         public CaiDatViewModel CaiDatViewModel
@@ -130,7 +141,24 @@ namespace Billiard4Life.ViewModel
         public string ExitTitle
         {
             get => _ExitTitle;
-            set { _ExitTitle = value; OnPropertyChanged();}
+            set { _ExitTitle = value; OnPropertyChanged(); }
+        }
+
+        private void OpenConnect()
+        {
+            sqlCon = new SqlConnection(strCon);
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+        }
+
+        private void CloseConnect()
+        {
+            if (sqlCon.State == ConnectionState.Open)
+            {
+                sqlCon.Close();
+            }
         }
     }
 }

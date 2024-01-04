@@ -93,8 +93,8 @@
                             <Grid.Resources>
                                 <Style x:Key="HeaderButton" TargetType="Button">
                                     <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Width" Value="25"/>
-                                    <Setter Property="Height" Value="25"/>
+                                    <Setter Property="Width" Value="30"/>
+                                    <Setter Property="Height" Value="30"/>
                                     <Setter Property="Cursor" Value="Hand"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -180,14 +180,18 @@
                             <TextBlock Grid.Column="0" FontSize="25" Width="250" FontWeight="SemiBold" Margin="20 0 0 0" VerticalAlignment="Center" Text="{Binding Navigator.CurrentTitle}" />
 
                         <StackPanel Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Height="60" Margin="0 0 50 0">
-                            <StackPanel VerticalAlignment="Center">
+                            <StackPanel VerticalAlignment="Center" Margin="0 0 40 0">
                                 <Canvas Background="White">
-                                    <Border Background="Red" Width="20" Height="20" CornerRadius="100" Canvas.Left="45" Canvas.Top="-10">
-                                        <TextBlock Text="{Binding NumberOfDishesNeedServing}" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                    <Border Background="Red" Width="30" Height="30" CornerRadius="100" Canvas.Left="45" Canvas.Top="-10">
+                                        <TextBlock Text="{Binding ReservationCount}" FontSize="22" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold"/>
                                     </Border>
                                 </Canvas>
-                                <Button Style="{StaticResource HeaderButton}" Margin="30 0 20 0" BorderThickness="0">
-                                    <fa:IconImage Icon="Bell" />
+                                <Button Style="{StaticResource HeaderButton}"
+                                        Margin="20 0 20 0" BorderThickness="0"
+                                        Height="40"
+                                        Width="40"
+                                        Click="Button_Click">
+                                    <fa:IconImage Icon="Bell"/>
                                 </Button>
                             </StackPanel>
 

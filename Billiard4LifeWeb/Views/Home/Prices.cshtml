@@ -1,36 +1,41 @@
-﻿<!-- Start Product Section -->
-<div class="product-section">
-	<div class="container">
-		<div class="row" style="height: 660px;">
+﻿ <!-- Page Header Start -->
+<div class="container-fluid page-header mb-5 position-relative overlay-bottom">
+	<div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 300px">
+		<h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Bảng giá</h1>
+	</div>
+</div>
+<!-- Page Header End -->
 
-			<!-- Start Column 1 -->
-			<div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
-				<h2 class="mb-4 section-title">Đầy đủ các loại bàn trên thị trường</h2>
-				<p><a asp-action="PlaceOrder" asp-controller="Home" class="btn btn-secondary me-2">Đặt bàn ngay</a></p>
-			</div>
-			<!-- End Column 1 -->
+<!-- Start Product Section -->
+<div class="container-fluid pt-5">
+	<div class="container">
+		<div class="section-title">
+			<h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Đầy đủ các loại bàn trên thị trường</h4>
+			<p>Dù bạn là người mới tập chơi hay là chuyên gia có kinh nghiệm, Billiard4Life luôn chào đón mọi đối tượng. Đội ngũ nhân viên chuyên nghiệp và nhiệt tình sẽ luôn ở đây để hỗ trợ bạn, từ việc lựa chọn gậy bi-a, giải thích các luật chơi đến cung cấp mẹo và chiến thuật.</p>
+		</div>
+		<div class="row" style="height: 660px;">
 			<!-- Start Column 2 -->
-			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-				<a class="product-item" href="cart.html">
-					<div class="grid grid-1"><img src="~/images/table1.png" class="img-fluid product-thumbnail"></div>
+			<div class="col-12 col-md-4 col-lg-4 mb-5 mb-md-0">
+				<a class="product-item" asp-action="PlaceOrder" asp-controller="Home">
+					<div class="grid grid-1"><img src="~/images/table1.png" class="img-fluid rounded product-thumbnail"></div>
 					<h3 class="product-title">Carom</h3>
 					<strong class="product-price">80.000đ/h</strong>
 				</a>
 			</div>
 			<!-- End Column 2 -->
 			<!-- Start Column 3 -->
-			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-				<a class="product-item" href="cart.html">
-					<div class="grid grid-1"><img src="~/images/table2.png" class="img-fluid product-thumbnail"></div>
+			<div class="col-12 col-md-4 col-lg-4 mb-5 mb-md-0">
+				<a class="product-item" asp-action="PlaceOrder" asp-controller="Home">
+					<div class="grid grid-1"><img src="~/images/table2.png" class="img-fluid rounded product-thumbnail"></div>
 					<h3 class="product-title">Libre</h3>
 					<strong class="product-price">65.000đ/h</strong>
 				</a>
 			</div>
 			<!-- End Column 3 -->
 			<!-- Start Column 4 -->
-			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-				<a class="product-item" href="cart.html">
-					<div class="grid grid-1"><img src="~/images/table3.png" class="img-fluid product-thumbnail"></div>
+			<div class="col-12 col-md-4 col-lg-4 mb-5 mb-md-0">
+				<a class="product-item" asp-action="PlaceOrder" asp-controller="Home">
+					<div class="grid grid-1"><img src="~/images/table3.png" class="img-fluid rounded product-thumbnail"></div>
 					<h3 class="product-title">Pool</h3>
 					<strong class="product-price">80.000đ/h</strong>
 				</a>

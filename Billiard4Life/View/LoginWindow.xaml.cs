@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantManagement.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,16 @@ namespace RestaurantManagement.View
         public LoginWindow()
         {
             InitializeComponent();
+        }
+
+        private void pwBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var vm = this.DataContext as LoginWindowVM;
+
+                vm.Login(this);
+            }
         }
     }
 }

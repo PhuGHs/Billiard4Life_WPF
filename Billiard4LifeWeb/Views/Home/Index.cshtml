@@ -1,24 +1,62 @@
-﻿<div id="header-carousel" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active" style="height: 660px;">
-            <img class="img-fluid" src="~/images/banner1.jpg" alt="Image">
-            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center text-center h-100">
-                <div class="p-3" style="max-width: 700px;">
-                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Billiard4Life - Tận hưởng từng đường cơ</h4>
-                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Dịch vụ chất lượng</h3>
-                    <p><a asp-action="PlaceOrder" asp-controller="Home" class="btn btn-secondary me-2">Đặt bàn ngay</a></p>
+﻿<!-- Carousel Start -->
+<div class="container-fluid p-0 mb-5">
+    <div id="blog-carousel" class="carousel slide overlay-bottom" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="w-100" src="~/images/banner2.jpg" alt="Image">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <h3 class="display-1 text-white m-0">Không gian thoải mái</h3>
+                    <p><a asp-action ="PlaceOrder" asp-controller="Home" class="btn btn-primary font-weight-bold px-3">Đặt bàn ngay</a></p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="w-100" src="~/images/banner1.jpg" alt="Image">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <h2 class="display-1 text-white m-0">Dịch vụ chất lượng</h2>
+                    <p><a asp-action="PlaceOrder" asp-controller="Home" class="btn btn-primary font-weight-bold px-3">Đặt bàn ngay</a></p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="w-100" src="~/images/banner3.jpg" alt="Image">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <h2 class="display-1 text-white m-0">Giá cả hợp lý</h2>
+                    <p><a class="btn btn-primary font-weight-bold px-3">Đặt bàn ngay</a></p>
                 </div>
             </div>
         </div>
-        <div class="carousel-item" style="height: 660px;">
-            <img class="img-fluid" src="~/images/banner3.jpg" alt="Image">
-            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center text-center h-100">
-                <div class="p-3" style="max-width: 700px;">
-                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Billiard4Life - Tận hưởng từng đường cơ</h4>
-                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Giá cả hợp lý</h3>
-                    <p><a asp-action="PlaceOrder" asp-controller="Home" class="btn btn-secondary me-2">Đặt bàn ngay</a></p>
+        <a class="carousel-control-prev" href="#blog-carousel" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#blog-carousel" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+</div>
+<!-- Carousel End -->
+<!-- About Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="section-title">
+            <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Về chúng tôi</h4>
+            <h1 class="display-4">Billiard4Life</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 py-0 py-lg-5">
+                <h1 class="mb-3">Giới thiệu</h1>
+                <p>Billiard4Life không chỉ là một quán bi-a thông thường, mà còn là điểm đến lý tưởng cho những người yêu thể thao và muốn thách thức bản thân. Với không gian thoáng đãng, trang thiết bị hiện đại và bàn bi-a chất lượng, chúng tôi cam kết mang đến cho bạn trải nghiệm bi-a tuyệt vời nhất.</p>
+                <a asp-action="PlaceOrder" asp-controller="Home" class="btn btn-secondary font-weight-bold py-2 px-4 mt-2">Đặt bàn</a>
+            </div>
+            <div class="col-lg-4 py-5 py-lg-0" style="min-height: 500px;">
+                <div class="position-relative h-100">
+                    <img class="position-absolute w-100 h-100" src="~/images/x1080.png" style="object-fit: cover;">
                 </div>
+            </div>
+            <div class="col-lg-4 py-0 py-lg-5">
+                <h1 class="mb-3">Thực đơn</h1>
+                <p>Ngoài ra, quán còn có đội ngũ đầu bếp tài năng, mang đến cho bạn các món ăn ngon miệng để tận hưởng giữa những trận đấu căng thẳng. Menu đa dạng với đặc sản độc đáo và đồ uống phong phú sẽ làm hài lòng mọi khẩu vị.</p>
+                <a asp-action="Services" asp-controller="Home" class="btn btn-primary font-weight-bold py-2 px-4 mt-2">Khám phá</a>
             </div>
         </div>
     </div>
 </div>
+<!-- About End -->

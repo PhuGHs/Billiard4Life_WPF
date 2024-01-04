@@ -1,120 +1,74 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        /* Basic styling */
-        body {
-            font-family: Arial, sans-serif;
-        }
+﻿@model Order
 
-        .form-group {
-            margin-bottom: 1em;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5em;
-        }
-
-        input[type="text"], input[type="datetime-local"], select, textarea {
-            width: 100%;
-            background-color: white;
-            padding: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            padding: 0.5em 1em;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-            button:hover {
-                background-color: #0056b3;
-            }
-
-        /* Resetting form styling */
-        input, select, textarea, button {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-color: transparent;
-            border: none;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-    </style>
-</head>
-<body>
-    <!-- Your form -->
-    <div class="block">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-8 pb-4">
-                <div class="row mb-5">
-                    <div class="col-lg-4">
-                    </div>
-                    <div class="col-lg-4" style="margin-top: 40px">
-                        <div class="service no-shadow align-items-center link horizontal d-flex active" data-aos="fade-left" data-aos-delay="0">
-                            <div class="service-contents">
-                                <p>Hãy điền thông tin đặt bàn của bạn vào bảng</p>
-                            </div> <!-- /.service-contents-->
-                        </div> <!-- /.service -->
-                    </div>
-                    <div class="col-lg-4">
+ <!-- Page Header Start -->
+<div class="container-fluid page-header mb-5 position-relative overlay-bottom">
+	<div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 300px">
+		<h1 class="display-4 mb-3 mt-0 mt-lg-5 text-white text-uppercase">Đặt bàn</h1>
+	</div>
+</div>
+<!-- Page Header End -->
+<!-- Reservation Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="reservation position-relative overlay-top overlay-bottom">
+            <div class="row align-items-center">
+                <div class="col-lg-6 my-5 my-lg-0">
+                    <div class="p-5">
+                        <div class="mb-4">
+                            <h1 class="text-white">Đặt bàn online</h1>
+                        </div>
+                        <p class="text-white">
+                            Hãy đến và trải nghiệm không khí sôi động, âm nhạc cuồng nhiệt và niềm đam mê bi-a tại [Tên Quán Billiard]. Chúng tôi tin rằng, từng khoảnh khắc tại đây sẽ là những kí ức khó quên. Hãy để Billiard4Life là điểm đến lý tưởng cho mọi hoạt động giải trí của bạn!
+                        </p>
+                        <ul class="list-inline text-white m-0">
+                            <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Không gian thoải mái</li>
+                            <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Dịch vụ chất lượng</li>
+                            <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Giá cả hợp lý</li>
+                        </ul>
                     </div>
                 </div>
-                <form>
-                    <div class="row">
-                        <div class="col-4">
+                <div class="col-lg-6">
+                    <div class="text-center p-5" style="background: rgba(51, 33, 29, .8);">
+                        <h1 class="text-white mb-4 mt-5">Điền thông tin</h1>
+                        <form class="mb-5" asp-action="Order" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label class="text-black" for="fname">Tên khách hàng</label>
-                                <input type="text" class="form-control" id="fname">
+                                <input type="text" class="form-control bg-transparent border-primary p-4" placeholder="Tên khách hàng"
+                                       asp-for="TenKhachHang" required="required" />
                             </div>
-                        </div>
-                        <div class="col-4">
                             <div class="form-group">
-                                <label class="text-black" for="lname">Số điện thoại</label>
-                                <input type="text" class="form-control" id="lname">
+                                <input type="text" class="form-control bg-transparent border-primary p-4" placeholder="Số điện thoại"
+                                       asp-for="SDT" required="required" />
                             </div>
-                        </div>
-                        <div class="col-4">
                             <div class="form-group">
-                                <label class="text-black" for="email">Email</label>
-                                <input type="text" class="form-control" id="email">
+                                <div class="date" id="date" data-target-input="nearest">
+                                    <input type="text" class="form-control bg-transparent border-primary p-4 datetimepicker-input"
+                                           asp-for="Ngay" placeholder="Ngày đặt" data-target="#date" data-toggle="datetimepicker" />
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
                             <div class="form-group">
-                                <label class="text-black" for="email">Loại bàn muốn đặt</label>
-                                <select class="form-control" id="tableType">
-                                    <option value="table1">Carom</option>
-                                    <option value="table2">Libre</option>
-                                    <option value="table3">Pool</option>
+                                <div class="time" id="time" data-target-input="nearest">
+                                    <input type="text" class="form-control bg-transparent border-primary p-4 datetimepicker-input" 
+                                           asp-for="Gio" placeholder="Thời gian" data-target="#time" data-toggle="datetimepicker" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <select class="custom-select bg-transparent border-primary px-4" style="height: 49px;"
+                                        asp-for="LoaiBan">
+                                    <option selected>Loại bàn</option>
+                                    <option value="1">Carom</option>
+                                    <option value="2">Libre</option>
+                                    <option value="3">Pool</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label class="text-black" for="datetime">Thời gian muốn đặt</label>
-                                <input type="datetime-local" class="form-text" name="datetime">
+
+                            <div>
+                                <button class="btn btn-primary btn-block font-weight-bold py-3" type="submit">Đặt ngay</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <div class="form-group mb-5">
-                        <label class="text-black" for="message">Ghi chú</label>
-                        <textarea name="" class="form-control" id="message" cols="30" rows="5"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary-hover-outline">Đặt bàn</button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+<!-- Reservation End -->

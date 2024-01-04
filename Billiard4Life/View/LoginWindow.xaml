@@ -87,6 +87,7 @@
                                  x:Name="pwBox"
                                  Grid.Row="1"
                                  Margin="35"
+                                 KeyDown="pwBox_KeyDown"
                                  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PasswordChanged">

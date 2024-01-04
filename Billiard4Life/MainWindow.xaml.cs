@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
+﻿using Billiard4Life.View;
 using Billiard4Life.ViewModel;
-using Billiard4Life.View;
+using Microsoft.AspNetCore.SignalR.Client;
+using System.Media;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Project;
 
@@ -23,13 +12,47 @@ namespace Project;
 /// </summary>
 public partial class MainWindow : Window
 {
+    HubConnection connection;
+
     public MainWindow()
     {
         InitializeComponent();
+
+        connection = new HubConnectionBuilder()
+            .WithUrl("https://localhost:7004/reservationhub")
+            .WithAutomaticReconnect()
+            .Build();
+
+        Connect();
     }
+
+    private async void Connect()
+    {
+        connection.On<string, string>("NewReservation", (user, mess) =>
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                var vm = this.DataContext as MainViewModel;
+
+                vm.ReservationCount++;
+
+                SystemSounds.Beep.Play();
+            });
+        });
+
+        try
+        {
+            await connection.StartAsync();
+        }
+        catch
+        {
+
+        }
+    }
+
     private void Border_MouseDown(object sender, MouseButtonEventArgs e)
     {
-        if(e.ChangedButton == MouseButton.Left)
+        if (e.ChangedButton == MouseButton.Left)
         {
             this.DragMove();
         }
@@ -38,5 +61,11 @@ public partial class MainWindow : Window
     {
         User userSettingPage = new User();
         userSettingPage.ShowDialog();
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        var reservation = new Reservation();
+        reservation.Show();
     }
 }

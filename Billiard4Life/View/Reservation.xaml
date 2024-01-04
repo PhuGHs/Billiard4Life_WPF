@@ -1,0 +1,120 @@
+﻿<Window x:Class="Billiard4Life.View.Reservation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Billiard4Life.View"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        mc:Ignorable="d"
+        Title="Reservation"
+        Height="550" 
+        Width="800"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="15"
+        TextElement.FontFamily="Comfortaa"
+        TextElement.Foreground="#3C6255"
+        FontFamily="Comfortaa"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Border Background="White"
+            CornerRadius="5"
+            BorderBrush="#61876E"
+            BorderThickness="4"/>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Border Background="#EEEEEE"
+                    CornerRadius="5"
+                        MouseDown="Border_MouseDown"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="  DANH SÁCH ĐẶT BÀN:"
+                       Foreground="#3C6255"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"/>
+                    <Button Grid.Column="2"
+                        Height="20"
+                        Width="20"
+                        Cursor="Hand"
+                            Click="Button_Click"
+                        materialDesign:ButtonAssist.CornerRadius="0,10,0,0"
+                        BorderThickness="0"
+                        Background="Transparent">
+                        <fa:IconImage Icon="PowerOff"
+                                  Foreground="#3C6255"
+                                  Margin="-27 -4 -15 -4"
+                                  Height="20"
+                                  Width="20"/>
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1"
+              Margin="0 7 0 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0 0 4 0"
+                      Grid.Column="0">
+                        <Border Background="#EEEEEE"
+                            CornerRadius="5"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Button Width="120"
+                                    Margin="10 0"
+                                    HorizontalAlignment="Right"
+                                    Foreground="White"
+                                    Background="#3C6255"
+                                    Content="Xác nhận"
+                                    Command="{Binding ConfirmCM}"/>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                          Grid.Row="1"
+                                  Margin="5 0 5 0">
+                                <ListView ItemsSource="{Binding Reservations}"
+                                  Foreground="#3C6255"
+                                  SelectedItem="{Binding Selected, Mode=OneWayToSource}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn DisplayMemberBinding="{Binding TenKhachHang}"
+                                                    Width="175"
+                                                    Header="Tên khách hàng" />
+                                            <GridViewColumn DisplayMemberBinding="{Binding SDT}"
+                                                    Width="155"
+                                                    Header="Số điện thoại" />
+                                            <GridViewColumn DisplayMemberBinding="{Binding Gio}"
+                                                    Width="155"
+                                                    Header="Giờ muốn đặt" />
+                                            <GridViewColumn DisplayMemberBinding="{Binding LoaiBan}"
+                                                    Width="125"
+                                                    Header="Loại bàn" />
+                                            <GridViewColumn DisplayMemberBinding="{Binding XacNhan}"
+                                                    Width="Auto"
+                                                    Header="Đã xác nhận" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

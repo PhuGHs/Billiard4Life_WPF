@@ -35,6 +35,7 @@
     <PackageReference Include="MaterialDesignColors" Version="2.0.6" />
     <PackageReference Include="MaterialDesignExtensions" Version="4.0.0-a02" />
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.25" />
     <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
     <PackageReference Include="OfficeOpenXml.Core.ExcelPackage" Version="1.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
