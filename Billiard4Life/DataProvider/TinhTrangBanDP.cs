@@ -356,7 +356,14 @@ namespace Billiard4Life.DataProvider
         }
         public string GetMaKH(string sdt)
         {
-            return sdt.Substring(sdt.Length - 6);
+            try
+            {
+                return sdt.Substring(sdt.Length - 6);
+            }
+            catch 
+            {
+                return "";
+            }
         }
     }
 }

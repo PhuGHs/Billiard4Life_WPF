@@ -31,7 +31,7 @@
         
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="450"/>
+                <ColumnDefinition Width="350"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -42,7 +42,7 @@
                     Margin="20 0 0 0"
                     Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     materialDesign:HintAssist.HintOpacity="0.8"
-                    materialDesign:HintAssist.Hint="Tìm kiếm khuyến mãi bằng tên khuyến mãi..." 
+                    materialDesign:HintAssist.Hint="Tìm kiếm khuyến mãi bằng tên" 
                     
                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                     FontSize="17"
@@ -69,7 +69,7 @@
                     Grid.Column="4"
                     Command="{Binding DeleteKhuyenMai_Command}" 
                     Foreground="White" 
-                    Background="#3C6255" 
+                    Background="#BF3131" 
                     Margin="10 0" 
                     BorderThickness="0"/>
         </Grid>

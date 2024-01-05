@@ -107,6 +107,16 @@ namespace Billiard4Life.ViewModel
                 TinhTrangBanDP.Flag.StopRecordTimeSpanPlayer(MenuDP.Flag.GetCurrentBillIDForThisTable(IDofPaidTable));
                 PrintBill(Convert.ToInt16(MenuDP.Flag.GetCurrentBillIDForThisTable(IDofPaidTable)), IDofPaidTable);
             });
+            OpenPaymentCM = new RelayCommand<Table>((p) =>
+            {
+                if (string.IsNullOrEmpty(TitleOfBill)) return false;
+                return true;
+            }, (p) =>
+            {
+                var window = new ThanhToan();
+                window.DataContext = this;
+                window.Show();
+            });
         }
         #region attributes
         private ObservableCollection<Table> _tables = new ObservableCollection<Table>();
@@ -263,6 +273,7 @@ namespace Billiard4Life.ViewModel
         public ICommand GetSwitchTableCommand { get; set; }
         public ICommand SortingFeature_Command { get; set; }
         public ICommand PrintBillCM { get; set; }
+        public ICommand OpenPaymentCM { get; set; }
         public ICommand AddNewTableCM { get; set; }
         public ICommand AddTableCM { get; set; }
         #endregion
@@ -605,6 +616,7 @@ namespace Billiard4Life.ViewModel
                     }
                     else
                     {
+                        isNull = false;
                         table.Coloroftable = "#05BFDB";
                         table.Status = 0;
                         TinhTrangBanDP.Flag.UpdateTable(table.ID, true);

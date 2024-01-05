@@ -30,7 +30,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="170"/>
+                    <ColumnDefinition Width="170"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
@@ -41,9 +42,9 @@
                          materialDesign:HintAssist.Hint="Tìm kiếm theo SĐT">
                 </TextBox>
 
-                <Button Grid.Column="2"
+                <Button Grid.Column="3"
                         Command="{Binding DeleteCM}"
-                        Background="#3C6255"
+                        Background="#BF3131"
                         Margin="5 5 5 10"
                         Foreground="#EAE7B1"
                         FontFamily="Comfortaa"
@@ -53,7 +54,7 @@
                 </Button>
 
 
-                <Button Grid.Column="1"
+                <Button Grid.Column="2"
                         Command="{Binding AddCM}"
                         Background="#3C6255"
                         Margin="5 5 10 10"

@@ -43,7 +43,7 @@
                         Margin="60 0 0 0" 
                         Content="Thêm món" 
                         Width="150"/>
-                <Button Background="#3C6255"
+                <Button Background="#BF3131"
                         Foreground="White"
                         BorderThickness="0"
                         Command="{Binding RemoveDish_Command}"

@@ -77,13 +77,21 @@
                                 <RowDefinition Height="60"/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Button Width="120"
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right">
+                                <Button Width="120"
                                     Margin="10 0"
-                                    HorizontalAlignment="Right"
+                                    Foreground="White"
+                                    Background="#BF3131"
+                                    Content="Hủy"
+                                    Command="{Binding CancelCM}"/>
+                                <Button Width="120"
+                                    Margin="10 0"
                                     Foreground="White"
                                     Background="#3C6255"
                                     Content="Xác nhận"
                                     Command="{Binding ConfirmCM}"/>
+                            </StackPanel>
                             <ScrollViewer VerticalScrollBarVisibility="Auto"
                                           Grid.Row="1"
                                   Margin="5 0 5 0">

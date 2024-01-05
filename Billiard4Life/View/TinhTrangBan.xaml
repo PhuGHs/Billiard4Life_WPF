@@ -330,7 +330,7 @@
                             Margin="20 0"
                             Cursor="Hand"
                             Content="THANH TOÁN"
-                            Command="{Binding GetPaymentCommand}"
+                            Command="{Binding OpenPaymentCM}"
                             Background="#3C6255"
                             Foreground="Wheat"/>
                 </Grid>

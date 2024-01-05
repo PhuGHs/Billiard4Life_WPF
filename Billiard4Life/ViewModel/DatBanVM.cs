@@ -1,14 +1,9 @@
 ﻿using Billiard4Life.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SqlClient;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Windows.Input;
 
 namespace Billiard4Life.ViewModel
 {
@@ -30,12 +25,13 @@ namespace Billiard4Life.ViewModel
             get => _Selected;
             set
             {
-                _Selected = value; 
+                _Selected = value;
                 OnPropertyChanged();
             }
         }
 
         public ICommand ConfirmCM { get; set; }
+        public ICommand CancelCM { get; set; }
 
         private string strCon = ConfigurationManager.ConnectionStrings["Billiard4Life"].ConnectionString;
         private SqlConnection sqlCon = null;
@@ -44,17 +40,30 @@ namespace Billiard4Life.ViewModel
         {
             Reservations = new ObservableCollection<DatBan>();
 
-            ConfirmCM = new RelayCommand<object>((p) => 
-            { 
+            ConfirmCM = new RelayCommand<object>((p) =>
+            {
                 if (Selected == null)
                 {
                     return false;
                 }
 
-                return true; 
+                return true;
             }, (p) =>
             {
                 Confirm();
+            });
+
+            CancelCM = new RelayCommand<object>((p) =>
+            {
+                if (Selected == null)
+                {
+                    return false;
+                }
+
+                return true;
+            }, (p) =>
+            {
+                Cancel();
             });
 
             GetList();
@@ -75,6 +84,21 @@ namespace Billiard4Life.ViewModel
             CloseConnect();
         }
 
+        public void Cancel()
+        {
+            OpenConnect();
+
+            var cmd = new SqlCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = sqlCon;
+            cmd.CommandText = $"DELETE FROM DATBAN WHERE ID = {Selected.ID}";
+            cmd.ExecuteNonQuery();
+
+            GetList();
+
+            CloseConnect();
+        }
+
         public void GetList()
         {
             _Reservations.Clear();
@@ -88,7 +112,7 @@ namespace Billiard4Life.ViewModel
                 "AND YEAR(NgayGio) >= YEAR(GETDATE()) ORDER BY DaXacNhan, ID";
             cmd.Connection = sqlCon;
             var reader = cmd.ExecuteReader();
-            
+
             while (reader.Read())
             {
                 var id = reader.GetInt32(0);

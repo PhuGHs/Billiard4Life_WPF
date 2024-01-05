@@ -172,8 +172,8 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="120"/>
-                                <RowDefinition Height="300"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="150"/>
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" 
                                     Padding="20" 
@@ -285,14 +285,14 @@
                                 </StackPanel>
                             </ScrollViewer>
                             <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0 15 0 0">
-                                <Separator Margin="20 20"/>
-                                <StackPanel Orientation="Horizontal"  VerticalAlignment="Top" Margin="10 0 0 0" >
+                                <Separator Margin="20 20 20 10"/>
+                                <StackPanel Orientation="Horizontal"  VerticalAlignment="Top" Margin="10 10" >
                                     <TextBlock Text="Tổng" 
-                                               FontSize="17" 
+                                               FontSize="20" 
                                                FontWeight="SemiBold" 
                                                Width="250"/>
                                     <TextBlock Text="{Binding Path=StrSubtotal}" 
-                                               FontSize="15" 
+                                               FontSize="20" 
                                                FontWeight="SemiBold" 
                                                Foreground="#3C6255"
                                                TextAlignment="Right"/>
@@ -303,45 +303,20 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20 20 0 0" >
-                                    <Button Background="#3C6255" 
-                                            Width="155"
-                                            Command="{Binding ClearAllSelectedDishes}"
-                                           >
-                                        <TextBlock 
-                                            Foreground="White" 
-                                            Text="Xoá chọn tất cả"
-                                            FontSize="15"
-                                            />
-                                    </Button>
-                                    <Button Command="{Binding Inform_Chef_Of_OrderedDishes}"
-                                            Background="#3C6255" 
-                                            BorderThickness="0" 
-                                            Margin="0 20 0 0"
-                                            Width="155">
-                                        <TextBlock Foreground="White" 
-                                                   Text="Đặt bàn" 
-                                                   FontSize="15" />
-                                    </Button>
-
-                                    <Button Command=""
-                                            Content="Đặt bàn trước"
-                                            Background="#3C6255"
-                                            Foreground="White"
-                                            FontSize="15"
-                                            Margin="0 20 0 0"
-                                            />
-                                </StackPanel>
-                                    <StackPanel Margin="0 20 0 0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label Content="SDT: " FontSize="18" FontWeight="SemiBold"/>
-                                            <TextBox FontSize="18" FontWeight="SemiBold" Width="120" Margin="20 0 0 0"/>
-                                        </StackPanel>
-                                        <StackPanel Margin="0 20 0 0"  Orientation="Horizontal">
-                                            <Label Content="Ngày: " FontSize="18" FontWeight="SemiBold"/>
-                                            <TextBox FontSize="18" FontWeight="SemiBold" Width="120" Margin="12 0 0 0"/>
-                                        </StackPanel>
-                                    </StackPanel>
+                                    <Button 
+                                        Background="#3C6255" 
+                                        Width="155"
+                                        Command="{Binding ClearAllSelectedDishes}"
+                                        Content="Xóa chọn tất cả"
+                                        Foreground="White"/>
+                                    <Button 
+                                        Command="{Binding Inform_Chef_Of_OrderedDishes}"
+                                        Background="#3C6255" 
+                                        BorderThickness="0" 
+                                        Width="155"
+                                        Grid.Column="1"
+                                        Content="Đặt bàn"
+                                        Foreground="White"/>
                                 </Grid>
                             </StackPanel>
                         </Grid>

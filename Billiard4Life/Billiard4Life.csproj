@@ -19,6 +19,7 @@
     <None Remove="images\menu_default_image.jpg" />
     <None Remove="images\poweroff.png" />
     <None Remove="images\power_off_button_64px.png" />
+    <None Remove="images\qrcode.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +57,9 @@
     <Resource Include="images\logo.png" />
     <Resource Include="images\Logo2.png" />
     <Resource Include="images\menu_default_image.jpg" />
+    <Resource Include="images\qrcode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
