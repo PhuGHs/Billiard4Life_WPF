@@ -106,7 +106,7 @@
                                             <GridViewColumn DisplayMemberBinding="{Binding SDT}"
                                                     Width="155"
                                                     Header="Số điện thoại" />
-                                            <GridViewColumn DisplayMemberBinding="{Binding Gio}"
+                                            <GridViewColumn DisplayMemberBinding="{Binding NgayGio}"
                                                     Width="155"
                                                     Header="Giờ muốn đặt" />
                                             <GridViewColumn DisplayMemberBinding="{Binding LoaiBan}"

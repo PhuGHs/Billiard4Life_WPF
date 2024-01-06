@@ -205,6 +205,7 @@ namespace Billiard4Life.ViewModel
             if (CrowdMonth == null) return;
 
             string month = GetMonth(CrowdMonth);
+            string year = GetYear(CrowdMonth);
             int[] crowd = new int[DateTime.DaysInMonth(DateTime.Now.Year, int.Parse(month))];
             for (int i = 0; i < crowd.Length; i++)
             {
@@ -215,7 +216,7 @@ namespace Billiard4Life.ViewModel
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = "SELECT DAY(NgayHD), COUNT(*) FROM HOADON WHERE MONTH(NgayHD) = " + month
-                + " AND YEAR(NgayHD) = " + DateTime.Now.Year + " AND TrangThai = N'Đã thanh toán' GROUP BY DAY(NgayHD)";
+                + " AND YEAR(NgayHD) = " + year + " AND TrangThai = N'Đã thanh toán' GROUP BY DAY(NgayHD)";
             cmd.Connection = sqlCon;
             SqlDataReader reader = cmd.ExecuteReader();
 
@@ -243,6 +244,7 @@ namespace Billiard4Life.ViewModel
             LabelsStaff.Clear();
 
             string month = GetMonth(StaffMonth);
+            string year = GetYear(StaffMonth);
             string title = "";
             string strQuerry = "";
 
@@ -256,7 +258,7 @@ namespace Billiard4Life.ViewModel
             {
                 title = "T" + month;
                 strQuerry = "SELECT SUM(TriGia), hd.MaNV, TenNV FROM HOADON hd JOIN NHANVIEN nv ON hd.MaNV = nv.MaNV" +
-                    " WHERE MONTH(NgayHD) = " + month + " AND YEAR(NgayHD) = " + DateTime.Now.Year + "" +
+                    " WHERE MONTH(NgayHD) = " + month + " AND YEAR(NgayHD) = " + year + "" +
                     " AND TrangThai = N'Đã thanh toán' GROUP BY hd.MaNV, TenNV";
             }
 
@@ -288,6 +290,7 @@ namespace Billiard4Life.ViewModel
             SeriesCollectionTypeTable.Clear();
 
             string month = GetMonth(TypeTableMonth);
+            string year = GetYear(TypeTableMonth);
             string strQuerry = "";
 
             if (month == "Tất cả")
@@ -298,7 +301,7 @@ namespace Billiard4Life.ViewModel
             else
             {
                 strQuerry = "SELECT DISTINCT COUNT(*), LoaiBan FROM HOADON hd JOIN BAN b ON hd.SoBan = b.SoBan " +
-                    "WHERE MONTH(NgayHD) = " + month + " AND YEAR(NgayHD) = " + DateTime.Now.Year 
+                    "WHERE MONTH(NgayHD) = " + month + " AND YEAR(NgayHD) = " + year
                     + " AND hd.TrangThai = N'Đã thanh toán' GROUP BY LoaiBan";
             }
 
@@ -392,19 +395,22 @@ namespace Billiard4Life.ViewModel
             {
                 if (TimeSelected == null) return;
                 string month = GetMonth(TimeSelected);
+                string year = GetYear(TimeSelected);
 
-                for (int i = 1; i <= DateTime.DaysInMonth(DateTime.Now.Year, int.Parse(month)); i++) 
+                for (int i = 1; i <= DateTime.DaysInMonth(int.Parse(year), int.Parse(month)); i++) 
                 {
                     LabelsRevenue.Add(i.ToString());
                     paid.Add(0);
                     profit.Add(0);
                 }
-                
+                paid.Add(0);
+                profit.Add(0);
+
                 //profit 
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = "SELECT DAY(NgayHD), SUM(TriGia) FROM HOADON WHERE TrangThai = N'Đã thanh toán' " +
-                    "AND MONTH(NgayHD) = " + month + " AND YEAR(NgayHD) = " + DateTime.Now.Year + " GROUP BY DAY(NgayHD)";
+                    "AND MONTH(NgayHD) = " + month + " AND YEAR(NgayHD) = " + year + " GROUP BY DAY(NgayHD)";
                 cmd.Connection = sqlCon;
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -417,7 +423,7 @@ namespace Billiard4Life.ViewModel
 
                 //paid
                 cmd.CommandText = "SELECT DAY(NgayNhap), SUM(DonGia * SoLuong) FROM CHITIETNHAP" +
-                    " WHERE MONTH(NgayNhap) = " + month + " AND YEAR(NgayNhap) = " + DateTime.Now.Year + " GROUP BY NgayNhap";
+                    " WHERE MONTH(NgayNhap) = " + month + " AND YEAR(NgayNhap) = " + year + " GROUP BY NgayNhap";
                 reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -429,7 +435,7 @@ namespace Billiard4Life.ViewModel
 
                 cmd.CommandText = "SELECT SUM(Gia * SoLuong) FROM CTHD ct JOIN HOADON hd ON ct.SoHD = hd.SoHD" +
                     " JOIN MENU m ON ct.MaMon = m.MaMon WHERE TrangThai = N'Đã thanh toán'" +
-                    " AND MONTH(NgayHD) = " + month + " AND YEAR(NgayHD) = " + DateTime.Now.Year;
+                    " AND MONTH(NgayHD) = " + month + " AND YEAR(NgayHD) = " + year;
                 reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -510,6 +516,10 @@ namespace Billiard4Life.ViewModel
 
             if (month == "Tháng")
             {
+                for (int i = 6; i <= 12; i++)
+                {
+                    ListTime.Add(i.ToString() + "/" + (DateTime.Now.Year - 1));
+                }
                 for (int i = 1; i <= DateTime.Now.Month; i++)
                 {
                     ListTime.Add(i.ToString() + "/" + DateTime.Now.Year);
@@ -527,6 +537,11 @@ namespace Billiard4Life.ViewModel
         {
             ListCrowdMonths.Clear();
             ListMonths.Clear();
+            for (int i = 6; i <= 12; i++)
+            {
+                ListMonths.Add(i.ToString() + "/" + (DateTime.Now.Year - 1));
+                ListCrowdMonths.Add(i.ToString() + "/" + (DateTime.Now.Year - 1));
+            }
             int currentMonth = DateTime.Now.Month;
             for (int i = 1; i <= currentMonth; i++)
             {
@@ -545,6 +560,11 @@ namespace Billiard4Life.ViewModel
                 i++;
             }
             return month;
+        }
+
+        private string GetYear(string dt)
+        {
+            return dt.Substring(dt.IndexOf("/") + 1);
         }
         
         private void OpenConnect()
